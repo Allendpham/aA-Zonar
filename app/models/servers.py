@@ -3,6 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.schema import Column, ForeignKey, Table
 
 
+
 Base = declarative_base()
 
 server_users = Table(
@@ -20,7 +21,7 @@ class Server(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     ownerId = db.Column(db.Integer, nullable=False)
-    name = db.Columnn(db.String(255), nullable=False)
+    name = db.Column(db.String(255), nullable=False)
     preview_img = db.Column(db.String(255))
     admin_Ids = db.Column(db.String(255))
 
