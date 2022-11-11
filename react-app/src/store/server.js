@@ -149,6 +149,8 @@ export default function serverReducer(state = initialState, action){
       const deleteState = { ...state };
       delete deleteState.allServers[action.serverId];
       return deleteState;
+    default:
+      return state;
   }
 
 }
