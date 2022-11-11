@@ -4,11 +4,11 @@ import { loadServersThunk } from '../../store/server';
 
 function ServersIndex() {
    const dispatch = useDispatch();
-   let servers = useSelector(state => state.server.allServers);
-
+   let servers = useSelector(state => Object.values(state.server.allServers));
+   console.log(servers)
    useEffect(() => {
       dispatch(loadServersThunk())
-   }, [dispatch, servers])
+   }, [dispatch])
 
    if(!servers.length) return(<h2>Loading...</h2>);
 

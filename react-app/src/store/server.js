@@ -125,7 +125,7 @@ const initialState = {allServers:{}, currentServer:{}}
 export default function serverReducer(state = initialState, action){
   switch (action.type){
     case LOAD_SERVERS:
-      const allServers = normalizeArray(action.servers);
+      const allServers = normalizeArray(action.servers.servers);
       return {...state, allServers:{...allServers}}
     case GET_SERVER:
       const currentServer = {...state, currentServer:{...action.server}}
