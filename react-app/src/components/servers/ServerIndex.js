@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadServersThunk } from '../../store/server';
+import ServerFormModal from './ServerFormModal';
 
 function ServersIndex() {
    const dispatch = useDispatch();
@@ -23,7 +24,7 @@ function ServersIndex() {
             ))}
          </ul>
 
-         <div><button>Create a Server</button></div>
+         <ServerFormModal />
          <div><button>Explore Servers</button></div>
       </div>
    );
