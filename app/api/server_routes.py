@@ -14,7 +14,7 @@ def server_root():
     servers = Server.query.all()
     return {'servers': [server.to_dict() for server in servers]}
 
-@server_routes.route('/create', methods=['POST'])
+@server_routes.route('', methods=['POST'])
 @login_required
 def server_create():
     '''
@@ -33,3 +33,26 @@ def server_create():
         db.session.commit()
         return new_server.to_dict()
     return form.data.error
+
+@server_routes.route('/<int: serverId>', methods=['PATCH'])
+def update_server(serverId):
+    """
+    Update a server
+    """
+    server = Server.query.get_or_404(serverId)
+    name = request.json['name']
+    preview_img = request.json['preview_img']
+    
+    server.name = name
+    server.preview_img = preview_img
+    
+    db.session.commit()
+    return server.to_dict() # double check this
+
+@server_routes.route('/<int: serverId>', methods=['DELETE'])
+def delete_server(serverId):
+    server = Server.query.get_or_404(serverId)
+    db.session.delete(server)
+    db.session.commit()
+    
+    return #something?
