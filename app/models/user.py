@@ -37,12 +37,12 @@ class User(Base, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
-    
+
     servers = relationship('Server',
                         secondary=server_users,
                         back_populates='users')
-    
-    admins = relationship('Server',
+
+    admin = relationship('Server',
                         secondary=server_admins,
                         back_populates='admins')
 
@@ -63,7 +63,7 @@ class User(Base, UserMixin):
             'username': self.username,
             'email': self.email
         }
-        
+
 
 
 
@@ -84,7 +84,7 @@ class Server(Base):
 
     admins = relationship('User',
                         secondary=server_admins,
-                        back_populates='admins')
+                        back_populates='admin')
 
 # class Server_user(db.Model):
 #     __tablename__ = 'server_users'
