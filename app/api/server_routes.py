@@ -31,5 +31,5 @@ def server_create():
                             preview_img=data['preview_img'])
         db.session.add(new_server)
         db.session.commit()
-        return new_server
+        return new_server.to_dict()
     return form.data.error
