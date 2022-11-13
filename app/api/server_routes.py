@@ -14,6 +14,15 @@ def server_root():
     servers = Server.query.all()
     return {'servers': [server.to_dict() for server in servers]}
 
+@server_routes.route('/<int:serverId>')
+@login_required
+def get_server(serverId):
+    """ 
+    Query for a single server 
+    """
+    single_server = Server.query.get(serverId)
+    return {'server': single_server.to_dict()}
+
 @server_routes.route('', methods=['POST'])
 @login_required
 def server_create():
@@ -34,35 +43,68 @@ def server_create():
         return new_server.to_dict()
     return form.data.error
 
-# @server_routes.route('/<int: serverId>/update', methods=['GET', 'POST'])
+@server_routes.route('/<int:serverId>/update', methods=['GET', 'POST'])
+def update_server(serverId):
+    """
+    Update a server
+    """
+    server = Server.query.get_or_404(serverId).first() # query or 404 if not found
+    if request.method == 'POST':
+        if server:
+            db.session.delete(server)
+            db.session.commit()
+
+            name = request.json['name']
+            preview_img = request.json['preview_img']
+            server = Server(id = serverId, name = name, preview_img = preview_img)
+
+            db.session.add(server)
+            db.session.commit()
+            return server.to_dict()
+        return "Server does not exist"
+
+
+#     PUT ROUTE IN CASE ABOVE DOES NOT WORK
+# @server_routes.route('/<int:serverId>/update' methods=['PUT'])
 # def update_server(serverId):
-#     """
+#     """ 
 #     Update a server
 #     """
-#     server = Server.query.get_or_404(serverId) # query or 404 if not found
-#     if request.method == 'POST':
-#         if server:
-#             db.session.delete(server)
-#             db.session.commit()
+#     server = Server.query.get_or_404(serverId).first() # query or 404 if not found
+    
+#     if server:
+#         name = request.json['name']
+#         preview_img = request.json['preview_img']
+        
+#         server.name = name
+#         server.preview_img = preview_img
+        
+#         db.session.commit()
+#         return server.to_dict()
+#     return "Server does not exist"
 
-#             name = request.json['name']
-#             preview_img = request.json['preview_img']
-#             server = Server(id = serverId, name = name, preview_img = preview_img)
+@server_routes.route('/<int:serverId>/delete', methods=['GET', 'POST'])
+def delete_server(serverId):
+    """
+    Delete a route
+    """
+    server = Server.query.get_or_404(serverId).first()
+    if request.method == 'POST':
+        if server:
+            db.session.delete(server)
+            db.session.commit()
+            return redirect('/api/servers')
+    return "Server does not exist"
 
-#             db.session.add(server)
-#             db.session.commit()
-#             return server.to_dict()
-#         return "Server does not exist"
-
-# @server_routes.route('/<int: serverId>/delete', methods=['GET', 'POST'])
+    # DELETE ROUTE IN CASE ABOVE DOES NOT WORK
+# @server_routes.route('/<int:serverId>/delete', methods=['DELETE'])
 # def delete_server(serverId):
 #     """
 #     Delete a route
 #     """
-#     server = Server.query.get_or_404(serverId)
-#     if request.method == 'POST':
-#         if server:
-#             db.session.delete(server)
-#             db.session.commit()
-#             return redirect('/api/servers')
+#     server = Server.query.get_or_404(serverId).first()
+#     if server:
+#         db.session.delete(server)
+#         db.session.commit()
+#         return redirect('/api/servers')
 #     return "Server does not exist"
