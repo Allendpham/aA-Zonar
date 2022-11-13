@@ -1,7 +1,7 @@
 """create user and server table
 
 Revision ID: 297b1e34dfbe
-Revises: 
+Revises:
 Create Date: 2022-11-13 12:17:05.212126
 
 """

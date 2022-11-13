@@ -130,7 +130,7 @@ export default function serverReducer(state = initialState, action){
     case GET_SERVER:
       const currentServer = {...state, currentServer:{...action.server}}
       return currentServer
-      case ADD_SERVER:
+    case ADD_SERVER:
         if (!state[action.server.id]) {
           const newState = {
             ...state, allServers:{...allServers,
