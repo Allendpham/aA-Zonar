@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request, redirect
 from flask_login import login_required
 from app.models import Server, db
 from app.forms import ServerForm
+from .auth_routes import validation_errors_to_error_messages
 
 server_routes = Blueprint('servers', __name__)
 
@@ -40,8 +41,9 @@ def server_create():
                             preview_img=data['preview_img'])
         db.session.add(new_server)
         db.session.commit()
-        return new_server.to_dict()
-    return form.data.error
+        return {'server': new_server.to_dict()}
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
 
 @server_routes.route('/<int:serverId>/update', methods=['GET', 'POST'])
 def update_server(serverId):
@@ -50,22 +52,27 @@ def update_server(serverId):
     """
     server = Server.query.get_or_404(serverId).first() # query or 404 if not found
     if request.method == 'POST':
-        if server:
-            db.session.delete(server)
-            db.session.commit()
+        form = ServerForm()
+        form['csrf_token'].data = request.cookies['csrf_token']
 
-            name = request.json['name']
-            preview_img = request.json['preview_img']
+        db.session.delete(server)
+        db.session.commit()
+
+        if form.validate_on_submit():
+            data = form.data
+            name = data['name']
+            preview_img = data['preview_img']
             server = Server(id = serverId, name = name, preview_img = preview_img)
 
             db.session.add(server)
             db.session.commit()
-            return server.to_dict()
-        return "Server does not exist"
+            return {'server': server.to_dict()}
+        return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
 
 
 #     PUT ROUTE IN CASE ABOVE DOES NOT WORK
-# @server_routes.route('/<int:serverId>/update' methods=['PUT'])
+# @server_routes.route('/<int:serverId>' methods=['PUT'])
 # def update_server(serverId):
 #     """ 
 #     Update a server
@@ -79,8 +86,9 @@ def update_server(serverId):
 #         server.name = name
 #         server.preview_img = preview_img
         
+#         db.session.add(server)
 #         db.session.commit()
-#         return server.to_dict()
+#         return {'server': server.to_dict()}
 #     return "Server does not exist"
 
 @server_routes.route('/<int:serverId>/delete', methods=['GET', 'POST'])
@@ -90,14 +98,14 @@ def delete_server(serverId):
     """
     server = Server.query.get_or_404(serverId).first()
     if request.method == 'POST':
-        if server:
+        if server: # necessary?
             db.session.delete(server)
             db.session.commit()
-            return redirect('/api/servers')
-    return "Server does not exist"
+            return {"message": "Server was successfully deleted"}
+    return {"error": "Server does not exist"}, 404
 
     # DELETE ROUTE IN CASE ABOVE DOES NOT WORK
-# @server_routes.route('/<int:serverId>/delete', methods=['DELETE'])
+# @server_routes.route('/<int:serverId>', methods=['DELETE'])
 # def delete_server(serverId):
 #     """
 #     Delete a route

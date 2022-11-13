@@ -28,7 +28,7 @@ class User(db.Model, UserMixin):
 
     admin = db.relationship('Server',
                         secondary=server_admins,
-                        back_populates='users')
+                        back_populates='admins')
 
     @property
     def password(self):

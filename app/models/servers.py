@@ -39,7 +39,7 @@ class Server(db.Model):
     
     admins = db.relationship('User',
                         secondary=server_admins,
-                        back_populates='servers')
+                        back_populates='admin')
 
 # class Server_user(db.Model):
 #     __tablename__ = 'server_users'
