@@ -11,8 +11,8 @@ from .db import add_prefix_for_prod
 server_users = Table(
     'server_users',
     db.metadata,
-    db.Column('serverId', db.Integer, db.ForeignKey(add_prefix_for_prod('servers.id')), primary_key=True),
-    db.Column('userId', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), primary_key=True),
+    db.Column('serverId', db.ForeignKey(add_prefix_for_prod('servers.id')), primary_key=True),
+    db.Column('userId', db.ForeignKey(add_prefix_for_prod('users.id')), primary_key=True),
 )
 
 server_admins = Table(
