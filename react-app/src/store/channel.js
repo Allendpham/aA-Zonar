@@ -33,7 +33,6 @@ export const loadServerChannelsThunk =(id) => async (dispatch) =>{
 
     if(response.ok){
         const data = await response.json();
-        console.log("is this happening?", data)
         dispatch(loadServerChannels(data))
         return data;
       } else if (response.status < 500) {
