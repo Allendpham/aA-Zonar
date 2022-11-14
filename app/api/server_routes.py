@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, redirect
-from flask_login import login_required
+from flask_login import login_required, current_user
 from sqlalchemy import orm
 from app.models import Server, db, Channel, User
 from app.forms import ServerForm, ChannelForm
@@ -49,6 +49,9 @@ def get_server(serverId):
     Query for a single server
     """
     single_server = Server.query.get(serverId)
+    print('++++++++++++++++++++', current_user.to_dict())
+    current_user.servers.append(single_server)
+    db.session.commit()
     return {'server': single_server.to_dict()}
 
 @server_routes.route('', methods=['POST'])
