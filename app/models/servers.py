@@ -39,7 +39,7 @@ class Server(db.Model):
                         secondary=server_admins,
                         backref='serverAdmin')
 
-    channels = db.relationship('Channel', backref='server')
+    channels = db.relationship('Channel', back_populates='server')
 
 # class Server_user(db.Model):
 #     __tablename__ = 'server_users'
