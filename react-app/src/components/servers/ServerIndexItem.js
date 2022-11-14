@@ -6,6 +6,7 @@ import ServerSettingsModal from './ServerSettingsModal';
 import { loadServerChannelsThunk, getChannelThunk } from '../../store/channel';
 import ChannelFormModal from '../channels/ChannelFormModal';
 import ChannelSettingsModal from '../channels/ChannelSettingsModal';
+import UsersList from '../users/usersList';
 
 const ServerIndexItem = () => {
    const dispatch = useDispatch();
@@ -61,7 +62,7 @@ const ServerIndexItem = () => {
             <li key={ele.id} onClick={() => showChannel(ele)}>{ele.name}<ChannelSettingsModal channelId={ele?.id}/></li>
          ))}</ul>
          {content}
-
+            <UsersList currentServer={singleServer}/>
       </div>
    )
 }
