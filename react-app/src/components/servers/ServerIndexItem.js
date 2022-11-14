@@ -6,6 +6,8 @@ import ServerSettingsModal from './ServerSettingsModal';
 import { loadServerChannelsThunk, getChannelThunk } from '../../store/channel';
 import ChannelFormModal from '../channels/ChannelFormModal';
 import ChannelSettingsModal from '../channels/ChannelSettingsModal';
+import Chat from '../chat';
+import UsersList from '../users/usersList';
 
 const ServerIndexItem = () => {
    const dispatch = useDispatch();
@@ -30,7 +32,7 @@ const ServerIndexItem = () => {
       dispatch(getChannelThunk(channel.id))
    }
    singleChannel && singleChannel?.channel?.serverId == serverId ?
-   content = (<div>Single Channel: {singleChannel.channel.name} <Chat /> </div>): content=(<div></div>)
+   content = (<div>Single Channel: {singleChannel.channel.name} <Chat/> </div>): content=(<div></div>)
 
    if(!singleServer) {
       return null;
@@ -61,7 +63,7 @@ const ServerIndexItem = () => {
             <li key={ele.id} onClick={() => showChannel(ele)}>{ele.name}<ChannelSettingsModal channelId={ele?.id}/></li>
          ))}</ul>
          {content}
-
+         <UsersList currentServer={singleServer}/>
       </div>
    )
 }
