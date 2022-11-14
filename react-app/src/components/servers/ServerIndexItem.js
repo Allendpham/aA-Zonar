@@ -6,7 +6,6 @@ import ServerSettingsModal from './ServerSettingsModal';
 import { loadServerChannelsThunk, getChannelThunk } from '../../store/channel';
 import ChannelFormModal from '../channels/ChannelFormModal';
 import ChannelSettingsModal from '../channels/ChannelSettingsModal';
-import Chat from '../chat';
 
 const ServerIndexItem = () => {
    const dispatch = useDispatch();
@@ -15,6 +14,7 @@ const ServerIndexItem = () => {
    const singleServer = useSelector(state => state.server.currentServer.server)
    const allChannels = useSelector(state => Object.values(state.channel.allChannels))
    const singleChannel = useSelector(state => state.channel?.currentChannel)
+   const currUser = useSelector(state => state.session.user)
    let content;
 
    useEffect(()=> {
@@ -35,7 +35,11 @@ const ServerIndexItem = () => {
    if(!singleServer) {
       return null;
    }
-
+   let addChannel;
+   currUser?.id == singleServer.ownerId ||
+      singleServer.admins.filter(user=> user.id == currUser?.id).length ?
+         addChannel = <ChannelFormModal/> :
+            addChannel = <div></div>
    return(
       <div className='server-index-item-wrapper'>
          <h1>Hello from Server {singleServer?.name}</h1>
@@ -50,12 +54,14 @@ const ServerIndexItem = () => {
          </ul>
          <ServerSettingsModal />
          <h2>TEXT CHANNELS
-            <ChannelFormModal/>
+            {/* <ChannelFormModal/> */}
+            {addChannel}
          </h2>
          <ul>{allChannels?.map(ele => (
             <li key={ele.id} onClick={() => showChannel(ele)}>{ele.name}<ChannelSettingsModal channelId={ele?.id}/></li>
          ))}</ul>
          {content}
+
       </div>
    )
 }
