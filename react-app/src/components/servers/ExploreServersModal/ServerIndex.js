@@ -5,7 +5,10 @@ import { Link } from 'react-router-dom';
 
 function ServerIndex() {
    const dispatch = useDispatch();
+   const user = useSelector(state => state.session.user)
+
    let servers = useSelector(state => Object.values(state.server.allServers));
+   servers = servers.filter(server => server['users'].filter(person => person.id == user.id).length == 0)
 
    useEffect(() => {
       dispatch(loadServersThunk())

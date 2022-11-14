@@ -8,7 +8,10 @@ import ExploreServersModal from './ExploreServersModal';
 
 function UserServers() {
    const dispatch = useDispatch();
+   const user = useSelector(state => state.session.user)
    let servers = useSelector(state => Object.values(state.server.allServers));
+   servers = servers.filter(server => server['users'].filter(person => person.id == user.id).length >= 1)
+
    useEffect(() => {
       dispatch(loadServersThunk())
    }, [dispatch])
