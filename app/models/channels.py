@@ -15,8 +15,6 @@ class Channel(db.Model):
    name = db.Column(db.String(255), nullable=False)
    serverId = db.Column(db.Integer, db.ForeignKey('servers.id'), nullable=False)
 
-   server = db.relationship('Server', back_populates='channels')
-
    def to_dict(self):
     return {
         'id': self.id,
