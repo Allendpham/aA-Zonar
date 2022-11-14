@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { addServerThunk } from '../../../store/server';
+import { addServerThunk, loadServersThunk } from '../../../store/server';
 
-const ServerForm = (setShowModal) => {
+const ServerForm = ({setShowModal}) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const user = useSelector(state => state.session.user)
@@ -28,6 +28,7 @@ const ServerForm = (setShowModal) => {
 
     if(server){
       setShowModal(false)
+      dispatch(loadServersThunk())
     }
   }
 

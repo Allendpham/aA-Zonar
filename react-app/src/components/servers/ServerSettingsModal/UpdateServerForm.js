@@ -1,38 +1,41 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { updateServerThunk, getServerThunk, removeServerThunk } from '../../../store/server';
+import { updateServerThunk, getServerThunk, removeServerThunk, loadServersThunk } from '../../../store/server';
 
-const UpdateServerForm = (setShowModal) => {
+const UpdateServerForm = ({setShowModal}) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const {serverId} = useParams();
   const user = useSelector(state => state.session.user)
-  const currServer = useSelector(state => state.server.currentServer)
-  const [name, setName] = useState('')
-  const [previewImg, setImage] = useState('') //default image
+  const currServer = useSelector(state => state.server.currentServer.server)
+  const [name, setName] = useState(currServer?.name)
+  const [previewImg, setImage] = useState(currServer?.preview_img) //default image
   const updateName = (e) => setName(e.target.value);
   const updateImage = (e) => setImage(e.target.value);
 
-  useEffect(()=>{
-    dispatch(getServerThunk(serverId))
-  }, [dispatch])
+  // useEffect(()=>{
+  //   dispatch(getServerThunk(serverId))
+  // }, [dispatch])
 
-  if(!Object.keys(currServer).length) return null;
+  if(!currServer) return null;
 
+  console.log('I am currserver', currServer)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const payload = {
+      serverId: serverId,
       ownerId:user.id,
       name,
       preview_img: previewImg
     };
-    let server = await dispatch(updateServerThunk(payload))
+    let server = await dispatch(updateServerThunk(payload, serverId))
 
     if(server){
       setShowModal(false)
     }
+    dispatch(getServerThunk(serverId))
   }
 
   const handleCancelClick = (e) => {
@@ -47,6 +50,7 @@ const UpdateServerForm = (setShowModal) => {
     //Display some type of modal/confirmation message where user has to confirm and input name of server to confirm delete
     dispatch(removeServerThunk(serverId))
     setShowModal(false)
+    dispatch(loadServersThunk())
     history.push('/@me')
   }
 
@@ -55,12 +59,12 @@ const UpdateServerForm = (setShowModal) => {
       <input
         type='text'
         placeholder='Server Image'
-        value={currServer.preview_img}
+        value={previewImg}
         onChange={updateImage}/>
       <input
         type='text'
         placeholder='Server Name'
-        value={currServer.name}
+        value={name}
         onChange={updateName}/>
       <button type='submit'>Submit</button>
       <button type='button' onClick={handleCancelClick}>Cancel</button>

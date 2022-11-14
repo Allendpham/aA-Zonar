@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
@@ -48,9 +48,10 @@ function App() {
         <ProtectedRoute path='/servers/:serverId' exact={true} >
           <ServerIndexItem />
         </ProtectedRoute>
-        <Route path='/' exact={true} >
-          <h1>My Home Page</h1>
-        </Route>
+        <ProtectedRoute path='/' exact={true} >
+          <Redirect to='/@me'></Redirect>
+        </ProtectedRoute>
+
       </Switch>
     </BrowserRouter>
   );

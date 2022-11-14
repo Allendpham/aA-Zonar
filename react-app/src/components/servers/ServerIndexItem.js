@@ -7,19 +7,18 @@ import ServerSettingsModal from './ServerSettingsModal';
 const ServerIndexItem = () => {
    const dispatch = useDispatch();
    const {serverId} = useParams();
-   const singleServer = useSelector(state => state.server.currentServer)
+   const singleServer = useSelector(state => state.server.currentServer.server)
 
    useEffect(()=> {
       dispatch(getServerThunk(serverId))
    }, [dispatch])
 
-   if(!Object.keys(singleServer).length) return null;
+   if(!singleServer) return null;
 
    return(
       <div className='server-index-item-wrapper'>
-         <h1>Hello from Server Index Item</h1>
-         <h2>{singleServer.name}</h2>
-         {/* <ServerSettingsModal> */}
+         <h1>Hello from Server {singleServer?.name}</h1>
+         <ServerSettingsModal />
       </div>
    )
 }

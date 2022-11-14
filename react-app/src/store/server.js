@@ -14,9 +14,9 @@ const getServer =(server) =>({
   server
 })
 
-const addServer = (serverId) => ({
+const addServer = (server) => ({
   type: ADD_SERVER,
-  serverId
+  server
 })
 
 const removeServer = (server) => ({
@@ -64,7 +64,7 @@ export const addServerThunk = (server) => async (dispatch) =>{
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(server),
   })
-
+  console.log("this is the add server response:", response)
   if(response.ok){
     const data = await response.json();
     dispatch(addServer(data))
@@ -79,8 +79,8 @@ export const addServerThunk = (server) => async (dispatch) =>{
   }
 }
 
-export const updateServerThunk = (server) => async (dispatch) =>{
-  const response = await fetch(`/api/servers/${server.id}`,{
+export const updateServerThunk = (server, id) => async (dispatch) =>{
+  const response = await fetch(`/api/servers/${id}`,{
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(server),
@@ -133,13 +133,13 @@ export default function serverReducer(state = initialState, action){
     case ADD_SERVER:
         if (!state[action.server.id]) {
           const newState = {
-            ...state, allServers:{...allServers,
+            ...state, allServers:{...state.allServers,
             [action.server.id]: action.server}
           };
           return newState;
         }
         return {
-          ...state, allServers:{...allServers,
+          ...state, allServers:{...state.allServers,
           [action.server.id]: {
             ...state[action.server.id],
             ...action.server}

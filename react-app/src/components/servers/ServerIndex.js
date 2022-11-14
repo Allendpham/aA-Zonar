@@ -19,10 +19,10 @@ function ServersIndex() {
       <div className='server-index-wrapper'>
          <ul className='servers-list-wrapper'>
             {servers?.map(server => (
-               <li key={server.id}>
-                  {server.name}
-                  {/* <ServerIndexItem key={server.id} server={server}> */}
-                  {/* <Link className='server-links' to={`/servers/${server.id}`}><img src=server.preview_img className='server-index-imgs'></Link> */}
+               <li key={server?.id}>
+                  {/* {server?.name} */}
+                  {/* <ServerIndexItem key={server.id} /> */}
+                  <Link className='server-links' to={`/servers/${server.id}`}>{server.name}</Link>
                </li>
             ))}
          </ul>
