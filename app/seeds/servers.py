@@ -65,3 +65,21 @@ def undo_servers():
         db.session.execute("DELETE FROM servers")
 
     db.session.commit()
+
+def undo_server_users():
+    if environment == "production":
+        db.session.execute(
+            f"TRUNCATE table {SCHEMA}.server_users RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute("DELETE FROM server_users")
+
+    db.session.commit()
+
+def undo_server_admins():
+    if environment == "production":
+        db.session.execute(
+            f"TRUNCATE table {SCHEMA}.server_admins RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute("DELETE FROM server_admins")
+
+    db.session.commit()
