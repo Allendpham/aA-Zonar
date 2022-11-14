@@ -1,14 +1,12 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { loadServersThunk } from '../../store/server';
-import ServerFormModal from './ServerFormModal';
-import ServerIndexItem from './ServerIndexItem';
+import { loadServersThunk } from '../../../store/server';
 import { Link } from 'react-router-dom';
-import ExploreServersModal from './ExploreServersModal';
 
-function UserServers() {
+function ServerIndex() {
    const dispatch = useDispatch();
    let servers = useSelector(state => Object.values(state.server.allServers));
+
    useEffect(() => {
       dispatch(loadServersThunk())
    }, [dispatch])
@@ -26,12 +24,8 @@ function UserServers() {
                </li>
             ))}
          </ul>
-
-         <ServerFormModal />
-         <ExploreServersModal />
-
       </div>
    );
 }
 
-export default UserServers
+export default ServerIndex

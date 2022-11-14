@@ -10,6 +10,7 @@ import User from './components/User';
 import ServersIndex from './components/servers/ServerIndex';
 import ServerIndexItem from './components/servers/ServerIndexItem';
 import { authenticate } from './store/session';
+import UserServers from './components/servers/ServerIndex';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -43,7 +44,7 @@ function App() {
           <User />
         </ProtectedRoute>
         <ProtectedRoute path='/@me' exact={true} >
-          <ServersIndex />
+          <UserServers />
         </ProtectedRoute>
         <ProtectedRoute path='/servers/:serverId' exact={true} >
           <ServerIndexItem />

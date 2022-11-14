@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request, redirect
 from flask_login import login_required
-from app.models import Server, db, Channel
+from sqlalchemy import orm
+from app.models import Server, db, Channel, User
 from app.forms import ServerForm, ChannelForm
 from .auth_routes import validation_errors_to_error_messages
 

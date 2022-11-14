@@ -29,6 +29,7 @@ export const loadServersThunk = ()=> async (dispatch) => {
 
   if(response.ok){
     const data = await response.json();
+    console.log(data)
     dispatch(loadServers(data))
     return data;
   } else if (response.status < 500) {

@@ -33,11 +33,11 @@ class Server(db.Model):
 
     users = db.relationship('User',
                         secondary = server_users,
-                        backref = 'serverUsers')
+                        backref = 'serverUsers', lazy=False)
 
     admins = db.relationship('User',
                         secondary=server_admins,
-                        backref='serverAdmin')
+                        backref='serverAdmin', lazy=False)
 
     channels = db.relationship('Channel', back_populates='server')
 
@@ -61,5 +61,6 @@ class Server(db.Model):
             'ownerId': self.ownerId,
             'name': self.name,
             'preview_img': self.preview_img,
-
+            'users': [user.to_dict() for user in self.users],
+            'admins': [admin.to_dict() for admin in self.admins]
         }
