@@ -8,18 +8,16 @@ from .db import add_prefix_for_prod
 
 # Base = declarative_base() <--- USELESS
 
-server_users = Table(
+server_users = db.Table(
     'server_users',
-    db.metadata,
-    db.Column('serverId', db.ForeignKey(add_prefix_for_prod('servers.id')), primary_key=True),
-    db.Column('userId', db.ForeignKey(add_prefix_for_prod('users.id')), primary_key=True),
+    db.Column('serverId', db.Integer, db.ForeignKey('servers.id')),
+    db.Column('userId', db.Integer, db.ForeignKey('users.id')),
 )
 
-server_admins = Table(
+server_admins = db.Table(
     'server_admins',
-    db.metadata,
-    db.Column('serverId',db.Integer, db.ForeignKey(add_prefix_for_prod('servers.id')), primary_key=True),
-    db.Column('userId', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), primary_key=True),
+    db.Column('serverId', db.Integer, db.ForeignKey('servers.id')),
+    db.Column('userId', db.Integer, db.ForeignKey('users.id')),
 )
 
 class Server(db.Model):
@@ -35,11 +33,11 @@ class Server(db.Model):
 
     users = db.relationship('User',
                         secondary = server_users,
-                        back_populates = 'servers')
+                        backref = 'serverUsers')
 
     admins = db.relationship('User',
                         secondary=server_admins,
-                        back_populates='admin')
+                        backref='serverAdmin')
 
     channels = db.relationship('Channel', back_populates='server')
 

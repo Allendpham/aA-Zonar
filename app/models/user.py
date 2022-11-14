@@ -7,7 +7,7 @@ from sqlalchemy.schema import Column, ForeignKey, Table
 from sqlalchemy.types import Integer
 from .servers import server_admins, server_users
 
-# Base = declarative_base() <--- USELESS 
+# Base = declarative_base() <--- USELESS
 
 
 class User(db.Model, UserMixin):
@@ -20,15 +20,15 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
-    
+
 
     servers = db.relationship('Server',
                         secondary=server_users,
-                        back_populates='users')
+                        backref='userServers')
 
     admin = db.relationship('Server',
                         secondary=server_admins,
-                        back_populates='admins')
+                        backref='adminServers')
 
     @property
     def password(self):
@@ -47,7 +47,3 @@ class User(db.Model, UserMixin):
             'username': self.username,
             'email': self.email
         }
-
-
-
-
