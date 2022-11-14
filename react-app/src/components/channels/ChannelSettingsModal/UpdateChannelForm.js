@@ -3,13 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { getChannelThunk, updateChannelThunk, deleteChannelThunk, loadServerChannelsThunk } from '../../../store/channel';
 
-const UpdateChannelForm = ({setShowModal}) => {
+const UpdateChannelForm = ({setShowModal, channelId}) => {
   const dispatch = useDispatch()
   const history = useHistory()
 
-  const channel = useSelector(state => state.currentChannel.channel)
+  const channels = useSelector(state => state.channel.allChannels)
+  const chosenChannel = channels[channelId]
+  console.log('i am the chosen one', chosenChannel)
 
-  const [name, setName] = useState(channel?.name)
+  const [name, setName] = useState(chosenChannel?.name)
 
   const updateName = (e) => setName(e.target.value);
 
@@ -18,21 +20,23 @@ const UpdateChannelForm = ({setShowModal}) => {
   //   dispatch(getServerThunk(serverId))
   // }, [dispatch])
 
-  if(!channel) return null;
+  if(!chosenChannel) return null;
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const payload = {
-      name
+      name,
+      serverId: chosenChannel.serverId
     };
-    let server = await dispatch(updateChannelThunk(payload, channel.id))
+    let server = await dispatch(updateChannelThunk(payload, channelId))
 
     if(server){
       setShowModal(false)
     }
-    dispatch(getChannelThunk(channel.id))
+    dispatch(loadServerChannelsThunk(chosenChannel.serverId))
+    dispatch(getChannelThunk(chosenChannel.id))
   }
 
   const handleCancelClick = (e) => {
@@ -45,10 +49,10 @@ const UpdateChannelForm = ({setShowModal}) => {
 
 
     //Display some type of modal/confirmation message where user has to confirm and input name of server to confirm delete
-    dispatch(deleteChannelThunk(channel.id))
+    dispatch(deleteChannelThunk(channelId))
     setShowModal(false)
-    dispatch(loadServerChannelsThunk())
-    history.push(`/servers/${channel.serverId}`)
+    dispatch(loadServerChannelsThunk(chosenChannel.serverId))
+    history.push(`/servers/${chosenChannel?.serverId}`)
   }
 
   return(
@@ -60,7 +64,7 @@ const UpdateChannelForm = ({setShowModal}) => {
         onChange={updateName}/>
       <button type='submit'>Submit</button>
       <button type='button' onClick={handleCancelClick}>Cancel</button>
-      <button type='button' onClick={handleDeleteClick}>Delete Server</button>
+      <button type='button' onClick={handleDeleteClick}>Delete Channel</button>
     </form>
   )
 }

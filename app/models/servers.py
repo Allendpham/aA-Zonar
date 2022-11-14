@@ -6,7 +6,7 @@ from .db import add_prefix_for_prod
 
 
 
-# Base = declarative_base() <--- USELESS 
+# Base = declarative_base() <--- USELESS
 
 server_users = Table(
     'server_users',
@@ -29,29 +29,31 @@ class Server(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    ownerId = db.Column(db.Integer, nullable=False)
+    ownerId = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     name = db.Column(db.String(255), nullable=False)
     preview_img = db.Column(db.String(255))
-    
+
     users = db.relationship('User',
                         secondary = server_users,
                         back_populates = 'servers')
-    
+
     admins = db.relationship('User',
                         secondary=server_admins,
                         back_populates='admin')
 
+    channels = db.relationship('Channel', back_populates='server')
+
 # class Server_user(db.Model):
 #     __tablename__ = 'server_users'
-    
+
 #     serverId = db.Column(db.Integer, db.ForeignKey('servers.id'))
 #     userId = db.Column(db.Integer, db.ForeignKey('users.id'))
-    
-    
-    
+
+
+
 # class Server_admin(db.Model):
 #     __tablename__ = 'server_admins'
-    
+
 #     serverId = db.Column(db.Integer, db.ForeignKey('servers.id'))
 #     userId = db.Column(db.Integer, db.ForeignKey('users.id'))
 
@@ -61,5 +63,5 @@ class Server(db.Model):
             'ownerId': self.ownerId,
             'name': self.name,
             'preview_img': self.preview_img,
-            
+
         }

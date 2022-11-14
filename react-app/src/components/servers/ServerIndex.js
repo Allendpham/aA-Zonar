@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 function ServersIndex() {
    const dispatch = useDispatch();
    let servers = useSelector(state => Object.values(state.server.allServers));
-   console.log(servers)
+ 
    useEffect(() => {
       dispatch(loadServersThunk())
    }, [dispatch])
@@ -29,6 +29,7 @@ function ServersIndex() {
 
          <ServerFormModal />
          <div><button>Explore Servers</button></div>
+
       </div>
    );
 }

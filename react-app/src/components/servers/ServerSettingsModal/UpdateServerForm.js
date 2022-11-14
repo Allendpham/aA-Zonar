@@ -20,7 +20,6 @@ const UpdateServerForm = ({setShowModal}) => {
 
   if(!currServer) return null;
 
-  console.log('I am currserver', currServer)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -36,6 +35,7 @@ const UpdateServerForm = ({setShowModal}) => {
       setShowModal(false)
     }
     dispatch(getServerThunk(serverId))
+    dispatch(loadServersThunk())
   }
 
   const handleCancelClick = (e) => {

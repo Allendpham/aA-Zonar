@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { createChannelThunk } from '../../../store/channel';
+import { createChannelThunk, loadServerChannelsThunk } from '../../../store/channel';
 
 const ChannelForm = ({setShowModal}) => {
   const dispatch = useDispatch()
@@ -20,14 +20,16 @@ const ChannelForm = ({setShowModal}) => {
     e.preventDefault();
 
     const payload = {
-      name
+      name,
+      serverId
     };
 
     let server = await dispatch(createChannelThunk(payload, serverId))
+    console.log("I am the server", server)
 
     if(server){
       setShowModal(false)
-      dispatch(loadServersThunk())
+      dispatch(loadServerChannelsThunk(serverId))
     }
   }
 

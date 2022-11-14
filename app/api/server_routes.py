@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request, redirect
 from flask_login import login_required
-from app.models import Server, db
-from app.forms import ServerForm
+from app.models import Server, db, Channel
+from app.forms import ServerForm, ChannelForm
 from .auth_routes import validation_errors_to_error_messages
 
 server_routes = Blueprint('servers', __name__)
@@ -14,6 +14,32 @@ def server_root():
     """
     servers = Server.query.all()
     return {'servers': [server.to_dict() for server in servers]}
+
+@server_routes.route('/<int:serverId>/channels')
+@login_required
+def get_server_channels(serverId):
+    """
+    Query for servers channels
+    """
+    channels = Channel.query.filter(Channel.serverId == serverId).all()
+    return {'channels': [channel.to_dict() for channel in channels]}
+
+@server_routes.route('/<int:serverId>/channels', methods=['POST'])
+@login_required
+def create_server_channel(serverId):
+    """
+    Create a channel on the current server
+    """
+    form = ChannelForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        data = form.data
+        new_channel = Channel(name=data['name'], serverId=data['serverId'])
+        db.session.add(new_channel)
+        db.session.commit()
+        return {'channel': new_channel.to_dict()}
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 @server_routes.route('/<int:serverId>')
 @login_required

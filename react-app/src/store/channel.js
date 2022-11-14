@@ -29,10 +29,11 @@ const deleteChannel = (id) => ({
 
 /// thunks
 export const loadServerChannelsThunk =(id) => async (dispatch) =>{
-    const response = await fetch(`api/servers/${id}/channels`)
+  const response = await fetch(`/api/servers/${id}/channels`)
 
     if(response.ok){
         const data = await response.json();
+        console.log("is this happening?", data)
         dispatch(loadServerChannels(data))
         return data;
       } else if (response.status < 500) {
@@ -47,7 +48,7 @@ export const loadServerChannelsThunk =(id) => async (dispatch) =>{
 }
 
 export const getChannelThunk = (id) => async (dispatch) => {
-    const response = await fetch(`api/channels/${id}`)
+    const response = await fetch(`/api/channels/${id}`)
 
     if(response.ok){
         const data = await response.json();
@@ -64,7 +65,7 @@ export const getChannelThunk = (id) => async (dispatch) => {
 }
 
 export const createChannelThunk = (payload, serverId) => async (dispatch) => {
-    const response = await fetch(`api/servers/${serverId}/channels`,
+    const response = await fetch(`/api/servers/${serverId}/channels`,
     {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -87,13 +88,13 @@ export const createChannelThunk = (payload, serverId) => async (dispatch) => {
 }
 
 export const updateChannelThunk = (payload, id) => async (dispatch) => {
-    const response = await fetch(`api/channels/${id}`,
+
+    const response = await fetch(`/api/channels/${id}`,
     {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
     })
-
     if(response.ok){
         const data = await response.json();
         dispatch(updateChannel(data))
@@ -110,12 +111,12 @@ export const updateChannelThunk = (payload, id) => async (dispatch) => {
 }
 
 export const deleteChannelThunk = (id) => async (dispatch) => {
-    const response = await fetch(`api/channels/${id}`,{
+    const response = await fetch(`/api/channels/${id}`,{
         method: 'DELETE'
     })
 
     if(response.ok){
-        dispatch(deleteChannel(serverId))
+        dispatch(deleteChannel(id))
         return;
       }else if (response.status < 500) {
         const data = await response.json();
@@ -126,8 +127,6 @@ export const deleteChannelThunk = (id) => async (dispatch) => {
         return ['An error occurred. Please try again.']
       }
 }
-
-
 
 
 
