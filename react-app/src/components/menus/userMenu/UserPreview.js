@@ -20,15 +20,15 @@ const UserPreviewForm = ({setShowModal, currentServer, user}) => {
             setAdminRole(true)
         }
     }
-  console.log(currentServer.admins)
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
+    //Needs to send a thunk to the backend to hit an endpoint that will store the user in admin join table
   }
 
+  //form should only display if the user is the owner of the server
 
 
 

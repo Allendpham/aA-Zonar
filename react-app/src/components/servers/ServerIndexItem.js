@@ -32,7 +32,7 @@ const ServerIndexItem = () => {
       dispatch(getChannelThunk(channel.id))
    }
    singleChannel && singleChannel?.channel?.serverId == serverId ?
-   content = (<div>Single Channel: {singleChannel.channel.name} <Chat/> </div>): content=(<div></div>)
+   content = (<div>Single Channel: {singleChannel.channel.name} <Chat channelId={singleChannel.channel.id}/> </div>): content=(<div></div>)
 
    if(!singleServer) {
       return null;
