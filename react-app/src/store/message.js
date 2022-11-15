@@ -81,15 +81,16 @@ export const updateChannelMessageThunk = (payload, messageId) => async(dispatch)
 }
 
 export const deleteChannelMessageThunk = (messageId) => async(dispatch) => {
-   const response = await fetch(`/api/channel_messsages/${messageId}`,{
+  const response = await fetch(`/api/channels/channel_messages/${messageId}`,{
       method: 'DELETE'
-   })
-
-   if(response.ok){
+    })
+    console.log("i'm delete", response)
+    if(response.ok){
       dispatch(deleteChannelMessage(messageId))
       return;
     }else if (response.status < 500) {
       const data = await response.json();
+      console.log("this is data", data)
       if (data.errors) {
         return data.errors;
       }

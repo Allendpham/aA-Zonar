@@ -12,7 +12,7 @@ const MessageSettingOptions = ({message, user}) => {
    const [currmessage, setMessage] = useState(message.msg)
    const serverId = useSelector(state => state.channel.currentChannel.channel.serverId)
    const server = useSelector(state => state.server.currentServer.server)
-
+  
    useEffect(() => {
       dispatch(getChannelThunk(message.channelId))
       dispatch(getServerThunk(serverId))
@@ -31,7 +31,7 @@ const MessageSettingOptions = ({message, user}) => {
       dispatch(updateChannelMessageThunk(payload, message.id))
    }
 
-   const deleteButton = (<button onClick={() => dispatch(deleteChannelMessageThunk(message.id))}>Delete</button>)
+   // const deleteButton = (<button onClick={() => dispatch(deleteChannelMessageThunk(message.id))}>Delete</button>)
 
    const updateForm = (<form className='update-message-form' onSubmit={handleSubmit}>
    <input
@@ -41,26 +41,37 @@ const MessageSettingOptions = ({message, user}) => {
        />
    </form>)
 
+// console.log("this id delete button", deleteButton)
+// console.log("this is update form", updateForm)
 
    //Check if user is admin
    let isAdmin = false;
 
    for(let person in server.admins){
-      if(person.id === user.id){
+      if(person.id === user.id || user.id === server.ownerId){
          isAdmin = true;
       }
    }
-
-   const content = () => {
-      message.userId === user.id ? updateContent = updateForm : updateContent = null;
-      message.userId === user.id || isAdmin ? deleteContent = deleteButton : deleteContent = null;
-   }
-
+   
+   message.userId === user.id ? updateContent = updateForm : updateContent = null;
+   // message.userId === user.id || isAdmin ? deleteContent = deleteButton : deleteContent = null;
+   // const content = () => {
+   //    // (<div>{updateContent} {deleteContent}</div>)
+   //    return (<div>hello</div>)
+   //    // console.log("this is the message user id", message.userId)
+   //    // console.log("this is the user id", user.id)
+   //    // console.log("this is delte content", deleteContent)
+   //    // console.log("this is update content", updateContent)
+   // }
+console.log("this is message id", message.id)
    return (
-      <div>
-         <button onClick={() => content()}>...</button>
-      </div>
-   )
+   <div>
+      <button onClick={() => updateForm}>edit</button>
+      <button onClick={() => dispatch(deleteChannelMessageThunk(message.id))}>
+         delete
+      </button>
+   </div>
+   );
 }
 
 export default MessageSettingOptions

@@ -52,8 +52,9 @@ const ServerIndexItem = () => {
          <ul className='servers-list-wrapper'>
             {servers?.map(server => (
                <li key={server?.id}>
-                  {/* {server?.name} */}
-                  {/* <ServerIndexItem key={server.id} /> */}
+                  {/* {server?.name}
+                  <ServerIndexItem key={server.id} /> */}
+                  {console.log(server.name)}
                   <Link className='server-links' to={`/servers/${server.id}`} onClick={() => dispatch(getServerThunk(server.id))}>{server.name}</Link>
                </li>
             ))}
