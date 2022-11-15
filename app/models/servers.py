@@ -10,14 +10,14 @@ from .db import add_prefix_for_prod
 Base = declarative_base()
 
 server_users = db.Table(
-    "server_users",
+    add_prefix_for_prod("server_users"),
     db.metadata,
     db.Column('serverId', db.Integer, db.ForeignKey(add_prefix_for_prod('servers.id'))),
     db.Column('userId', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
 )
 
 server_admins = db.Table(
-    "server_admins",
+    add_prefix_for_prod("server_admins"),
     db.metadata,
     db.Column('serverId', db.Integer, db.ForeignKey(add_prefix_for_prod('servers.id'))),
     db.Column('userId', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
