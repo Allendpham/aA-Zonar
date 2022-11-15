@@ -4,13 +4,13 @@ import MessageSettingOptions from './messageSettings';
 
 function MessageSettingModal({message, user}) {
   const [showModal, setShowModal] = useState(false);
-
+  console.log('..............................', message)
 
   return (
     <div className="message-settings-wrapper">
-      <button id="message-settings-button" onMouseOver={() => {setShowModal(true)}}>{message.user}: {message.msg}</button>
+      <div id="message-settings-button" onClick={() => {setShowModal(true)}}>User: {message.userId} - {message.message}</div>
       {showModal && (
-        <Modal onMouseOut={() => setShowModal(false)}>
+        <Modal onClose={() => setShowModal(false)}>
           <MessageSettingOptions setShowModal={setShowModal} message={message} user={user}/>
         </Modal>
       )}

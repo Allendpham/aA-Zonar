@@ -21,12 +21,11 @@ const deleteChannelMessage = (messageId) => ({
 
 //THUNKS
 export const getChannelMessagesThunk = (channelId) => async (dispatch) => {
-  console.log('im a thunk')
+
    const response = await fetch(`/api/channels/${channelId}/messages`)
-    console.log('response', response)
+
    if(response.ok){
       const data = await response.json();
-      console.log('data', data)
       dispatch(loadChannelMessages(data))
       return data;
     } else if (response.status < 500) {
@@ -48,7 +47,7 @@ export const createChannelMessagesThunk = (payload) => async (dispatch) => {
 
     if(response.ok){
       const data = await response.json();
-      dispatch(addChannelMessage(data))
+      dispatch(addChannelMessage(data.message))
       return data;
     }else if (response.status < 500) {
       const data = await response.json();

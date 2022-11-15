@@ -8,6 +8,7 @@ import ChannelFormModal from '../channels/ChannelFormModal';
 import ChannelSettingsModal from '../channels/ChannelSettingsModal';
 import Chat from '../chat';
 import UsersList from '../users/usersList';
+import { getChannelMessagesThunk } from '../../store/message';
 
 const ServerIndexItem = () => {
    const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const ServerIndexItem = () => {
    const singleServer = useSelector(state => state.server.currentServer.server)
    const allChannels = useSelector(state => Object.values(state.channel.allChannels))
    const singleChannel = useSelector(state => state.channel?.currentChannel)
+   // const channel_messages = useSelector(state => (Object.values(state.message), () => true))
    const currUser = useSelector(state => state.session.user)
    let content;
 
@@ -31,6 +33,8 @@ const ServerIndexItem = () => {
    const showChannel = (channel) => {
       dispatch(getChannelThunk(channel.id))
    }
+
+
    singleChannel && singleChannel?.channel?.serverId == serverId ?
    content = (<div>Single Channel: {singleChannel.channel.name} <Chat channelId={singleChannel.channel.id}/> </div>): content=(<div></div>)
 

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { io } from 'socket.io-client';
 import { getChannelMessagesThunk, createChannelMessagesThunk } from '../../store/message';
 import MessageSettingModal from '../menus/messageMenu/index';
+import { store } from '../../index';
 let socket;
 
 const Chat = ({channelId}) => {
@@ -10,20 +11,40 @@ const Chat = ({channelId}) => {
     const [chatInput, setChatInput] = useState("");
     const [messages, setMessages] = useState([]);
     const user = useSelector(state => state.session.user)
-    const channel_messages = useSelector(state => Object.values(state.message))
-    console.log('channelid',channelId)
-    console.log('+++++++++++++++++++++++',channel_messages)
-    useEffect(() => {
-        dispatch(getChannelMessagesThunk(channelId))
-    }, [dispatch])
+    const channel_messages = useSelector(state => (Object.values(state.message)))
+    const [initialLoad, setInitialLoad] = useState(false);
+
+    // let channel_messages;
+    // //Raw fetch request for the channel_messages
+    // async function rawFetch (channelId) {
+    //     const response = await fetch(`/api/channels/${channelId}/messages`);
+    //     if(response.ok){
+    //         const data = await response.json();
+    //         console.log('this is the data----------------', data.messages)
+    //         channel_messages = data.messages;
+    //     }
+    // }
+
+    // rawFetch(channelId).then(oldmessages => {
+    //     socket.emit("oldmessages", oldmessages)
+    // });
+
+    // useEffect(() => {
+    //     if(!initialLoad) {
+    //         setInitialLoad(true)
+    //         dispatch(getChannelMessagesThunk(channelId))
+    //         setMessages(Object.values(store.getState().message))
+    //     }
+    //     else return;
+    // }, [channelId])
 
     useEffect(() => {
         // open socket connection
         // create websocket
         socket = io();
-
+        dispatch(getChannelMessagesThunk(channelId))
         socket.on("chat", (chat) => {
-            setMessages(messages => [...messages, chat])
+            setMessages((message) => [...message, chat])
         })
         // when component unmounts, disconnect
         return (() => {
@@ -31,13 +52,21 @@ const Chat = ({channelId}) => {
         })
     }, [])
 
+    // useEffect(() => {
+    //     socket.on("oldmessages", (oldmessages) => {
+    //         let res = JSON.parse(oldmessages);
+    //         setMessages((message) => [...res, ...message])
+    //     })
+    //     return () => socket.off("oldmessages")
+    // }, [channelId])
+
     const updateChatInput = (e) => {
         setChatInput(e.target.value)
     };
 
     const sendChat = (e) => {
         e.preventDefault()
-        socket.emit("chat", { user: user.username, msg: chatInput });
+        socket.emit("chat", { userId: user.id, message: chatInput });
         setChatInput("")
 
         let payload = {
@@ -48,13 +77,19 @@ const Chat = ({channelId}) => {
 
         dispatch(createChannelMessagesThunk(payload))
     }
-    if(!channel_messages) return (<h1>loading...</h1>)
+    // if(!channel_messages) return (<h1>loading...</h1>)
+    console.log("these are the channelmessages", channel_messages);
+    console.log("these are the chat messages", messages)
     return (user && (
         <div>
             <div>
-                {channel_messages.map((message, ind) => (
-                    <MessageSettingModal message={message} user={user}/>
-                    // <div key={ind}>{`${message.user}: ${message.msg}`}</div>
+                {channel_messages?.map((message, ind) => (
+                    // <MessageSettingModal key={message.id} message={message} user={user}/>
+                    <div key={ind}>{`${message.userId}: ${message.message}`}</div>
+                ))}
+                {messages.map((message, ind) => (
+                    // <MessageSettingModal key={message.id} message={message} user={user}/>
+                    <div key={ind}>{`${message.userId}: ${message.message}`}</div>
                 ))}
             </div>
             <form onSubmit={sendChat}>

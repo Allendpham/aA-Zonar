@@ -65,7 +65,7 @@ def get_channelmessages(channelId):
 
 @channel_routes.route('/<int:channelId>/messages', methods=['POST'])
 @login_required
-def post_channelmessages():
+def post_channelmessages(channelId):
    """
    Post one message
    """
