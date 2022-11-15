@@ -1,4 +1,5 @@
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, send, join_room, leave_room, rooms
+from flask import request
 from .models import ChannelMessage
 import os
 
@@ -13,16 +14,30 @@ else:
     origins = "*"
 
 # create your SocketIO instance
-socketio = SocketIO(cors_allowed_origins=origins)
+socketio = SocketIO(cors_allowed_origins=origins,logger=True, engineio_logger=True )
 
 
 # handle chat messages
 @socketio.on("chat")
 def handle_chat(data):
-    emit("chat", data, broadcast=True)
+    print('dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', data)
+    emit("chat", data['msg'], room=data['room'])
+    # send(data['msg'], to=data['room'])
 
-@socketio.on('connect')
-def old_messages():
-    messages = ChannelMessage.query.all()
-    last100Messages = {'messages':[message.to_dict() for message in messages]}
-    emit('last_100_messages', last100Messages)
+
+@socketio.on('join')
+def joinroom(data):
+    user = request.sid
+    curr_rooms = rooms(sid=None, namespace=None)
+    for room in curr_rooms[1:]:
+        leave_room(room)
+    room = data['channel']['name']
+    join_room(room)
+    messages = ChannelMessage.query.filter(ChannelMessage.channelId == data['channel']['id'])
+    last100Messages = {'messages':[message.to_dict() for message in messages[-10:]]} ##change slice to fit CSS goals later
+    emit('last_100_messages', last100Messages, room=user)
+    emit("chat", {
+            'userId': 1,
+            'channelId': 1,
+            'message': f'joined room {room}'
+        }, room=room)
