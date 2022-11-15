@@ -53,7 +53,7 @@ def seed_servers():
     db.session.add(sports_server)
     db.session.add(fantasy_server)
     kyle.servers.append(demo_server)
-    kyle.admin.append(demo_server)
+    # kyle.admin.append(demo_server)
 
     db.session.commit()
 

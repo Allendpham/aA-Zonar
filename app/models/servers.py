@@ -9,13 +9,13 @@ from .db import add_prefix_for_prod
 # Base = declarative_base() <--- USELESS
 
 server_users = db.Table(
-    'server_users',
+    "server_users",
     db.Column('serverId', db.Integer, db.ForeignKey(add_prefix_for_prod('servers.id'))),
     db.Column('userId', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
 )
 
 server_admins = db.Table(
-    'server_admins',
+    "server_admins",
     db.Column('serverId', db.Integer, db.ForeignKey(add_prefix_for_prod('servers.id'))),
     db.Column('userId', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
 )
