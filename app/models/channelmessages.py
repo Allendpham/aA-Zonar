@@ -2,6 +2,7 @@ from .db import db, environment, SCHEMA
 from sqlalchemy import func
 import datetime
 from .db import add_prefix_for_prod
+import json
 
 class ChannelMessage(db.Model):
     __tablename__= 'channelmessages'
@@ -25,6 +26,6 @@ class ChannelMessage(db.Model):
         'userId': self.userId,
         'channelId': self.channelId,
         'message': self.message,
-        'createdAt': self.createdAt,
-        'updatedAt': self.updatedAt
+        'createdAt': json.dumps(self.createdAt, default=str),
+        'updatedAt': json.dumps(self.updatedAt, default=str)
     }

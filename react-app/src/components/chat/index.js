@@ -15,19 +15,18 @@ const Chat = ({channelId}) => {
     const [initialLoad, setInitialLoad] = useState(false);
 
     // let channel_messages;
-    // //Raw fetch request for the channel_messages
+    // // //Raw fetch request for the channel_messages
     // async function rawFetch (channelId) {
     //     const response = await fetch(`/api/channels/${channelId}/messages`);
     //     if(response.ok){
     //         const data = await response.json();
     //         console.log('this is the data----------------', data.messages)
     //         channel_messages = data.messages;
+    //         return channel_messages
     //     }
     // }
 
-    // rawFetch(channelId).then(oldmessages => {
-    //     socket.emit("oldmessages", oldmessages)
-    // });
+
 
     // useEffect(() => {
     //     if(!initialLoad) {
@@ -39,9 +38,9 @@ const Chat = ({channelId}) => {
     // }, [channelId])
 
     useEffect(() => {
+        socket = io();
         // open socket connection
         // create websocket
-        socket = io();
         dispatch(getChannelMessagesThunk(channelId))
         socket.on("chat", (chat) => {
             setMessages((message) => [...message, chat])
@@ -52,13 +51,14 @@ const Chat = ({channelId}) => {
         })
     }, [])
 
-    // useEffect(() => {
-    //     socket.on("oldmessages", (oldmessages) => {
-    //         let res = JSON.parse(oldmessages);
-    //         setMessages((message) => [...res, ...message])
-    //     })
-    //     return () => socket.off("oldmessages")
-    // }, [channelId])
+    useEffect(() => {
+        socket.on('last_100_messages', (last100Messages) => {
+          setMessages((state) => [...last100Messages.messages, ...state]);
+        });
+
+        return () => socket.off('last_100_messages');
+      }, []);
+
 
     const updateChatInput = (e) => {
         setChatInput(e.target.value)
@@ -83,10 +83,10 @@ const Chat = ({channelId}) => {
     return (user && (
         <div>
             <div>
-                {channel_messages?.map((message, ind) => (
+                {/* {channel_messages?.map((message, ind) => (
                     // <MessageSettingModal key={message.id} message={message} user={user}/>
                     <div key={ind}>{`${message.userId}: ${message.message}`}</div>
-                ))}
+                ))} */}
                 {messages.map((message, ind) => (
                     // <MessageSettingModal key={message.id} message={message} user={user}/>
                     <div key={ind}>{`${message.userId}: ${message.message}`}</div>

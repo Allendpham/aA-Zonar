@@ -1,4 +1,5 @@
 from flask_socketio import SocketIO, emit
+from .models import ChannelMessage
 import os
 
 
@@ -19,3 +20,9 @@ socketio = SocketIO(cors_allowed_origins=origins)
 @socketio.on("chat")
 def handle_chat(data):
     emit("chat", data, broadcast=True)
+
+@socketio.on('connect')
+def old_messages():
+    messages = ChannelMessage.query.all()
+    last100Messages = {'messages':[message.to_dict() for message in messages]}
+    emit('last_100_messages', last100Messages)
