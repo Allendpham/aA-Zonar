@@ -21,10 +21,12 @@ const deleteChannelMessage = (messageId) => ({
 
 //THUNKS
 export const getChannelMessagesThunk = (channelId) => async (dispatch) => {
+  console.log('im a thunk')
    const response = await fetch(`/api/channels/${channelId}/messages`)
-
+    console.log('response', response)
    if(response.ok){
       const data = await response.json();
+      console.log('data', data)
       dispatch(loadChannelMessages(data))
       return data;
     } else if (response.status < 500) {
@@ -99,7 +101,7 @@ export const deleteChannelMessageThunk = (messageId) => async(dispatch) => {
 
 //REDUCER
 const initialState = {}
-export default function messageReducer(state = initialState, action)
+export default function messageReducer(state = initialState, action){
    switch(action.type){
       case LOAD_CHANNEL_MESSAGES:
          const channelMessages = normalizeArray(action.messages.messages);
@@ -125,6 +127,7 @@ export default function messageReducer(state = initialState, action)
       default:
          return state;
    }
+  }
 
 //HELPERS
 function normalizeArray(dataArray){

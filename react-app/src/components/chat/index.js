@@ -10,8 +10,9 @@ const Chat = ({channelId}) => {
     const [chatInput, setChatInput] = useState("");
     const [messages, setMessages] = useState([]);
     const user = useSelector(state => state.session.user)
-    const channel_messages = useSelector(state => state.message)
-
+    const channel_messages = useSelector(state => Object.values(state.message))
+    console.log('channelid',channelId)
+    console.log('+++++++++++++++++++++++',channel_messages)
     useEffect(() => {
         dispatch(getChannelMessagesThunk(channelId))
     }, [dispatch])
@@ -47,7 +48,7 @@ const Chat = ({channelId}) => {
 
         dispatch(createChannelMessagesThunk(payload))
     }
-
+    if(!channel_messages) return (<h1>loading...</h1>)
     return (user && (
         <div>
             <div>

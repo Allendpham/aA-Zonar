@@ -9,7 +9,7 @@ const MessageSettingOptions = ({message, user}) => {
    let updateContent;
    let deleteContent;
    const dispatch = useDispatch()
-   const [message, setMessage] = useState(message.msg)
+   const [currmessage, setMessage] = useState(message.msg)
    const serverId = useSelector(state => state.channel.currentChannel.channel.serverId)
    const server = useSelector(state => state.server.currentServer.server)
 
@@ -36,7 +36,7 @@ const MessageSettingOptions = ({message, user}) => {
    const updateForm = (<form className='update-message-form' onSubmit={handleSubmit}>
    <input
        type='text'
-       value={message}
+       value={currmessage}
        onClick={(e)=> setMessage(e.target.value)}
        />
    </form>)

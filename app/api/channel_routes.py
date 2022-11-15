@@ -61,8 +61,7 @@ def get_channelmessages(channelId):
    Query for one channels messages
    """
    messages = ChannelMessage.query.filter(ChannelMessage.channelId == channelId)
-   print('================================================', messages)
-   return {[message.to_dict() for message in messages]}
+   return {"messages":[message.to_dict() for message in messages]}
 
 @channel_routes.route('/<int:channelId>/messages', methods=['POST'])
 @login_required
@@ -79,5 +78,5 @@ def post_channelmessages():
                                  channelId=data['channelId'])
       db.session.add(new_message)
       db.session.commit()
-      return {new_message.to_dict()}
+      return {"message":new_message.to_dict()}
    return {'errors': validation_errors_to_error_messages(form.errors)}, 401

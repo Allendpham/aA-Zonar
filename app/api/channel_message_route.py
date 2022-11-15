@@ -21,7 +21,7 @@ def update_channel_message(channelmessageId):
       message.userId=data['userId']
       message.channelId=data['channelId']
       db.session.commit()
-      return {message.to_dict()}
+      return {"message": message.to_dict()}
   return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 @channel_message_routes.route('/<int:channel_message_Id>', methods=['DELETE'])
