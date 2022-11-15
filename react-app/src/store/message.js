@@ -60,14 +60,16 @@ export const createChannelMessagesThunk = (payload) => async (dispatch) => {
 }
 
 export const updateChannelMessageThunk = (payload, messageId) => async(dispatch) => {
-   const response = await fetch(`/api/channel_messages/${messageId}`,{
+  // console.log('im hereeeeeeeeeeeeeeeee')
+  const response = await fetch(`/api/channel_messages/${messageId}`,{
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     })
-
+    console.log('I AMMM PAYLOAD', payload)
     if(response.ok){
       const data = await response.json();
+      console.log(data)
       dispatch(addChannelMessage(data))
       return data;
     }else if (response.status < 500) {

@@ -9,10 +9,11 @@ const MessageSettingOptions = ({message, user}) => {
    let updateContent;
    let deleteContent;
    const dispatch = useDispatch()
-   const [currmessage, setMessage] = useState(message.msg)
+   const [currmessage, setMessage] = useState(message.message)
+   const [settings, setSettings] = useState(false)
    const serverId = useSelector(state => state.channel.currentChannel.channel.serverId)
    const server = useSelector(state => state.server.currentServer.server)
-  
+
    useEffect(() => {
       dispatch(getChannelThunk(message.channelId))
       dispatch(getServerThunk(serverId))
@@ -25,21 +26,28 @@ const MessageSettingOptions = ({message, user}) => {
       let payload = {
          userId: user.id,
          channelId: message.channelId,
-         message
+         message: currmessage
       }
 
       dispatch(updateChannelMessageThunk(payload, message.id))
+      setSettings(!settings)
    }
 
    // const deleteButton = (<button onClick={() => dispatch(deleteChannelMessageThunk(message.id))}>Delete</button>)
 
-   const updateForm = (<form className='update-message-form' onSubmit={handleSubmit}>
-   <input
-       type='text'
-       value={currmessage}
-       onClick={(e)=> setMessage(e.target.value)}
-       />
-   </form>)
+   let updateForm;
+   settings ?
+   updateForm =
+      (<form className='update-message-form' onSubmit={handleSubmit}>
+         <input
+             type='text'
+             value={currmessage}
+             onChange={(e)=> setMessage(e.target.value)}
+             />
+         <button type='submit'>Submit</button>
+         {/* <input type='submit' value='Submit'/> */}
+      </form>) : updateForm = null
+
 
 // console.log("this id delete button", deleteButton)
 // console.log("this is update form", updateForm)
@@ -52,7 +60,7 @@ const MessageSettingOptions = ({message, user}) => {
          isAdmin = true;
       }
    }
-   
+
    message.userId === user.id ? updateContent = updateForm : updateContent = null;
    // message.userId === user.id || isAdmin ? deleteContent = deleteButton : deleteContent = null;
    // const content = () => {
@@ -66,7 +74,8 @@ const MessageSettingOptions = ({message, user}) => {
 console.log("this is message id", message.id)
    return (
    <div>
-      <button onClick={() => updateForm}>edit</button>
+      <button onClick={() => setSettings(!settings)}>edit</button>
+      {updateForm}
       <button onClick={() => dispatch(deleteChannelMessageThunk(message.id))}>
          delete
       </button>
