@@ -26,7 +26,6 @@ const deleteChannel = (id) => ({
 })
 
 
-
 /// thunks
 export const loadServerChannelsThunk =(id) => async (dispatch) =>{
   const response = await fetch(`/api/servers/${id}/channels`)

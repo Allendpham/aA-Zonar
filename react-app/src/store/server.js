@@ -64,7 +64,7 @@ export const addServerThunk = (server) => async (dispatch) =>{
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(server),
   })
-  console.log("this is the add server response:", response)
+  
   if(response.ok){
     const data = await response.json();
     dispatch(addServer(data))

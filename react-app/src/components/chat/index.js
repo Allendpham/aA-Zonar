@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { io } from 'socket.io-client';
+import { getChannelMessagesThunk, createChannelMessagesThunk } from '../../store/message';
+import MessageSettingModal from '../menus/messageMenu/index';
 let socket;
 
-const Chat = () => {
+const Chat = ({channelId}) => {
+    const dispatch = useDispatch();
     const [chatInput, setChatInput] = useState("");
     const [messages, setMessages] = useState([]);
     const user = useSelector(state => state.session.user)
+    const channel_messages = useSelector(state => state.message)
+
+    useEffect(() => {
+        dispatch(getChannelMessagesThunk(channelId))
+    }, [dispatch])
 
     useEffect(() => {
         // open socket connection
@@ -30,13 +38,22 @@ const Chat = () => {
         e.preventDefault()
         socket.emit("chat", { user: user.username, msg: chatInput });
         setChatInput("")
+
+        let payload = {
+            userId: user.id,
+            channelId,
+            message: chatInput
+        }
+
+        dispatch(createChannelMessagesThunk(payload))
     }
 
     return (user && (
         <div>
             <div>
-                {messages.map((message, ind) => (
-                    <div key={ind}>{`${message.user}: ${message.msg}`}</div>
+                {channel_messages.map((message, ind) => (
+                    <MessageSettingModal message={message} user={user}/>
+                    // <div key={ind}>{`${message.user}: ${message.msg}`}</div>
                 ))}
             </div>
             <form onSubmit={sendChat}>
