@@ -7,17 +7,20 @@ from .db import add_prefix_for_prod
 
 
 # Base = declarative_base() <--- USELESS
+Base = declarative_base()
 
 server_users = db.Table(
     "server_users",
-    db.Column('serverId', db.Integer, db.ForeignKey(add_prefix_for_prod('server.id'))),
-    db.Column('userId', db.Integer, db.ForeignKey(add_prefix_for_prod('user.id')))
+    Base.metadata,
+    db.Column('serverId', db.Integer, db.ForeignKey(add_prefix_for_prod('servers.id'))),
+    db.Column('userId', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
 )
 
 server_admins = db.Table(
     "server_admins",
-    db.Column('serverId', db.Integer, db.ForeignKey(add_prefix_for_prod('server.id'))),
-    db.Column('userId', db.Integer, db.ForeignKey(add_prefix_for_prod('user.id')))
+    Base.metadata
+    db.Column('serverId', db.Integer, db.ForeignKey(add_prefix_for_prod('servers.id'))),
+    db.Column('userId', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
 )
 
 class Server(db.Model):
@@ -27,7 +30,7 @@ class Server(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    ownerId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('user.id')), nullable=False)
+    ownerId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     name = db.Column(db.String(255), nullable=False)
     preview_img = db.Column(db.String(255))
 
