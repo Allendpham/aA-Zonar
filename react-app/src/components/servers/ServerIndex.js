@@ -16,7 +16,7 @@ function UserServers() {
       dispatch(loadServersThunk())
    }, [dispatch])
 
-   if(!servers.length) return(<h2>Loading...</h2>);
+   if(!servers.length) return(<ExploreServersModal />);
    //Need to filter servers for only servers that the user is a part of
    return(
       <div className='server-index-wrapper'>

@@ -49,7 +49,6 @@ def get_server(serverId):
     Query for a single server
     """
     single_server = Server.query.get(serverId)
-    print('++++++++++++++++++++', current_user.to_dict())
     current_user.servers.append(single_server)
     db.session.commit()
     return {'server': single_server.to_dict()}
@@ -70,6 +69,8 @@ def server_create():
                             name=data['name'],
                             preview_img=data['preview_img'])
         db.session.add(new_server)
+        current_user.admin.append(new_server)
+
         db.session.commit()
         return {'server': new_server.to_dict()}
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401

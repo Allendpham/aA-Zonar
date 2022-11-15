@@ -30,6 +30,8 @@ class User(db.Model, UserMixin):
                         secondary=server_admins,
                         backref='adminServers')
 
+    userchannels = db.relationship('ChannelMessage', back_populates='channelusers')
+    
     @property
     def password(self):
         return self.hashed_password
