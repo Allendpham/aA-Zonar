@@ -10,14 +10,14 @@ from .db import add_prefix_for_prod
 Base = declarative_base()
 
 server_users = db.Table(
-    add_prefix_for_prod("server_users"),
+    "server_users",
     db.metadata,
     db.Column('serverId', db.Integer, db.ForeignKey(add_prefix_for_prod('servers.id'))),
     db.Column('userId', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
 )
 
 server_admins = db.Table(
-    add_prefix_for_prod("server_admins"),
+    "server_admins",
     db.metadata,
     db.Column('serverId', db.Integer, db.ForeignKey(add_prefix_for_prod('servers.id'))),
     db.Column('userId', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
@@ -35,11 +35,11 @@ class Server(db.Model):
     preview_img = db.Column(db.String(255))
 
     users = db.relationship('User',
-                        secondary = server_users,
+                        secondary = add_prefix_for_prod('server_users'),
                         backref = 'serverUsers')
 
     admins = db.relationship('User',
-                        secondary= server_admins,
+                        secondary= add_prefix_for_prod('server_admins'),
                         backref='serverAdmin')
 
     channels = db.relationship('Channel', back_populates='server')

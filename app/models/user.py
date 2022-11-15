@@ -23,11 +23,11 @@ class User(db.Model, UserMixin):
 
 
     servers = db.relationship('Server',
-                        secondary=server_users,
+                        secondary=add_prefix_for_prod('server_users'),
                         backref='userServers')
 
     admin = db.relationship('Server',
-                        secondary=server_admins,
+                        secondary=add_prefix_for_prod('server_admins'),
                         backref='adminServers')
 
     @property
