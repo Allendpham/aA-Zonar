@@ -5,7 +5,7 @@ from flask_login import UserMixin
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.schema import Column, ForeignKey, Table
 from sqlalchemy.types import Integer
-from models.servers import server_admins, server_users
+from .servers import server_admins, server_users
 
 # Base = declarative_base() <--- USELESS
 

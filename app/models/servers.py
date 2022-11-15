@@ -11,14 +11,14 @@ Base = declarative_base()
 
 server_users = db.Table(
     "server_users",
-    Base.metadata,
+    db.metadata,
     db.Column('serverId', db.Integer, db.ForeignKey(add_prefix_for_prod('servers.id'))),
     db.Column('userId', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
 )
 
 server_admins = db.Table(
     "server_admins",
-    Base.metadata
+    db.metadata,
     db.Column('serverId', db.Integer, db.ForeignKey(add_prefix_for_prod('servers.id'))),
     db.Column('userId', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
 )
