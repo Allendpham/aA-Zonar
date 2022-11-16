@@ -1,6 +1,6 @@
 from flask_socketio import SocketIO, emit, send, join_room, leave_room, rooms
 from flask import request
-from .models import ChannelMessage
+from .models import ChannelMessage, PrivateChatMessage
 import os
 
 
@@ -29,9 +29,13 @@ def joinroom(data):
     curr_rooms = rooms(sid=None, namespace=None)
     for room in curr_rooms:
         if room != user:
-         leave_room(room)
-    room = data['channel']['name']
+            leave_room(room)
+    if data['channel']:
+        room = data['channel']['name']
+    elif data['chat']:
+        room = f"{user}: {data['chat']}" #come back to this
     join_room(room)
+    emit("currRoom", {"room": room})
     emit("chat",{'message': {
             'userId': 1,
             'channelId': 1,
@@ -41,7 +45,10 @@ def joinroom(data):
 @socketio.on('fetch')
 def fetch_msgs(data):
     user = request.sid
-    messages = ChannelMessage.query.filter(ChannelMessage.channelId == data['channel']['id'])
+    if data['channel']:
+        messages = ChannelMessage.query.filter(ChannelMessage.channelId == data['channel']['id'])
+    elif data['chat']:
+        messages = PrivateChatMessage.query.filter(PrivateChatMessage.privateChatId == data['chat'])
     last100Messages = {'messages':[message.to_dict() for message in messages]} ##change slice to fit CSS goals later
     print(last100Messages)
     emit('last_100_messages', last100Messages, room=user)

@@ -165,7 +165,7 @@ export const updatePrivateChatMessageThunk = (payload, messageId) => async(dispa
 }
 
 export const deletePrivateChatMessageThunk = (messageId) => async(dispatch) => {
- const response = await fetch(`/api/privaete_chat_messages/${messageId}`,{
+ const response = await fetch(`/api/private_chat_messages/${messageId}`,{
      method: 'DELETE'
    })
    
