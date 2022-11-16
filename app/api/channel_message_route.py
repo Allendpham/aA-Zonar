@@ -31,7 +31,7 @@ def update_channel_message(channel_message_id):
       return {"message": message.to_dict()}
   return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
-@channel_message_routes.route('/channel_messages/<int:channel_message_Id>', methods=['DELETE'])
+@channel_message_routes.route('/<int:channel_message_Id>', methods=['DELETE'])
 @login_required
 def delete_channel_message(channel_message_Id):
   """
@@ -43,5 +43,5 @@ def delete_channel_message(channel_message_Id):
       db.session.delete(message)
       # message.delete(synchronize_session=False)
       db.session.commit()
-      return {"message": "Channel was successfully deleted"}
-  return {"error": "Channel does not exist"}, 404
+      return {"message": "Channel message was successfully deleted"}
+  return {"error": "Channel message does not exist"}, 404
