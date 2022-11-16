@@ -19,7 +19,7 @@ const deleteChannelMessage = (messageId) => ({
    messageId
 })
 
-//THUNKS
+//THUNKS - Channels
 export const getChannelMessagesThunk = (channelId) => async (dispatch) => {
 
    const response = await fetch(`/api/channels/${channelId}/messages`)
@@ -100,6 +100,89 @@ export const deleteChannelMessageThunk = (messageId) => async(dispatch) => {
       return ['An error occurred. Please try again.']
     }
 }
+
+// THUNKS Private Chats
+export const getPrivateChatMessagesThunk = (privateChatId) => async (dispatch) => {
+
+  const response = await fetch(`/api/private_chat/${privateChatId}/messages`)
+
+  if(response.ok){
+     const data = await response.json();
+     dispatch(loadChannelMessages(data))
+     return data;
+   } else if (response.status < 500) {
+     const data = await response.json();
+     if (data.errors) {
+       return data.errors;
+     }
+   } else {
+     return ['An error occurred. Please try again.']
+   }
+}
+
+export const createPrivateChatMessagesThunk = (payload) => async (dispatch) => {
+  const response = await fetch(`/api/private_chat/${payload.privateChatId}/messages`,{
+     method: "POST",
+     headers: { "Content-Type": "application/json" },
+     body: JSON.stringify(payload),
+   })
+
+   if(response.ok){
+     const data = await response.json();
+     dispatch(addChannelMessage(data.message))
+     return data;
+   }else if (response.status < 500) {
+     const data = await response.json();
+     if (data.errors) {
+       return data.errors;
+     }
+   } else {
+     return ['An error occurred. Please try again.']
+   }
+}
+
+export const updatePrivateChatMessageThunk = (payload, messageId) => async(dispatch) => {
+ // console.log('im hereeeeeeeeeeeeeeeee')
+ const response = await fetch(`/api/private_chat_messages/${messageId}`,{
+     method: "PUT",
+     headers: { "Content-Type": "application/json" },
+     body: JSON.stringify(payload),
+   })
+   console.log('I AMMM PAYLOAD', payload)
+   if(response.ok){
+     const data = await response.json();
+     console.log(data)
+     dispatch(addChannelMessage(data))
+     return data;
+   }else if (response.status < 500) {
+     const data = await response.json();
+     if (data.errors) {
+       return data.errors;
+     }
+   } else {
+     return ['An error occurred. Please try again.']
+   }
+}
+
+export const deletePrivateChatMessageThunk = (messageId) => async(dispatch) => {
+ const response = await fetch(`/api/privaete_chat_messages/${messageId}`,{
+     method: 'DELETE'
+   })
+   
+   if(response.ok){
+     dispatch(deleteChannelMessage(messageId))
+     return;
+   }else if (response.status < 500) {
+     const data = await response.json();
+     console.log("this is data", data)
+     if (data.errors) {
+       return data.errors;
+     }
+   } else {
+     return ['An error occurred. Please try again.']
+   }
+}
+
 
 //REDUCER
 const initialState = {}
