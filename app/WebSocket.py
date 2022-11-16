@@ -29,12 +29,14 @@ def handle_chat(data):
 def joinroom(data):
     user = request.sid
     curr_rooms = rooms(sid=None, namespace=None)
-    for room in curr_rooms[1:]:
-        leave_room(room)
+    for room in curr_rooms:
+        if room != user:
+         leave_room(room)
     room = data['channel']['name']
     join_room(room)
     messages = ChannelMessage.query.filter(ChannelMessage.channelId == data['channel']['id'])
-    last100Messages = {'messages':[message.to_dict() for message in messages[-10:]]} ##change slice to fit CSS goals later
+    last100Messages = {'messages':[message.to_dict() for message in messages]} ##change slice to fit CSS goals later
+    print(last100Messages)
     emit('last_100_messages', last100Messages, room=user)
     emit("chat", {
             'userId': 1,

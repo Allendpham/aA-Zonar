@@ -31,8 +31,9 @@ const Chat = ({channel}) => {
 
     }, [channel])
     useEffect(() => {
-        socket.on('last_100_messages', (last100Messages) => {
-          setMessages((state) => [...last100Messages.messages, ...state]);
+        socket.on('last_100_messages', (data) => {
+        const history = data.messages
+          setMessages((state) => [...history.slice(-10), ...state]);
         });
 
         return () => socket.off('last_100_messages');
