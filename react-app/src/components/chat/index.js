@@ -34,7 +34,7 @@ const Chat = ({channel, chat = null}) => {
         return (() => {
             socket.disconnect()
         })
-    }, [])
+    }, []) // if browser gets angry put chat and channel inside dependency
 
     useEffect(() =>{
         setMessages([])
