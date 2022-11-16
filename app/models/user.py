@@ -24,11 +24,11 @@ class User(db.Model, UserMixin):
 
     servers = db.relationship('Server',
                         secondary=server_users,
-                        backref='userServers')
+                        back_populates='users')
 
     admin = db.relationship('Server',
                         secondary=server_admins,
-                        backref='adminServers')
+                        back_populates='admins')
 
     @property
     def password(self):

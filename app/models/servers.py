@@ -36,11 +36,11 @@ class Server(db.Model):
 
     users = db.relationship('User',
                         secondary = server_users,
-                        backref = 'serverUsers')
+                        back_populates = 'servers')
 
     admins = db.relationship('User',
                         secondary= server_admins,
-                        backref='serverAdmin')
+                        back_populates='admin')
 
     channels = db.relationship('Channel', back_populates='server')
 
