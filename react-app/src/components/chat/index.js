@@ -18,7 +18,7 @@ const Chat = ({channel}) => {
         // create websocket
         dispatch(getChannelMessagesThunk(channel.id))
         socket.on("chat", (chat) => {
-            setMessages((message) => [...message, chat])
+            setMessages((message) => [...message, chat.message])
         })
         // when component unmounts, disconnect
         return (() => {
@@ -27,28 +27,32 @@ const Chat = ({channel}) => {
     }, [])
     useEffect(() =>{
         setMessages([])
+        socket.emit('fetch', {channel: channel} )
         socket.emit('join', {channel: channel})
 
     }, [channel])
+
     useEffect(() => {
         socket.on('last_100_messages', (data) => {
         const history = data.messages
-          setMessages((state) => [...history.slice(-10), ...state]);
+          setMessages((state) => [...history.slice(-10)]);
         });
 
-        return () => socket.off('last_100_messages');
+        // return () => socket.off('last_100_messages');
       }, []);
 
 
 
-
+    const populateSocket = () => {
+        socket.emit('fetch', {channel: channel} )
+    }
     const updateChatInput = (e) => {
         setChatInput(e.target.value)
     };
 
-    const sendChat = (e) => {
+    const sendChat = async (e) => {
+        socket.emit('fetch', {channel: channel} )
         e.preventDefault()
-        socket.emit("chat", { msg: {userId: user.id, message: chatInput }, room: channel.name});
         setChatInput("")
 
         let payload = {
@@ -56,16 +60,15 @@ const Chat = ({channel}) => {
             channelId: channel.id,
             message: chatInput
         }
-        dispatch(createChannelMessagesThunk(payload))
+        let new_message = await dispatch(createChannelMessagesThunk(payload))
+        socket.emit("chat", { msg: {...new_message}, room: channel.name});
     }
-    // if(!channel_messages) return (<h1>loading...</h1>)
 
     return (user && (
         <div>
             <div>
                 {messages.map((message, ind) => (
-                    <MessageSettingModal key={message.id} message={message} user={user}/>
-                    // <div key={ind}>{`${message.userId}: ${message.message}`}</div>
+                    <MessageSettingModal populateSocket={populateSocket} key={message.id} message={message} user={user}/>
                 ))}
             </div>
             <form onSubmit={sendChat}>

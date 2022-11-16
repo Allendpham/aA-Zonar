@@ -5,7 +5,7 @@ import { updateChannelMessageThunk, deleteChannelMessageThunk } from '../../../s
 import { getChannelThunk } from '../../../store/channel';
 import { getServerThunk } from '../../../store/server';
 
-const MessageSettingOptions = ({message, user}) => {
+const MessageSettingOptions = ({message, user, populateSocket}) => {
    let updateContent;
    let deleteContent;
    const dispatch = useDispatch()
@@ -15,10 +15,14 @@ const MessageSettingOptions = ({message, user}) => {
    const server = useSelector(state => state.server.currentServer.server)
 
    useEffect(() => {
-      dispatch(getChannelThunk(message.channelId))
+      // dispatch(getChannelThunk(message.channelId))
       dispatch(getServerThunk(serverId))
    }, [dispatch])
+   const handleDelete = async () => {
+      dispatch(deleteChannelMessageThunk(message.id))
+      populateSocket()
 
+   }
    const handleSubmit = async (e) => {
       e.preventDefault();
 
@@ -31,6 +35,7 @@ const MessageSettingOptions = ({message, user}) => {
 
       dispatch(updateChannelMessageThunk(payload, message.id))
       setSettings(!settings)
+      populateSocket()
    }
 
    // const deleteButton = (<button onClick={() => dispatch(deleteChannelMessageThunk(message.id))}>Delete</button>)
@@ -76,7 +81,7 @@ console.log("this is message id", message.id)
    <div>
       <button onClick={() => setSettings(!settings)}>edit</button>
       {updateForm}
-      <button onClick={() => dispatch(deleteChannelMessageThunk(message.id))}>
+      <button onClick={() => handleDelete()}>
          delete
       </button>
    </div>

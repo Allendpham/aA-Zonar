@@ -20,9 +20,7 @@ socketio = SocketIO(cors_allowed_origins=origins,logger=True, engineio_logger=Tr
 # handle chat messages
 @socketio.on("chat")
 def handle_chat(data):
-    print('dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', data)
     emit("chat", data['msg'], room=data['room'])
-    # send(data['msg'], to=data['room'])
 
 
 @socketio.on('join')
@@ -34,12 +32,16 @@ def joinroom(data):
          leave_room(room)
     room = data['channel']['name']
     join_room(room)
+    emit("chat",{'message': {
+            'userId': 1,
+            'channelId': 1,
+            'message': f'joined room {room}'
+        }}, room=room)
+
+@socketio.on('fetch')
+def fetch_msgs(data):
+    user = request.sid
     messages = ChannelMessage.query.filter(ChannelMessage.channelId == data['channel']['id'])
     last100Messages = {'messages':[message.to_dict() for message in messages]} ##change slice to fit CSS goals later
     print(last100Messages)
     emit('last_100_messages', last100Messages, room=user)
-    emit("chat", {
-            'userId': 1,
-            'channelId': 1,
-            'message': f'joined room {room}'
-        }, room=room)
