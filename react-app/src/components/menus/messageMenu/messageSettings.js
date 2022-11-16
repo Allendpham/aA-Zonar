@@ -65,40 +65,30 @@ const MessageSettingOptions = ({message, user, populateSocket, chat}) => {
              onChange={(e)=> setMessage(e.target.value)}
              />
          <button type='submit'>Submit</button>
-         {/* <input type='submit' value='Submit'/> */}
       </form>) : updateForm = null
 
 
-// console.log("this id delete button", deleteButton)
-// console.log("this is update form", updateForm)
 
-   //Check if user is admin
-   let isAdmin = false;
 
-   for(let person in server?.admins){
-      if(person.id === user.id || user.id === server.ownerId){
-         isAdmin = true;
+   let deleteButt;
+   for(const person in server?.admins){
+      if(server?.admins[person].id === user.id || user.id === server.ownerId){
+         deleteButt = (<button onClick={() => handleDelete()}>delete</button>)
       }
    }
 
-   message.userId === user.id ? updateContent = updateForm : updateContent = null;
-   // message.userId === user.id || isAdmin ? deleteContent = deleteButton : deleteContent = null;
-   // const content = () => {
-   //    // (<div>{updateContent} {deleteContent}</div>)
-   //    return (<div>hello</div>)
-   //    // console.log("this is the message user id", message.userId)
-   //    // console.log("this is the user id", user.id)
-   //    // console.log("this is delte content", deleteContent)
-   //    // console.log("this is update content", updateContent)
-   // }
-console.log("this is message id", message.id)
+
+   let setSettingsButt
+   message.userId === user.id ?
+      setSettingsButt = (<button onClick={() => setSettings(!settings)}>edit</button>) :
+         setSettingsButt = null
+
+
    return (
    <div>
-      <button onClick={() => setSettings(!settings)}>edit</button>
+      {setSettingsButt}
       {updateForm}
-      <button onClick={() => handleDelete()}>
-         delete
-      </button>
+      {deleteButt}
    </div>
    );
 }
