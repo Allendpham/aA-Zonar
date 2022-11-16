@@ -1,4 +1,4 @@
-from app.models import db, Server, User, environment, SCHEMA
+from app.models import db, Server, User, environment, SCHEMA, PrivateChat
 
 def seed_servers():
     kyle = User(
@@ -55,6 +55,20 @@ def seed_servers():
     kyle.servers.append(demo_server)
     kyle.admin.append(demo_server)
 
+    private_chat1 = PrivateChat()
+    private_chat2 = PrivateChat()
+    private_chat3 = PrivateChat()
+
+    db.session.add(private_chat1)
+    db.session.add(private_chat2)
+    db.session.add(private_chat3)
+    kyle.privatechats.append(private_chat1)
+    ben.privatechats.append(private_chat1)
+    kyle.privatechats.append(private_chat2)
+    allen.privatechats.append(private_chat2)
+    kyle.privatechats.append(private_chat3)
+    brin.privatechats.append(private_chat3)
+
     db.session.commit()
 
 def undo_servers():
@@ -81,5 +95,14 @@ def undo_server_admins():
             f"TRUNCATE table {SCHEMA}.server_admins RESTART IDENTITY CASCADE;")
     else:
         db.session.execute("DELETE FROM server_admins")
+
+    db.session.commit()
+
+def undo_private_chats():
+    if environment == "production":
+        db.session.execute(
+            f"TRUNCATE table {SCHEMA}.privatechats RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute("DELETE FROM privatechats")
 
     db.session.commit()
