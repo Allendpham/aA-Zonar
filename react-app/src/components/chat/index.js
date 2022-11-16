@@ -17,11 +17,6 @@ const Chat = ({channel, chat = null}) => {
         socket = io();
         // open socket connection
         // create websocket
-        if (chat === null){
-            dispatch(getChannelMessagesThunk(channel.id))
-        } else {
-            dispatch(getPrivateChatMessagesThunk(chat))
-        }
 
         socket.on("currRoom", (currRoomName) => {
             setCurrRoom(currRoomName.room)
@@ -38,10 +33,13 @@ const Chat = ({channel, chat = null}) => {
 
     useEffect(() =>{
         setMessages([])
+    
         if (chat === null) {
+            dispatch(getChannelMessagesThunk(channel.id))
             socket.emit('fetch', {channel: channel} )
             socket.emit('join', {channel: channel})
         } else {
+            dispatch(getPrivateChatMessagesThunk(chat))
             socket.emit('fetch', {chat: chat} )
             socket.emit('join', {chat: chat} )
         }
@@ -66,11 +64,11 @@ const Chat = ({channel, chat = null}) => {
            socket.emit("fetch", { chat: chat });
          }
     }
-    
+
     const updateChatInput = (e) => {
         setChatInput(e.target.value)
     };
-    
+
     const sendChat = async (e) => {
         e.preventDefault()
         if (chat === null) {

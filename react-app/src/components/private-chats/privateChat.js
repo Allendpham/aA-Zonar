@@ -9,7 +9,7 @@ function PrivateChats() {
   const user = useSelector((state) => state.session.user);
   const liveChats = useSelector((state) => state.privatechat.allPrivateChats);
   const [chatId, setChatId] = useState(liveChats[0].id)
- 
+
   useEffect(() => {
     dispatch(loadPrivateChatsThunk());
   }, [dispatch]);
@@ -30,11 +30,11 @@ function PrivateChats() {
               className="chat-links"
               onClick={() => getChannel(chat.id)}
             >
-              {chat.name}
+              {chat.users}
           </li>
         ))}
       </ul>
-        < Chat chat={chatId} /> 
+        < Chat chat={chatId} />
     </div>
   );
 }
