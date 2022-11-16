@@ -103,8 +103,8 @@ const Chat = ({channel, chat = null}) => {
     return (user && (
         <div>
             <div>
-                {messages.map((message, ind) => (
-                    <MessageSettingModal populateSocket={populateSocket} key={message.id} message={message} user={user} chat={chat}/>
+                {messages?.map((message, ind) => (
+                    <MessageSettingModal populateSocket={populateSocket} key={message?.id} message={message} user={user} chat={chat}/>
                 ))}
             </div>
             <form onSubmit={sendChat}>
