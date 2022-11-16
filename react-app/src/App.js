@@ -11,6 +11,7 @@ import ServersIndex from './components/servers/ServerIndex';
 import ServerIndexItem from './components/servers/ServerIndexItem';
 import { authenticate } from './store/session';
 import UserServers from './components/servers/ServerIndex';
+import PrivateChats from './components/private-chats/privateChat';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -45,6 +46,7 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path='/@me' exact={true} >
           <UserServers />
+          <PrivateChats />
         </ProtectedRoute>
         <ProtectedRoute path='/servers/:serverId' exact={true} >
           <ServerIndexItem />

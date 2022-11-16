@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getServerThunk, loadServersThunk } from '../../store/server';
 import ServerFormModal from './ServerFormModal';
-import ServerIndexItem from './ServerIndexItem';
 import { Link } from 'react-router-dom';
 import ExploreServersModal from './ExploreServersModal';
 
