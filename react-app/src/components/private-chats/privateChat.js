@@ -7,14 +7,13 @@ import Chat from "../chat";
 function PrivateChats() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
-  const liveChats = useSelector((state) => state.privatechat.allPrivateChats);
-  const [chatId, setChatId] = useState(liveChats[0].id)
+  const liveChats = useSelector((state) => Object.values(state.privatechat.allPrivateChats));
+  const [chatId, setChatId] = useState('')
 
   useEffect(() => {
     dispatch(loadPrivateChatsThunk());
   }, [dispatch]);
-
-  if (!liveChats.length) return <h1>Loading...</h1>;
+  if (!liveChats) return <h1>Loading...</h1>;
   //Need to filter servers for only servers that the user is a part of
 
   const getChannel = (id) => {
@@ -30,7 +29,7 @@ function PrivateChats() {
               className="chat-links"
               onClick={() => getChannel(chat.id)}
             >
-              {chat.users}
+              {chat.users.filter(users => users.username != user.username ).map(name => name.username).join(' ')}
           </li>
         ))}
       </ul>

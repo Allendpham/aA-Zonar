@@ -25,7 +25,7 @@ export const loadPrivateChatsThunk = () => async (dispatch) => {
    const response = await fetch(`/api/private_chat/current`)
    //When receiving response: please include the users of all those private chats
    if(response.ok){
-      const data = await response.json();
+     const data = await response.json();
       dispatch(loadPrivateChats(data))
       return data;
     } else if (response.status < 500) {
@@ -85,7 +85,7 @@ export default function privateChatReducer(state = initialState, action){
          const allChats = normalizeArray(action.privatechats.privatechats)
          return {...state, allPrivateChats:{...allChats}}
       case GET_ONE_PRIVATE_CHAT:
-         return {...state, currentPrivateChat: {...action.privatechat}}
+         return {...state, currentPrivateChat: {...action.privatechat.privatechat}}
       case CREATE_PRIVATE_CHAT:
          return {...state, allPrivateChats:{...state.allPrivateChats,
             [action.privatechat.id]: action.privatechat}}

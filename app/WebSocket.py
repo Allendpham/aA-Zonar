@@ -30,7 +30,7 @@ def joinroom(data):
     for room in curr_rooms:
         if room != user:
             leave_room(room)
-    if data['channel']:
+    if 'channel' in data:
         room = data['channel']['name']
     elif data['chat']:
         room = f"{user}: {data['chat']}" #come back to this
@@ -45,7 +45,7 @@ def joinroom(data):
 @socketio.on('fetch')
 def fetch_msgs(data):
     user = request.sid
-    if data['channel']:
+    if 'channel' in data:
         messages = ChannelMessage.query.filter(ChannelMessage.channelId == data['channel']['id'])
     elif data['chat']:
         messages = PrivateChatMessage.query.filter(PrivateChatMessage.privateChatId == data['chat'])

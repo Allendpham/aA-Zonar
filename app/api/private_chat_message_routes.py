@@ -1,5 +1,8 @@
 from flask import Blueprint, jsonify, request, redirect
 from flask_login import login_required
+from app.models import PrivateChatMessage, db
+from app.forms import PrivateMessageForm
+from .auth_routes import validation_errors_to_error_messages
 
 private_chat_message_routes = Blueprint('privateChatMessages', __name__)
 
@@ -7,11 +10,11 @@ private_chat_message_routes = Blueprint('privateChatMessages', __name__)
 @private_chat_message_routes.route('/<int:privatechatmessageId>', methods=['PUT'])
 # @login_required
 def update_channel_message(privatechatmessageId):
-  message = ChannelMessage.query.get_or_404(privatechatmessageId)
+  message = PrivateChatMessage.query.get_or_404(privatechatmessageId)
   """
   Update a message
   """
-  form = MessageForm()
+  form = PrivateMessageForm()
   form['csrf_token'].data = request.cookies['csrf_token']
   if form.validate_on_submit():
       data = form.data
@@ -28,7 +31,7 @@ def delete_channel_message(privatechatmessageId):
   """
   Delete a message
   """
-  message = ChannelMessage.query.get_or_404(privatechatmessageId)
+  message = PrivateChatMessage.query.get_or_404(privatechatmessageId)
   if message:
       db.session.delete(message)
       # message.delete(synchronize_session=False)

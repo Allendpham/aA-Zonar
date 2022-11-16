@@ -33,7 +33,7 @@ const Chat = ({channel, chat = null}) => {
 
     useEffect(() =>{
         setMessages([])
-    
+
         if (chat === null) {
             dispatch(getChannelMessagesThunk(channel.id))
             socket.emit('fetch', {channel: channel} )
@@ -71,7 +71,7 @@ const Chat = ({channel, chat = null}) => {
 
     const sendChat = async (e) => {
         e.preventDefault()
-        if (chat === null) {
+        if (chat !== null) {
             socket.emit('fetch', {channel: channel} )
 
             let payload = {

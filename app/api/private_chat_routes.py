@@ -13,19 +13,19 @@ def get_private_chats():
    """
    Get all current users private chats
    """
+   user = current_user.to_dict()
    allChats = PrivateChat.query.all()
-   chats = [chat for chat in allChats if current_user.id in chat.users]
-   return { 'privatechats' : [chat.to_dict() for chat in chats] }
+   return { 'privatechats' : [chat.to_dict() for chat in allChats if user in chat.to_dict()['users']] }
 
 
-# @private_chat_routes.route('/<int:privatechatId>')
-# @login_required
-# def get_one_private_chat(privatechatId):
-#    """
-#    Query to get one private chat details
-#    """
-#    single_private = PrivateChat.query.get(privatechatId)
-#    return { }
+@private_chat_routes.route('/<int:privatechatId>')
+@login_required
+def get_one_private_chat(privatechatId):
+   """
+   Query to get one private chat details
+   """
+   single_private = PrivateChat.query.get(privatechatId)
+   return {'privatechat': single_private.to_dict() }
 
 @private_chat_routes.route('', methods=['POST'])
 @login_required
@@ -57,10 +57,10 @@ def get_private_chat_messages(privatechatId):
    """
    Get all private chat messages of one chat
    """
-   all_private_chat_messages = PrivateChatMessage.query.filter(PrivateChatMessage.privatechatId == privatechatId)
-   return {"messages":[message.to_dict() for message in messages]}
+   all_private_chat_messages = PrivateChatMessage.query.filter(PrivateChatMessage.privateChatId == privatechatId)
+   return {"messages":[message.to_dict() for message in all_private_chat_messages]}
 
-@channel_routes.route('/<int:privatechatId>/messages', methods=['POST'])
+@private_chat_routes.route('/<int:privatechatId>/messages', methods=['POST'])
 @login_required
 def post_channelmessages(privatechatId):
    """

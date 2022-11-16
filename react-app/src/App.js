@@ -12,6 +12,7 @@ import ServerIndexItem from './components/servers/ServerIndexItem';
 import { authenticate } from './store/session';
 import UserServers from './components/servers/ServerIndex';
 import PrivateChats from './components/private-chats/privateChat';
+import { loadPrivateChatsThunk } from './store/privatechat';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -22,6 +23,7 @@ function App() {
       await dispatch(authenticate());
       setLoaded(true);
     })();
+    dispatch(loadPrivateChatsThunk())
   }, [dispatch]);
 
   if (!loaded) {
