@@ -16,6 +16,9 @@ server_users = Table(
     db.Column('userId', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
 )
 
+if environment == 'production':
+    server_users.schema = SCHEMA
+
 server_admins = Table(
     "server_admins",
     db.metadata,
