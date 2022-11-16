@@ -1,26 +1,30 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { updateChannelMessageThunk, deleteChannelMessageThunk } from '../../../store/message';
+import { updateChannelMessageThunk, deleteChannelMessageThunk, updatePrivateChatMessageThunk, deletePrivateChatMessageThunk } from '../../../store/message';
 import { getChannelThunk } from '../../../store/channel';
 import { getServerThunk } from '../../../store/server';
 
-const MessageSettingOptions = ({message, user, populateSocket}) => {
+const MessageSettingOptions = ({message, user, populateSocket, chat}) => {
    let updateContent;
    let deleteContent;
    const dispatch = useDispatch()
    const [currmessage, setMessage] = useState(message.message)
    const [settings, setSettings] = useState(false)
-   const serverId = useSelector(state => state.channel.currentChannel.channel.serverId)
-   const server = useSelector(state => state.server.currentServer.server)
+   const serverId = useSelector(state => state?.channel?.currentChannel?.channel?.serverId)
+   const server = useSelector(state => state?.server?.currentServer?.server)
 
    useEffect(() => {
       // dispatch(getChannelThunk(message.channelId))
       dispatch(getServerThunk(serverId))
    }, [dispatch])
-   
+
    const handleDelete = async () => {
-      dispatch(deleteChannelMessageThunk(message.id))
+      if(!chat){
+         dispatch(deleteChannelMessageThunk(message.id))
+      } else {
+         dispatch(deletePrivateChatMessageThunk(message.id))
+      }
       populateSocket()
 
    }
@@ -28,13 +32,22 @@ const MessageSettingOptions = ({message, user, populateSocket}) => {
       e.preventDefault();
 
 
-      let payload = {
+      let payloadChannelMessages = {
          userId: user.id,
          channelId: message.channelId,
          message: currmessage
       }
 
-      dispatch(updateChannelMessageThunk(payload, message.id))
+      let payloadChatMessages = {
+         userId: user.id,
+         privateChatId: message.privateChatId,
+         message: currmessage
+      }
+      if(!chat){
+         dispatch(updateChannelMessageThunk(payloadChannelMessages, message.id))
+      } else {
+         dispatch(updatePrivateChatMessageThunk(payloadChatMessages, message.id))
+      }
       setSettings(!settings)
       populateSocket()
    }
@@ -44,7 +57,8 @@ const MessageSettingOptions = ({message, user, populateSocket}) => {
    let updateForm;
    settings ?
    updateForm =
-      (<form className='update-message-form' onSubmit={handleSubmit}>
+      (<form className='update-message-form' onSubmit={handleSubmit}
+      onKeyPress={(e) => e === 'ENTER' ? handleSubmit() : null}>
          <input
              type='text'
              value={currmessage}
@@ -61,7 +75,7 @@ const MessageSettingOptions = ({message, user, populateSocket}) => {
    //Check if user is admin
    let isAdmin = false;
 
-   for(let person in server.admins){
+   for(let person in server?.admins){
       if(person.id === user.id || user.id === server.ownerId){
          isAdmin = true;
       }
