@@ -26,6 +26,9 @@ server_admins = Table(
     db.Column('userId', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
 )
 
+if environment == 'production':
+    server_admins.schema = SCHEMA
+
 class Server(db.Model):
     __tablename__ = 'servers'
 
