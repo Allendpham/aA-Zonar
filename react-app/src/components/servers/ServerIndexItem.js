@@ -9,6 +9,7 @@ import ChannelSettingsModal from '../channels/ChannelSettingsModal';
 import Chat from '../chat';
 import UsersList from '../users/usersList';
 import { getChannelMessagesThunk } from '../../store/message';
+import UserServers from './ServerIndex';
 
 const ServerIndexItem = () => {
    const dispatch = useDispatch();
@@ -50,16 +51,7 @@ const ServerIndexItem = () => {
    return(
       <div className='server-index-item-wrapper'>
          <h1>Hello from Server {singleServer?.name}</h1>
-         <ul className='servers-list-wrapper'>
-            {servers?.map(server => (
-               <li key={server?.id}>
-                  {/* {server?.name}
-                  <ServerIndexItem key={server.id} /> */}
-                  {console.log(server.name)}
-                  <Link className='server-links' to={`/servers/${server.id}`} onClick={() => dispatch(getServerThunk(server.id))}>{server.name}</Link>
-               </li>
-            ))}
-         </ul>
+         <UserServers />
          <ServerSettingsModal />
          <h2>TEXT CHANNELS
             {/* <ChannelFormModal/> */}

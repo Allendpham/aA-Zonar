@@ -18,6 +18,7 @@ const MessageSettingOptions = ({message, user, populateSocket}) => {
       // dispatch(getChannelThunk(message.channelId))
       dispatch(getServerThunk(serverId))
    }, [dispatch])
+   
    const handleDelete = async () => {
       dispatch(deleteChannelMessageThunk(message.id))
       populateSocket()

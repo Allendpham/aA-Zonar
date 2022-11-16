@@ -64,9 +64,10 @@ export const addServerThunk = (server) => async (dispatch) =>{
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(server),
   })
-  
+
   if(response.ok){
     const data = await response.json();
+    console.log('sssssssssssssssssssssssssssssssssssssssssssssssssss', data)
     dispatch(addServer(data))
     return data;
   }else if (response.status < 500) {
@@ -88,7 +89,7 @@ export const updateServerThunk = (server, id) => async (dispatch) =>{
 
   if(response.ok){
     const data = await response.json();
-    dispatch(addServer(data))
+    dispatch(addServer(data.server))
     return data;
   }else if (response.status < 500) {
     const data = await response.json();

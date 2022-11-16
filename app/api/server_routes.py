@@ -70,7 +70,7 @@ def server_create():
                             preview_img=data['preview_img'])
         db.session.add(new_server)
         current_user.admin.append(new_server)
-
+        current_user.servers.append(new_server)
         db.session.commit()
         return {'server': new_server.to_dict()}
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401

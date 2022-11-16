@@ -46,6 +46,7 @@ const Chat = ({channel}) => {
     const populateSocket = () => {
         socket.emit('fetch', {channel: channel} )
     }
+    
     const updateChatInput = (e) => {
         setChatInput(e.target.value)
     };

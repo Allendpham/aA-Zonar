@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { loadServersThunk } from '../../store/server';
+import { getServerThunk, loadServersThunk } from '../../store/server';
 import ServerFormModal from './ServerFormModal';
 import ServerIndexItem from './ServerIndexItem';
 import { Link } from 'react-router-dom';
@@ -9,9 +9,9 @@ import ExploreServersModal from './ExploreServersModal';
 function UserServers() {
    const dispatch = useDispatch();
    const user = useSelector(state => state.session.user)
-   let servers = useSelector(state => Object.values(state.server.allServers));
-   servers = servers.filter(server => server['users'].filter(person => person.id == user.id).length >= 1)
-
+   let servers = useSelector(state => state.server.allServers);
+   console.log('serverrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',servers)
+   servers = Object.values(servers).filter(server => server['users'].filter(person => person.id == user.id).length >= 1)
    useEffect(() => {
       dispatch(loadServersThunk())
    }, [dispatch])
@@ -25,7 +25,7 @@ function UserServers() {
                <li key={server?.id}>
                   {/* {server?.name} */}
                   {/* <ServerIndexItem key={server.id} /> */}
-                  <Link className='server-links' to={`/servers/${server.id}`}>{server.name}</Link>
+                  <Link className='server-links' to={`/servers/${server.id}`} onClick={() => dispatch(getServerThunk(server.id))}>{server.name}</Link>
                </li>
             ))}
          </ul>
