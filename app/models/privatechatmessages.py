@@ -14,8 +14,8 @@ class PrivateChatMessage(db.Model):
     userId = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     privateChatId = db.Column(db.Integer, db.ForeignKey('privatechats.id'), nullable=False)
     message = db.Column(db.String(500), nullable=False)
-    createdAt = db.Column(db.DateTime, server_default=func.now())
-    updatedAt = db.Column(db.DateTime, server_default=func.now(), onupdate=datetime.datetime)
+    createdAt = db.Column(db.DateTime, default=datetime.datetime.now())
+    updatedAt = db.Column(db.DateTime, default=datetime.datetime.now(), onupdate=datetime.datetime.now())
 
     privatechat = db.relationship('PrivateChat', back_populates='privatechatmessagelist')
 
@@ -23,7 +23,7 @@ class PrivateChatMessage(db.Model):
       return {
         'id': self.id,
         'userId': self.userId,
-        'privateChatId': self.channelId,
+        'privateChatId': self.privateChatId,
         'message': self.message,
         'createdAt': json.dumps(self.createdAt, default=str),
         'updatedAt': json.dumps(self.updatedAt, default=str)

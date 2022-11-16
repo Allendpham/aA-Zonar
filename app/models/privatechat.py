@@ -26,5 +26,7 @@ class PrivateChat(db.Model):
 
    def to_dict(self):
     return {
-        'id': self.id
+        'id': self.id,
+        'users': [user.to_dict() for user in self.users],
+        'messages': [pm.to_dict() for pm in self.privatechatmessagelist]
     }

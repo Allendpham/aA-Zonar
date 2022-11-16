@@ -19,7 +19,6 @@ def update_channel_message(channel_message_id):
   """
   Update a message
   """
-  print('++++++++++++++++++++++++++++++++++++++ggggggggg',message)
   form = MessageForm()
   form['csrf_token'].data = request.cookies['csrf_token']
   if form.validate_on_submit():
@@ -38,7 +37,6 @@ def delete_channel_message(channel_message_Id):
   Delete a message
   """
   message = ChannelMessage.query.get_or_404(channel_message_Id)
-  print("+++++++++++++++++++++++=", message)
   if message:
       db.session.delete(message)
       # message.delete(synchronize_session=False)
