@@ -14,14 +14,15 @@ const MessageSettingOptions = ({message, user}) => {
    const serverId = useSelector(state => state.channel.currentChannel.channel.serverId)
    const server = useSelector(state => state.server.currentServer.server)
 
+
+   console.log('mmmmmmmmmmmmmmmmmmmmmmmmm', message)
    useEffect(() => {
-      dispatch(getChannelThunk(message.channelId))
+      // dispatch(getChannelThunk(message.channelId))
       dispatch(getServerThunk(serverId))
    }, [dispatch])
 
    const handleSubmit = async (e) => {
       e.preventDefault();
-
 
       let payload = {
          userId: user.id,
@@ -31,6 +32,12 @@ const MessageSettingOptions = ({message, user}) => {
 
       dispatch(updateChannelMessageThunk(payload, message.id))
       setSettings(!settings)
+
+      // if (updatedMessage) {
+      //    dispatch(getChannelThunk(message.channelId))
+
+      // }
+
    }
 
    // const deleteButton = (<button onClick={() => dispatch(deleteChannelMessageThunk(message.id))}>Delete</button>)
@@ -45,12 +52,9 @@ const MessageSettingOptions = ({message, user}) => {
              onChange={(e)=> setMessage(e.target.value)}
              />
          <button type='submit'>Submit</button>
-         {/* <input type='submit' value='Submit'/> */}
       </form>) : updateForm = null
 
 
-// console.log("this id delete button", deleteButton)
-// console.log("this is update form", updateForm)
 
    //Check if user is admin
    let isAdmin = false;
@@ -71,7 +75,6 @@ const MessageSettingOptions = ({message, user}) => {
    //    // console.log("this is delte content", deleteContent)
    //    // console.log("this is update content", updateContent)
    // }
-console.log("this is message id", message.id)
    return (
    <div>
       <button onClick={() => setSettings(!settings)}>edit</button>

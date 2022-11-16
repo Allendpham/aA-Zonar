@@ -16,7 +16,7 @@ const Chat = ({channel}) => {
         socket = io();
         // open socket connection
         // create websocket
-        dispatch(getChannelMessagesThunk(channel.id))
+        // dispatch(getChannelMessagesThunk(channel.id))
         socket.on("chat", (chat) => {
             setMessages((message) => [...message, chat])
         })
@@ -57,6 +57,7 @@ const Chat = ({channel}) => {
             message: chatInput
         }
         dispatch(createChannelMessagesThunk(payload))
+        dispatch()
     }
     // if(!channel_messages) return (<h1>loading...</h1>)
 
