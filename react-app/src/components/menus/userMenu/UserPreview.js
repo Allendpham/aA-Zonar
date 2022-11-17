@@ -7,24 +7,24 @@ const UserPreviewForm = ({setShowModal, currentServer, user}) => {
   const dispatch = useDispatch()
   const history = useHistory()
 
-  const [adminRole, setAdminRole] = useState(true)
+  const [adminRole, setAdminRole] = useState(false)
   const [isOwner, setOwner] = useState(false)
   const currUser = useSelector(state => state.session.user)
 
-
-
+console.log('serverrrrrrrrrrrrrrrrrrrrrr', currentServer)
   useEffect(() =>{
     if(currentServer?.ownerId === currUser?.id) setOwner(true)
+    if(currentServer.admins.filter(admin => admin.id === user.id).length > 0){
+      setAdminRole(true)
+    }
   },[])
 
+
+  useEffect(()=>{
+    dispatch(getServerThunk(currentServer.id))
+  }, [adminRole])
+
     if(!currentServer) return (<h1>Loading</h1>)
-    for (const userAdmin in currentServer.admins) {
-        if (userAdmin.id === user.id) {
-            setAdminRole(true)
-        }
-    }
-
-
 
   const submitRole = async (e) => {
 
@@ -34,11 +34,20 @@ const UserPreviewForm = ({setShowModal, currentServer, user}) => {
       userId: user.id
     }
 
-    const response = await fetch(`/api/servers/admins`,{
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    })
+    if(adminRole){
+      const response = await fetch(`/api/servers/admins`,{
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+    }else{
+      const response = await fetch(`/api/servers/admins`,{
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+    }
+
 
     //Needs to send a thunk to the backend to hit an endpoint that will store the user in admin join table
   }
@@ -55,7 +64,7 @@ const UserPreviewForm = ({setShowModal, currentServer, user}) => {
             type='checkbox'
             checked={adminRole}
             onClick={()=> submitRole()}
-            disabled={!isOwner}
+            disabled={!isOwner || currentServer.ownerId === user.id}
             />
     </form>
   )

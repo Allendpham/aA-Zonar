@@ -121,32 +121,35 @@ def add_admin():
     Adds a admin to a server
     """
     request_data = request.get_json()
-    print('===================================', request_data)
     userId = request_data['userId']
     serverId = request_data['serverId']
 
     user = User.query.get_or_404(userId)
-    print('userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', user)
     server = Server.query.get_or_404(serverId)
-    print('serverrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', server)
 
     if server and user:
-        print('ilovebrinnnnnnnnnnnnnnnnnnnnnnnn')
+
         user.admin.append(server)
         db.session.commit()
         return {'message': 'Admin was successfully added'}
     return {"error": "Server or User does not exist"}, 404
 
 
+@server_routes.route('/admins', methods=['DELETE'])
+def delete_admin():
+    """
+    Delete a route
+    """
+    request_data = request.get_json()
+    userId = request_data['userId']
+    serverId = request_data['serverId']
 
-# @server_routes.route('/<int:serverId>', methods=['DELETE'])
-# def delete_server(serverId):
-#     """
-#     Delete a route
-#     """
-#     server = Server.query.get_or_404(serverId)
-#     if server:
-#         db.session.delete(server)
-#         db.session.commit()
-#         return {"message": "Server was successfully deleted"}
-#     return {"error": "Server does not exist"}, 404
+    user = User.query.get_or_404(userId)
+    server = Server.query.get_or_404(serverId)
+
+    if server and user:
+
+        user.admin.remove(server)
+        db.session.commit()
+        return {'message': 'Admin was successfully removed'}
+    return {"error": "Server or User does not exist"}, 404
