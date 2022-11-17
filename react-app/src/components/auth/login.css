@@ -1,11 +1,15 @@
 .login-page {
-    background-image: url(https://i.imgur.com/HnFvFmD.jpg);
+    background-image: url('https://i.imgur.com/HnFvFmD.jpg');
     display: flex;
-    align-content: flex-start;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    height: 100%;
+    height: 100vh;
     max-height: 100%;
     min-height: 100%;
+    background-image: url('https://i.imgur.com/HnFvFmD.jpg');
+    background-size: cover;
+    background-repeat: none;
 }
 
 .login-form {
