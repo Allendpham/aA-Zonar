@@ -11,7 +11,7 @@ function ServerIndexItem({server}) {
    console.log(server.name)
    const intials = server?.name.split(' ').map(word => word[0].toUpperCase()).join('').slice(0,3)
    useEffect(() => {
-
+    // dispatch(loadServersThunk())
    }, [dispatch])
 
   const goToServer = () =>{

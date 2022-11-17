@@ -29,7 +29,7 @@ const ServerPage = () => {
 
    useEffect(() => {
       dispatch(loadServersThunk())
-   }, [dispatch])
+   }, [dispatch, serverId])
 
    const showChannel = (channel) => {
 

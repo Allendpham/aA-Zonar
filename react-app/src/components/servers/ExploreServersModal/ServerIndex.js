@@ -8,10 +8,10 @@ function ServerIndex({setShowModal}) {
    const user = useSelector(state => state.session.user)
 
    let servers = useSelector(state => Object.values(state.server.allServers));
-   servers = servers.filter(server => server['users'].filter(person => person.id == user.id).length == 0)
+   servers = servers?.filter(server => server['users'].filter(person => person.id == user.id).length == 0)
 
    useEffect(() => {
-      dispatch(loadServersThunk())
+      // dispatch(loadServersThunk())
    }, [dispatch])
 
    if(!servers.length) return(<h2>Loading...</h2>);
@@ -26,7 +26,9 @@ function ServerIndex({setShowModal}) {
              <Link
                className="server-links"
                onClick={() => (
-                 setShowModal(false), dispatch(loadServersThunk())
+                 setShowModal(false)
+                //  Note the server bar just doesn't update when you atttempt to join a server while on a server index page,
+                // but it works fine when you join a server while on the regular /@me page
                )}
                to={`/servers/${server.id}`}
              >
