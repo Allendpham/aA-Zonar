@@ -1,0 +1,96 @@
+.splashpagewrapper {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   /* background-color: rgb(64, 78, 237); */
+   height: 100vh;
+   background-image: url('https://i.imgur.com/HnFvFmD.jpg');
+   background-size: cover;
+   background-repeat: none;
+}
+
+.navbar {
+   height: 80px;
+   margin-top: 0;
+   width: auto fit-content;
+   width: 80vw;
+   display: flex;
+   justify-content: center;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.login-link {
+   text-decoration: none;
+   font-size: 13px;
+   line-height: 24px;
+   color: black;
+   background-color: white;
+   width: 63px;
+   height: 38px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 25px;
+}
+
+.home-logo {
+   width: 80px;
+   height: 45px;
+}
+
+.home-logo-link {
+   text-decoration: none;
+   color: white;
+   display: flex;
+   align-content: center;
+   align-items: center;
+}
+
+.login-link:hover {
+   /* border: 1px solid black; */
+   box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+   color: rgba(64, 78, 237)
+}
+
+.maincontent {
+   color: white;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   width: 63%;
+   margin-top: 50px;
+}
+
+.maincontent h1 {
+   font-size: 56px;
+   font-weight: 800;
+   /* Need to import the 'Ginto Nord', Whitney font family */
+   line-height: 53px;
+}
+
+.maincontent p {
+   font-size: 20px;
+   line-height: 32.5px;
+   text-align: center;
+}
+
+.welcome-button {
+   text-decoration: none;
+   color: black;
+   font-size: 20px;
+   font-weight: 500;
+   width: 320px;
+   height: 53px;
+   border-radius: 25px;
+   background-color: white;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-top: 5px;
+}
+
+.welcome-button:hover {
+   box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+   color: rgba(64, 78, 237)
+}

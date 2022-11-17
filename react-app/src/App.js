@@ -9,6 +9,7 @@ import UsersList from './components/UsersList';
 import User from './components/User';
 import ServersIndex from './components/servers/ServerIndex';
 import ServerIndexItem from './components/servers/ServerIndexItem';
+import SplashPage from './components/splashpage/SplashPage';
 import { authenticate } from './store/session';
 import UserServers from './components/servers/ServerIndex';
 import PrivateChats from './components/private-chats/privateChat';
@@ -32,7 +33,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar />
+      {/* <NavBar /> */}
       <Switch>
         <Route path='/login' exact={true}>
           <LoginForm />
@@ -47,15 +48,21 @@ function App() {
           <User />
         </ProtectedRoute>
         <ProtectedRoute path='/@me' exact={true} >
+          <NavBar />
           <UserServers />
           <PrivateChats />
         </ProtectedRoute>
         <ProtectedRoute path='/servers/:serverId' exact={true} >
+          <NavBar />
           <ServerIndexItem />
         </ProtectedRoute>
-        <ProtectedRoute path='/' exact={true} >
+        {/* <ProtectedRoute path='/' exact={true} >
           <Redirect to='/@me'></Redirect>
-        </ProtectedRoute>
+        </ProtectedRoute> */}
+        <Route path='/' exact={true}>
+          <SplashPage />
+        </Route>
+
 
       </Switch>
     </BrowserRouter>
