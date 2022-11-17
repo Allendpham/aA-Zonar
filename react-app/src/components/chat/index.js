@@ -59,8 +59,6 @@ const Chat = ({channel, chat = null}) => {
         const history = data.messages
             setMessages((state) => [...history.slice(-10)]);
         });
-
-        // return () => socket.off('last_100_messages');
         }, []);
 
 
@@ -69,7 +67,7 @@ const Chat = ({channel, chat = null}) => {
          if (chat === null) {
              socket.emit('fetch', {channel: channel} )
          } else {
-           socket.emit("fetch", { chat: chat });
+             socket.emit("fetch", { chat: chat });
          }
     }
 

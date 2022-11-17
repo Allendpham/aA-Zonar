@@ -15,15 +15,14 @@ const MessageSettingOptions = ({message, user,users, populateSocket, chat}) => {
    const poster = Object.values(users).find(member => member.id == message?.userId)
 
    useEffect(() => {
-      // dispatch(getChannelThunk(message.channelId))
       dispatch(getServerThunk(serverId))
    }, [dispatch])
 
    const handleDelete = async () => {
       if(!chat){
-         dispatch(deleteChannelMessageThunk(message.id))
+         await dispatch(deleteChannelMessageThunk(message.id))
       } else {
-         dispatch(deletePrivateChatMessageThunk(message.id))
+        await dispatch(deletePrivateChatMessageThunk(message.id))
       }
       populateSocket()
    }
@@ -44,15 +43,13 @@ const MessageSettingOptions = ({message, user,users, populateSocket, chat}) => {
          message: currmessage
       }
       if(!chat){
-         dispatch(updateChannelMessageThunk(payloadChannelMessages, message.id))
+         await dispatch(updateChannelMessageThunk(payloadChannelMessages, message.id))
       } else {
-         dispatch(updatePrivateChatMessageThunk(payloadChatMessages, message.id))
+         await dispatch(updatePrivateChatMessageThunk(payloadChatMessages, message.id))
       }
       setSettings(!settings)
       populateSocket()
    }
-
-   // const deleteButton = (<button onClick={() => dispatch(deleteChannelMessageThunk(message.id))}>Delete</button>)
 
    let messageInput;
    settings?
@@ -84,6 +81,10 @@ const MessageSettingOptions = ({message, user,users, populateSocket, chat}) => {
          deleteButt = (<button onClick={() => handleDelete()}>delete</button>)
       }
    }
+if(message.userId === user.id){
+   deleteButt = (<button onClick={() => handleDelete()}>delete</button>)
+
+}
    let deleteContent
    shown ? deleteContent = deleteButt : deleteContent = null
 
