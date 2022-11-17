@@ -53,6 +53,8 @@ def get_server(serverId):
     db.session.commit()
     return {'server': single_server.to_dict()}
 
+
+
 @server_routes.route('', methods=['POST'])
 @login_required
 def server_create():
@@ -150,7 +152,21 @@ def delete_server(serverId):
     """
     server = Server.query.get_or_404(serverId)
     if server:
+        server.users = [] #empty the server of users and admins
+        server.admins = []
         db.session.delete(server)
         db.session.commit()
         return {"message": "Server was successfully deleted"}
     return {"error": "Server does not exist"}, 404
+
+@server_routes.route('/<int:serverId>/users', methods=['GET'])
+@login_required
+def leave_server(serverId):
+    """
+    Query for server association to leave a server
+    """
+
+    single_server = Server.query.get(serverId)
+    current_user.servers.remove(single_server)
+    db.session.commit()
+    return {'server': single_server.to_dict()}

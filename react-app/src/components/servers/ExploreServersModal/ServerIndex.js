@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loadServersThunk } from '../../../store/server';
 import { Link } from 'react-router-dom';
 
-function ServerIndex() {
+function ServerIndex({setShowModal}) {
    const dispatch = useDispatch();
    const user = useSelector(state => state.session.user)
 
@@ -16,18 +16,26 @@ function ServerIndex() {
 
    if(!servers.length) return(<h2>Loading...</h2>);
    //Need to filter servers for only servers that the user is a part of
-   return(
-      <div className='server-index-wrapper'>
-         <ul className='servers-list-wrapper'>
-            {servers?.map(server => (
-               <li key={server?.id}>
-                  {/* {server?.name} */}
-                  {/* <ServerIndexItem key={server.id} /> */}
-                  <Link className='server-links' to={`/servers/${server.id}`}>{server.name}</Link>
-               </li>
-            ))}
-         </ul>
-      </div>
+   return (
+     <div className="server-index-wrapper">
+       <ul className="servers-list-wrapper">
+         {servers?.map((server) => (
+           <li key={server?.id}>
+             {/* {server?.name} */}
+             {/* <ServerIndexItem key={server.id} /> */}
+             <Link
+               className="server-links"
+               onClick={() => (
+                 setShowModal(false), dispatch(loadServersThunk())
+               )}
+               to={`/servers/${server.id}`}
+             >
+               {server.name}
+             </Link>
+           </li>
+         ))}
+       </ul>
+     </div>
    );
 }
 

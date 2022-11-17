@@ -9,7 +9,7 @@ function ServerIndexItem({server}) {
    const dispatch = useDispatch();
    const bg_img = server.preview_img? server.preview_img:null
    console.log(server.name)
-   const intials = server.name.split(' ').map(word => word[0].toUpperCase()).join('').slice(0,3)
+   const intials = server?.name.split(' ').map(word => word[0].toUpperCase()).join('').slice(0,3)
    useEffect(() => {
 
    }, [dispatch])

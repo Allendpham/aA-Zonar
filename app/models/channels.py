@@ -16,7 +16,7 @@ class Channel(db.Model):
    serverId = db.Column(db.Integer, db.ForeignKey('servers.id'), nullable=False)
 
    server = db.relationship('Server', back_populates='channels')
-   channelmessagelist = db.relationship('ChannelMessage', back_populates='channel', lazy=False)
+   channelmessagelist = db.relationship('ChannelMessage', back_populates='channel', lazy=False, cascade="all, delete")
    def to_dict(self):
     return {
         'id': self.id,
