@@ -1,0 +1,91 @@
+.login-page {
+    /* background-image: url('https://i.imgur.com/HnFvFmD.jpg'); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    max-height: 100%;
+    min-height: 100%;
+    background-image: url('https://i.imgur.com/gvWM8y7.png');
+    background-size: cover;
+    background-repeat: none;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: flex-start;
+    border-radius: 5px;
+    color: #fdfefe;
+    height: 354px;
+    width: 410px;
+    padding: 34px;
+    background-color: #36393f;
+}
+
+.login-welcome {
+    display: flex;
+    align-self: center;
+    color: #fdfefe;
+    font-size: 25px;
+    margin: 0 0 8px 0;
+}
+
+.login-subheading {
+    display: flex;
+    align-self: center;
+    color: #fdfefe;
+    font-size: 16px;
+    margin: 0
+}
+
+.login-text-div {
+    margin: 5px 0;
+}
+
+.login-text {
+    color: #fdfefe;
+    margin: 0 0 5px;
+}
+
+.login-input {
+    color: #e7f0fe;
+    border-style: none;
+    padding: 10px;
+    width: 90%;
+    height: 20px;
+    color: black;
+    border-radius: 4px;
+    box-shadow: none;
+}
+
+.login-submit {
+    background-color: #5765f2;
+    color: #fdfefe;
+    border-radius: 4px;
+    border-style: none;
+    margin: 20px 0;
+    width: 95%;
+    height: 30%;
+}
+
+.register {
+    font-size: 13px;
+    margin-top: 3px;
+}
+
+.signup-link:link {
+    color: #0ca9ed;
+}
+
+.signup-link:visited {
+    color: #0ca9ed;
+}
+.signup-link:hover {
+    color: #0ca9ed;
+}
+.signup-link:active {
+    color: #0ca9ed;
+}

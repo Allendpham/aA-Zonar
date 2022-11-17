@@ -54,6 +54,17 @@ const UpdateServerForm = ({setShowModal}) => {
     history.push('/@me')
   }
 
+  const handleLeaveClick = async (e) => {
+    e.preventDefault()
+
+    const leave_server = await fetch(`/api/servers/${currServer.id}/users`)
+    console.log("+++++++++++++++++++++++ i made it", leave_server)
+    // dispatch(loadServersThunk());
+    history.push("/@me");
+    return leave_server
+  }
+
+
   return(
     <form className='server-form' onSubmit={handleSubmit}>
       <input
@@ -68,7 +79,12 @@ const UpdateServerForm = ({setShowModal}) => {
         onChange={updateName}/>
       <button type='submit'>Submit</button>
       <button type='button' onClick={handleCancelClick}>Cancel</button>
-      <button type='button' onClick={handleDeleteClick}>Delete Server</button>
+      {user.id === currServer.ownerId &&
+      (<button type='button' onClick={handleDeleteClick}>Delete Server</button>)
+      }
+      {user.id !== currServer.ownerId &&
+      (<button type='button' onClick={handleLeaveClick}>Leave Server</button>)
+      }
     </form>
   )
 }

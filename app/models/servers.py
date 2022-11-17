@@ -6,7 +6,6 @@ from .db import add_prefix_for_prod
 
 
 
-# Base = declarative_base() <--- USELESS
 Base = declarative_base()
 
 server_users = Table(
@@ -26,6 +25,9 @@ server_admins = Table(
     db.Column('userId', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
 )
 
+if environment == 'production':
+    server_admins.schema = SCHEMA
+
 class Server(db.Model):
     __tablename__ = 'servers'
 
@@ -39,13 +41,18 @@ class Server(db.Model):
 
     users = db.relationship('User',
                         secondary = server_users,
-                        back_populates = 'servers')
+                        back_populates = 'servers',
+                        lazy=False,
+                        cascade="all, delete")
 
     admins = db.relationship('User',
                         secondary= server_admins,
-                        back_populates='admin')
+                        back_populates='admin',
+                        lazy=False,
+                        cascade="all, delete")
 
-    channels = db.relationship('Channel', back_populates='server')
+    channels = db.relationship('Channel', back_populates='server',
+                            cascade="all, delete")
 
 # class Server_user(db.Model):
 #     __tablename__ = 'server_users'
@@ -67,5 +74,6 @@ class Server(db.Model):
             'ownerId': self.ownerId,
             'name': self.name,
             'preview_img': self.preview_img,
-
+            'users': [user.to_dict() for user in self.users],
+            'admins': [admin.to_dict() for admin in self.admins]
         }
