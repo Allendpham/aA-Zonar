@@ -11,6 +11,7 @@ const Chat = ({channel, chat = null}) => {
     const [chatInput, setChatInput] = useState("");
     const [messages, setMessages] = useState([]);
     const [currRoom, setCurrRoom] = useState("")
+    const [users, setUsers] = useState([])
     const user = useSelector(state => state.session.user)
 
     useEffect(() => {
@@ -21,6 +22,7 @@ const Chat = ({channel, chat = null}) => {
         socket.on("currRoom", (currRoomName) => {
             setCurrRoom(currRoomName.room)
         })
+
 
         socket.on("chat", (chat) => {
             setMessages((message) => [...message, chat.message])
@@ -36,13 +38,19 @@ const Chat = ({channel, chat = null}) => {
 
         if (chat === null) {
             dispatch(getChannelMessagesThunk(channel.id))
-            socket.emit('fetch', {channel: channel} )
             socket.emit('join', {channel: channel})
+            socket.emit('fetch', {channel: channel} )
         } else {
             dispatch(getPrivateChatMessagesThunk(chat))
-            socket.emit('fetch', {chat: chat} )
             socket.emit('join', {chat: chat} )
+            socket.emit('fetch', {chat: chat} )
         }
+        async function fetchData() {
+            const response = await fetch('/api/users/');
+            const responseData = await response.json();
+            setUsers(responseData.users);
+          }
+          fetchData();
 
     }, [channel, chat])
 
@@ -104,7 +112,7 @@ const Chat = ({channel, chat = null}) => {
         <div>
             <div>
                 {messages?.map((message, ind) => (
-                    <MessageSettingModal populateSocket={populateSocket} key={message?.id} message={message} user={user} chat={chat}/>
+                    <MessageSettingModal populateSocket={populateSocket} key={message?.id} message={message} user={user} users={users} chat={chat}/>
                 ))}
             </div>
             <form onSubmit={sendChat}>
