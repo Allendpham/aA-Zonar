@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { io } from 'socket.io-client';
 import { getChannelMessagesThunk, createChannelMessagesThunk, getPrivateChatMessagesThunk, createPrivateChatMessagesThunk } from '../../store/message';
-import MessageSettingModal from '../menus/messageMenu/index';
+import MessageSettingOptions from '../menus/messageMenu/messageSettings';
 import { store } from '../../index';
 let socket;
 
@@ -112,7 +112,7 @@ const Chat = ({channel, chat = null}) => {
         <div>
             <div>
                 {messages?.map((message, ind) => (
-                    <MessageSettingModal populateSocket={populateSocket} key={message?.id} message={message} user={user} users={users} chat={chat}/>
+                    <MessageSettingOptions populateSocket={populateSocket} key={message?.id} message={message} user={user} users={users} chat={chat}/>
                 ))}
             </div>
             <form onSubmit={sendChat}>

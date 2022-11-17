@@ -5,15 +5,14 @@ import { updateChannelMessageThunk, deleteChannelMessageThunk, updatePrivateChat
 import { getChannelThunk } from '../../../store/channel';
 import { getServerThunk } from '../../../store/server';
 
-const MessageSettingOptions = ({message, user, populateSocket, chat}) => {
-   let updateContent;
-   let deleteContent;
+const MessageSettingOptions = ({message, user,users, populateSocket, chat}) => {
    const dispatch = useDispatch()
    const [currmessage, setMessage] = useState(message.message)
    const [settings, setSettings] = useState(false)
+   const [shown, setShown] = useState(false)
    const serverId = useSelector(state => state?.channel?.currentChannel?.channel?.serverId)
    const server = useSelector(state => state?.server?.currentServer?.server)
-
+   const poster = Object.values(users).find(member => member.id == message?.userId)
 
    useEffect(() => {
       // dispatch(getChannelThunk(message.channelId))
@@ -27,8 +26,8 @@ const MessageSettingOptions = ({message, user, populateSocket, chat}) => {
          dispatch(deletePrivateChatMessageThunk(message.id))
       }
       populateSocket()
-
    }
+
    const handleSubmit = async (e) => {
       e.preventDefault();
 
@@ -55,16 +54,24 @@ const MessageSettingOptions = ({message, user, populateSocket, chat}) => {
 
    // const deleteButton = (<button onClick={() => dispatch(deleteChannelMessageThunk(message.id))}>Delete</button>)
 
+   let messageInput;
+   settings?
+      messageInput = (
+         <input
+         type='text'
+         value={currmessage}
+         onChange={(e)=> setMessage(e.target.value)}
+         />
+         ) :
+            messageInput = (
+               message.message
+            )
+
    let updateForm;
    settings ?
    updateForm =
       (<form className='update-message-form' onSubmit={handleSubmit}
-      onKeyPress={(e) => e === 'ENTER' ? handleSubmit() : null}>
-         <input
-             type='text'
-             value={currmessage}
-             onChange={(e)=> setMessage(e.target.value)}
-             />
+         onKeyPress={(e) => e === 'ENTER' ? handleSubmit() : null}>
          <button type='submit'>Submit</button>
       </form>) : updateForm = null
 
@@ -77,19 +84,24 @@ const MessageSettingOptions = ({message, user, populateSocket, chat}) => {
          deleteButt = (<button onClick={() => handleDelete()}>delete</button>)
       }
    }
-
+   let deleteContent
+   shown ? deleteContent = deleteButt : deleteContent = null
 
    let setSettingsButt
    message.userId === user.id ?
       setSettingsButt = (<button onClick={() => setSettings(!settings)}>edit</button>) :
          setSettingsButt = null
 
+   let updateContent
+   shown ? updateContent = setSettingsButt : updateContent = null
 
    return (
-   <div>
-      {setSettingsButt}
+   <div onMouseEnter={()=> setShown(true)} onMouseLeave={() => setShown(false)} >
+      <div id="message-settings-button"> {poster?.username} - {messageInput}</div>
+
+      {updateContent}
       {updateForm}
-      {deleteButt}
+      {deleteContent}
    </div>
    );
 }
