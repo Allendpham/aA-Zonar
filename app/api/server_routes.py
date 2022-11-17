@@ -69,6 +69,11 @@ def server_create():
                             name=data['name'],
                             preview_img=data['preview_img'])
         db.session.add(new_server)
+
+        # # Create a default general channel for newly created server
+        # general_channel = Channel(name='General', serverId=new_server.id)
+        # db.session.add(general_channel)
+
         current_user.admin.append(new_server)
         current_user.servers.append(new_server)
         db.session.commit()

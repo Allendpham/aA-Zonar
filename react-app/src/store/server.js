@@ -1,3 +1,5 @@
+import { createChannelThunk } from "./channel"
+
 //CONSTANTS
 const LOAD_SERVERS = 'servers/LOAD_SERVER'
 const GET_SERVER = 'servers/GET_SERVER'
@@ -67,8 +69,15 @@ export const addServerThunk = (server) => async (dispatch) =>{
 
   if(response.ok){
     const data = await response.json();
-    console.log('sssssssssssssssssssssssssssssssssssssssssssssssssss', data)
     dispatch(addServer(data))
+
+    const general_chat = {
+      name: 'General',
+      serverId: data.server.id
+    }
+
+    dispatch(createChannelThunk(general_chat, data.server.id))
+
     return data;
   }else if (response.status < 500) {
     const data = await response.json();

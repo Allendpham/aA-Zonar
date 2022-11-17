@@ -7,8 +7,8 @@ import NavBar from './components/NavBar';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import User from './components/User';
-import ServersIndex from './components/servers/ServerIndex';
-import ServerIndexItem from './components/servers/ServerIndexItem';
+// import ServersIndex from './components/servers/ServerIndex';
+// import ServerIndexItem from './components/servers/ServerIndexItem';
 import SplashPage from './components/splashpage/SplashPage';
 import ServersIndex from './components/servers/ServerIndex/ServerIndex';
 import ServerPage from './components/servers/ServerPage';
@@ -34,7 +34,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      {/* <NavBar /> */}
+      <NavBar />
       <Switch>
         <Route path='/login' exact={true}>
           <LoginForm />

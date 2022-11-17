@@ -45,7 +45,7 @@ const LoginForm = () => {
           <label htmlFor="email">
             <p className="login-text">Email</p>
           </label>
-          
+
           <input
             className="login-input"
             name="email"
@@ -59,7 +59,7 @@ const LoginForm = () => {
           <label htmlFor="password">
             <p className="login-text">Password</p>
           </label>
-          
+
           <input
             className="login-input"
             name="password"
@@ -71,6 +71,7 @@ const LoginForm = () => {
           <br />
           <button className='login-submit' type="submit">Log in</button>
         </div>
+          <button className='login-submit' onClick={() => {dispatch(login('kyle@aa.io', 'password'))}}>Demo Login</button>
         <p className='register'>
           Need an account?{" "}
           <Link className="signup-link" to={`/sign-up`}>
