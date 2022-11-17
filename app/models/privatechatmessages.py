@@ -11,8 +11,8 @@ class PrivateChatMessage(db.Model):
      __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    userId = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    privateChatId = db.Column(db.Integer, db.ForeignKey('privatechats.id'), nullable=False)
+    userId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
+    privateChatId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('privatechats.id')), nullable=False)
     message = db.Column(db.String(500), nullable=False)
     createdAt = db.Column(db.DateTime, default=datetime.datetime.now())
     updatedAt = db.Column(db.DateTime, default=datetime.datetime.now(), onupdate=datetime.datetime.now())

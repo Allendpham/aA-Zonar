@@ -7,9 +7,13 @@ from .db import add_prefix_for_prod
 
 private_chat_users = db.Table(
     'private_chat_users',
-    db.Column('privatechatId', db.Integer, db.ForeignKey('privatechats.id')),
-    db.Column('userId', db.Integer, db.ForeignKey('users.id')),
+    db.Column('privatechatId', db.Integer, db.ForeignKey(add_prefix_for_prod('privatechats.id'))),
+    db.Column('userId', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id'))),
 )
+
+if environment == 'production':
+    private_chat_users.schema = SCHEMA
+
 
 class PrivateChat(db.Model):
    __tablename__ = 'privatechats'

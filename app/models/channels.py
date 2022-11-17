@@ -13,7 +13,7 @@ class Channel(db.Model):
 
    id = db.Column(db.Integer, primary_key=True)
    name = db.Column(db.String(255), nullable=False)
-   serverId = db.Column(db.Integer, db.ForeignKey('servers.id'), nullable=False)
+   serverId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('servers.id')), nullable=False)
 
    server = db.relationship('Server', back_populates='channels')
    channelmessagelist = db.relationship('ChannelMessage', back_populates='channel', lazy=False, cascade="all, delete")
