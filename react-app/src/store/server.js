@@ -11,9 +11,10 @@ const loadServers = (servers) =>({
   servers
 });
 
-const getServer =(server) =>({
+const getServer =(server, allServers) =>({
   type: GET_SERVER,
-  server
+  server,
+  allServers
 })
 
 const addServer = (server) => ({
@@ -45,10 +46,12 @@ export const loadServersThunk = ()=> async (dispatch) => {
 
 export const getServerThunk = (serverId) => async (dispatch) => {
   const response = await fetch(`/api/servers/${serverId}`)
+  const Nextresponse  = await fetch('/api/servers')
 
   if(response.ok){
     const data = await response.json();
-    dispatch(getServer(data))
+    const allServersData = await Nextresponse.json();
+    dispatch(getServer(data, allServersData))
     return data;
   }else if (response.status < 500) {
     const data = await response.json();
@@ -129,7 +132,6 @@ export const removeServerThunk = (serverId) => async (dispatch) =>{
 }
 
 
-
 //REDUCER
 const initialState = {allServers:{}, currentServer:{}}
 export default function serverReducer(state = initialState, action){
@@ -138,7 +140,8 @@ export default function serverReducer(state = initialState, action){
       const allServers = normalizeArray(action.servers.servers);
       return {...state, allServers:{...allServers}}
     case GET_SERVER:
-      const currentServer = {...state, currentServer:{...action.server}}
+      const allServersforRender = normalizeArray(action.allServers.servers);
+      const currentServer = {allServers: {...allServersforRender}, currentServer:{...action.server}}
       return currentServer
     case ADD_SERVER:
         if (!state[action.server.id]) {
@@ -170,6 +173,19 @@ function normalizeArray(dataArray){
   const obj = {}
   dataArray.forEach(element => {
     obj[element.id] = element
+    // let copyUsers = [];
+    // let copyAdmins = [];
+    // obj[element.id].users.forEach(user => {
+    //   console.log("this is each user ---------------------", user)
+    //   copyUsers.push({...user})
+    // })
+    // obj[element.id].admins.forEach(admin => {
+    //   copyAdmins.push({...admin})
+    // })
+    // console.log("tthis is the copy =======================", copyUsers)
+    // obj[element.id].users = [...copyUsers]
+    // obj[element.id].admins = [...copyAdmins]
+    // console.log('these are the servers with replaced elements', obj[element.id])
   })
   return obj
 }

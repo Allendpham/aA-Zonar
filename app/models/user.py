@@ -25,7 +25,8 @@ class User(db.Model, UserMixin):
 
     servers = db.relationship('Server',
                         secondary=server_users,
-                        backref='userServers')
+                        backref='userServers'
+                        )
 
     admin = db.relationship('Server',
                         secondary=server_admins,
