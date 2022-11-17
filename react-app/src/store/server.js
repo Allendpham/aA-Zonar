@@ -173,19 +173,6 @@ function normalizeArray(dataArray){
   const obj = {}
   dataArray.forEach(element => {
     obj[element.id] = element
-    // let copyUsers = [];
-    // let copyAdmins = [];
-    // obj[element.id].users.forEach(user => {
-    //   console.log("this is each user ---------------------", user)
-    //   copyUsers.push({...user})
-    // })
-    // obj[element.id].admins.forEach(admin => {
-    //   copyAdmins.push({...admin})
-    // })
-    // console.log("tthis is the copy =======================", copyUsers)
-    // obj[element.id].users = [...copyUsers]
-    // obj[element.id].admins = [...copyAdmins]
-    // console.log('these are the servers with replaced elements', obj[element.id])
   })
   return obj
 }
