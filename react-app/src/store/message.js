@@ -60,16 +60,16 @@ export const createChannelMessagesThunk = (payload) => async (dispatch) => {
 }
 
 export const updateChannelMessageThunk = (payload, messageId) => async(dispatch) => {
-  // console.log('im hereeeeeeeeeeeeeeeee')
+
   const response = await fetch(`/api/channel_messages/${messageId}`,{
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     })
-    console.log('I AMMM PAYLOAD', payload)
+
     if(response.ok){
       const data = await response.json();
-      console.log(data)
+
       dispatch(addChannelMessage(data))
       return data;
     }else if (response.status < 500) {
@@ -86,13 +86,13 @@ export const deleteChannelMessageThunk = (messageId) => async(dispatch) => {
   const response = await fetch(`/api/channel_messages/${messageId}`,{
       method: 'DELETE'
     })
-    console.log("i'm delete", response)
+
     if(response.ok){
       dispatch(deleteChannelMessage(messageId))
       return;
     }else if (response.status < 500) {
       const data = await response.json();
-      console.log("this is data", data)
+
       if (data.errors) {
         return data.errors;
       }
@@ -142,16 +142,16 @@ export const createPrivateChatMessagesThunk = (payload) => async (dispatch) => {
 }
 
 export const updatePrivateChatMessageThunk = (payload, messageId) => async(dispatch) => {
- // console.log('im hereeeeeeeeeeeeeeeee')
+
  const response = await fetch(`/api/private_chat_messages/${messageId}`,{
      method: "PUT",
      headers: { "Content-Type": "application/json" },
      body: JSON.stringify(payload),
    })
-   console.log('I AMMM PAYLOAD', payload)
+
    if(response.ok){
      const data = await response.json();
-     console.log(data)
+
      dispatch(addChannelMessage(data))
      return data;
    }else if (response.status < 500) {
@@ -174,7 +174,7 @@ export const deletePrivateChatMessageThunk = (messageId) => async(dispatch) => {
      return;
    }else if (response.status < 500) {
      const data = await response.json();
-     console.log("this is data", data)
+
      if (data.errors) {
        return data.errors;
      }
