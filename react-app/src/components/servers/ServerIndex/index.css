@@ -1,0 +1,67 @@
+.server-index-wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  width: 70px;
+  background-color: rgb(32,34,37);
+  overflow: auto;
+}
+
+.server-index-wrapper ul{
+  list-style-type: none;
+  padding-left: unset;
+
+}
+
+
+
+button{
+  margin-bottom: 12px !important;
+}
+
+.server-index-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.server-index-item{
+  padding: 0;
+  margin-bottom: 8px;
+  width: 48px;
+  height: 48px;
+  max-width: 48px;
+  max-height: 48px;
+  object-fit: fill;
+  background-color: rgb(54,57,63);
+  border: 1px solid transparent;
+  border-radius: 99%;
+  color: #DCDDDE;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color .15s ease-out, color .15s ease-out, border-radius .15s ease-out;
+  cursor: pointer;
+}
+
+.server-index-item:hover{
+  border-radius: 30%;
+  background-color: rgb(64, 78, 237);
+}
+
+#home-button{
+  object-fit: scale-down;
+  background-image: url('https://res.cloudinary.com/degkakjou/image/upload/v1668657898/Zonar/pngfind.com-discord-icon-png-283551_l2blab.png');
+}
+
+
+
+.bar-split {
+  position: relative;
+  margin:auto;
+  margin-bottom: 8px;
+  height: 2px;
+  width: 32px;
+  border-radius: 1px;
+  background-color: rgba(255,255,255, .06);
+  /* background-color: black; */
+}

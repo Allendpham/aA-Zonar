@@ -9,9 +9,9 @@ import ChannelSettingsModal from '../channels/ChannelSettingsModal';
 import Chat from '../chat';
 import UsersList from '../users/usersList';
 import { getChannelMessagesThunk } from '../../store/message';
-import UserServers from './ServerIndex';
+import UserServers from './ServerIndex/ServerIndex';
 
-const ServerIndexItem = () => {
+const ServerPage = () => {
    const dispatch = useDispatch();
    const {serverId} = useParams();
    const servers = useSelector(state => Object.values(state.server.allServers))
@@ -66,4 +66,4 @@ const ServerIndexItem = () => {
    )
 }
 
-export default ServerIndexItem;
+export default ServerPage;

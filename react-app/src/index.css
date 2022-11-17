@@ -1,1 +1,28 @@
 /* TODO Add site wide styles */
+.server-index-create{
+  margin-bottom: 8px;
+  width: 48px;
+  height: 48px;
+  object-fit: fill;
+  background-color: #36393F;
+  border: 1px solid transparent;
+  border-radius: 99%;
+  color: #DCDDDE;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color .15s ease-out, color .15s ease-out, border-radius .15s ease-out;
+}
+
+.server-index-create:hover{
+  border-radius: 30%;
+  background-color: rgb(59,165,92);
+}
+
+
+.server-index-create i{
+  color: rgb(59,165,93)
+}
+
+.server-index-create:hover i{
+  color: #DCDDDE;
+}

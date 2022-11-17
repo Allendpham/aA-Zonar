@@ -7,7 +7,7 @@ function ExploreServersModal() {
 
   return (
     <div className="">
-      <button id="explore-button" onClick={() => {setShowModal(true)}}>Explore Servers</button>
+      <button id="explore-button" className= 'server-index-create' onClick={() => {setShowModal(true)}}><i class="fa-solid fa-compass"></i></button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <ServerIndex setShowModal={setShowModal}/>
