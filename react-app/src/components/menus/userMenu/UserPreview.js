@@ -8,13 +8,16 @@ const UserPreviewForm = ({setShowModal, currentServer, user}) => {
   const history = useHistory()
 
   const [adminRole, setAdminRole] = useState(true)
+  const [isOwner, setOwner] = useState(false)
+  const currUser = useSelector(state => state.session.user)
 
 
+
+  useEffect(() =>{
+    if(currentServer?.ownerId === currUser?.id) setOwner(true)
+  },[])
 
     if(!currentServer) return (<h1>Loading</h1>)
-
-
-
     for (const userAdmin in currentServer.admins) {
         if (userAdmin.id === user.id) {
             setAdminRole(true)
@@ -22,8 +25,20 @@ const UserPreviewForm = ({setShowModal, currentServer, user}) => {
     }
 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+
+  const submitRole = async (e) => {
+
+    setAdminRole(!adminRole)
+    const payload = {
+      serverId: currentServer.id,
+      userId: user.id
+    }
+
+    const response = await fetch(`/api/servers/admins`,{
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    })
 
     //Needs to send a thunk to the backend to hit an endpoint that will store the user in admin join table
   }
@@ -34,12 +49,13 @@ const UserPreviewForm = ({setShowModal, currentServer, user}) => {
 
 
   return(
-    <form className='user-preview-form' onSubmit={handleSubmit}>
+    <form className='user-preview-form'>
         <label>AdminRole</label>
         <input
             type='checkbox'
             checked={adminRole}
-            onClick={()=>setAdminRole(!adminRole)}
+            onClick={()=> submitRole()}
+            disabled={!isOwner}
             />
     </form>
   )

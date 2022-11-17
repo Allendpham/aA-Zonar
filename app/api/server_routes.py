@@ -80,34 +80,6 @@ def server_create():
         return {'server': new_server.to_dict()}
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
-
-# @server_routes.route('/<int:serverId>/update', methods=['GET', 'POST'])
-# def update_server(serverId):
-#     """
-#     Update a server
-#     """
-#     print("I made it here!!")
-#     server = Server.query.get_or_404(serverId) # query or 404 if not found
-#     if request.method == 'POST':
-#         form = ServerForm()
-#         form['csrf_token'].data = request.cookies['csrf_token']
-
-#         db.session.delete(server)
-#         db.session.commit()
-
-#         if form.validate_on_submit():
-#             data = form.data
-#             name = data['name']
-#             preview_img = data['preview_img']
-#             server = Server(ownerId= data['ownerId'], name = name, preview_img = preview_img)
-
-#             db.session.add(server)
-#             db.session.commit()
-#             return {'server': server.to_dict()}
-#         return {'errors': validation_errors_to_error_messages(form.errors)}, 401
-
-
-
     # PUT ROUTE IN CASE ABOVE DOES NOT WORK
 @server_routes.route('/<int:serverId>', methods=['PUT'])
 def update_server(serverId):
@@ -129,19 +101,6 @@ def update_server(serverId):
         return {'server': server.to_dict()}
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
-# @server_routes.route('/<int:serverId>/delete', methods=['GET', 'POST'])
-# def delete_server(serverId):
-#     """
-#     Delete a route
-#     """
-#     server = Server.query.get_or_404(serverId).first()
-#     if request.method == 'POST':
-#         if server: # necessary?
-#             db.session.delete(server)
-#             db.session.commit()
-#             return {"message": "Server was successfully deleted"}
-#     return {"error": "Server does not exist"}, 404
-
     # DELETE ROUTE IN CASE ABOVE DOES NOT WORK
 @server_routes.route('/<int:serverId>', methods=['DELETE'])
 def delete_server(serverId):
@@ -154,3 +113,40 @@ def delete_server(serverId):
         db.session.commit()
         return {"message": "Server was successfully deleted"}
     return {"error": "Server does not exist"}, 404
+
+
+@server_routes.route('/admins', methods=['POST'])
+def add_admin():
+    """
+    Adds a admin to a server
+    """
+    request_data = request.get_json()
+    print('===================================', request_data)
+    userId = request_data['userId']
+    serverId = request_data['serverId']
+
+    user = User.query.get_or_404(userId)
+    print('userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', user)
+    server = Server.query.get_or_404(serverId)
+    print('serverrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', server)
+
+    if server and user:
+        print('ilovebrinnnnnnnnnnnnnnnnnnnnnnnn')
+        user.admin.append(server)
+        db.session.commit()
+        return {'message': 'Admin was successfully added'}
+    return {"error": "Server or User does not exist"}, 404
+
+
+
+# @server_routes.route('/<int:serverId>', methods=['DELETE'])
+# def delete_server(serverId):
+#     """
+#     Delete a route
+#     """
+#     server = Server.query.get_or_404(serverId)
+#     if server:
+#         db.session.delete(server)
+#         db.session.commit()
+#         return {"message": "Server was successfully deleted"}
+#     return {"error": "Server does not exist"}, 404
