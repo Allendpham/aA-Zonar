@@ -10,8 +10,9 @@ import User from './components/User';
 import ServersIndex from './components/servers/ServerIndex';
 import ServerIndexItem from './components/servers/ServerIndexItem';
 import SplashPage from './components/splashpage/SplashPage';
+import ServersIndex from './components/servers/ServerIndex/ServerIndex';
+import ServerPage from './components/servers/ServerPage';
 import { authenticate } from './store/session';
-import UserServers from './components/servers/ServerIndex';
 import PrivateChats from './components/private-chats/privateChat';
 import { loadPrivateChatsThunk } from './store/privatechat';
 
@@ -48,13 +49,11 @@ function App() {
           <User />
         </ProtectedRoute>
         <ProtectedRoute path='/@me' exact={true} >
-          <NavBar />
-          <UserServers />
+          <ServersIndex />
           <PrivateChats />
         </ProtectedRoute>
         <ProtectedRoute path='/servers/:serverId' exact={true} >
-          <NavBar />
-          <ServerIndexItem />
+          <ServerPage />
         </ProtectedRoute>
         {/* <ProtectedRoute path='/' exact={true} >
           <Redirect to='/@me'></Redirect>
