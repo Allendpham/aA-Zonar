@@ -1,0 +1,73 @@
+.login-page {
+    background-image: url(https://i.imgur.com/HnFvFmD.jpg);
+    display: flex;
+    align-content: flex-start;
+    justify-content: center;
+    height: 100%;
+    max-height: 100%;
+    min-height: 100%;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: flex-start;
+    border-radius: 5px;
+    color: #fdfefe;
+    height: 314px;
+    width: 410px;
+    padding: 34px;
+    background-color: #36393f;
+}
+
+.login-welcome {
+    display: flex;
+    align-self: center;
+    color: #fdfefe;
+    font-size: 25px;
+    margin: 0 0 8px 0;
+}
+
+.login-subheading {
+    display: flex;
+    align-self: center;
+    color: #fdfefe;
+    font-size: 16px;
+    margin: 0
+}
+
+.login-text-div {
+    margin: 5px 0;
+}
+
+.login-text {
+    color: #fdfefe;
+    margin: 0 0 5px;
+}
+
+.login-input {
+    color: #e7f0fe;
+    border-style: none;
+    padding: 10px;
+    width: 90%;
+    height: 20px;
+    color: black;
+    border-radius: 4px;
+    box-shadow: none;
+}
+
+.login-submit {
+    background-color: #5765f2;
+    color: #fdfefe;
+    border-radius: 4px;
+    border-style: none;
+    margin: 20px 0;
+    width: 95%;
+    height: 30%;
+}
+
+.register {
+    font-size: 13px;
+    margin-top: 3px;
+}
