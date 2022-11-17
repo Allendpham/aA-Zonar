@@ -9,7 +9,6 @@ const UpdateChannelForm = ({setShowModal, channelId}) => {
 
   const channels = useSelector(state => state.channel.allChannels)
   const chosenChannel = channels[channelId]
-  console.log('i am the chosen one', chosenChannel)
 
   const [name, setName] = useState(chosenChannel?.name)
 

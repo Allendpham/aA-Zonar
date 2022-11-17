@@ -25,7 +25,6 @@ const ChannelForm = ({setShowModal}) => {
     };
 
     let server = await dispatch(createChannelThunk(payload, serverId))
-    console.log("I am the server", server)
 
     if(server){
       setShowModal(false)
