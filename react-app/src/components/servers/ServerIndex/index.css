@@ -1,3 +1,6 @@
+.server-content-wrapper{
+  display: flex;
+}
 .server-index-wrapper{
   display: flex;
   flex-direction: column;

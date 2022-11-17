@@ -55,11 +55,11 @@ export const getOnePrivateChatThunk = (privateChatId) => async (dispatch) => {
     }
 }
 
-export const createPrivateChatThunk = (userId) => async (dispatch) => {
+export const createPrivateChatThunk = (payload) => async (dispatch) => {
    const response = await fetch(`/api/private_chat`,{
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userId)
+      body: JSON.stringify(payload)
   })
   //This is really only going to append the existing current user and the given userId to a newly created private chat instance
   //Return the server along with the associated users

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import { createPrivateChatThunk } from '../../../store/privatechat';
 import { getServerThunk } from '../../../store/server';
 
 const UserPreviewForm = ({setShowModal, currentServer, user}) => {
@@ -10,8 +11,8 @@ const UserPreviewForm = ({setShowModal, currentServer, user}) => {
   const [adminRole, setAdminRole] = useState(false)
   const [isOwner, setOwner] = useState(false)
   const currUser = useSelector(state => state.session.user)
-
-console.log('serverrrrrrrrrrrrrrrrrrrrrr', currentServer)
+  const currentChats = useSelector(state => Object.values(state.privatechat.allPrivateChats))
+console.log('serverrrrrrrrrrrrrrrrrrrrrr', currentChats)
   useEffect(() =>{
     if(currentServer?.ownerId === currUser?.id) setOwner(true)
     if(currentServer.admins.filter(admin => admin.id === user.id).length > 0){
@@ -19,6 +20,7 @@ console.log('serverrrrrrrrrrrrrrrrrrrrrr', currentServer)
     }
   },[])
 
+  const matchedChats = currentChats.map(chat => chat.users.map(mbr => mbr.id)).filter(item => item.includes(user.id))
 
   useEffect(()=>{
     dispatch(getServerThunk(currentServer.id))
@@ -48,10 +50,25 @@ console.log('serverrrrrrrrrrrrrrrrrrrrrr', currentServer)
       })
     }
 
-
-    //Needs to send a thunk to the backend to hit an endpoint that will store the user in admin join table
   }
 
+  //Needs to send a thunk to the backend to hit an endpoint that will store the user in admin join table
+
+
+const startChat = async () =>{
+  let payload = {
+    userId: user.id
+  }
+  if(matchedChats.length > 0){
+    history.push('/@me')
+    return
+  }
+  let chat = await dispatch(createPrivateChatThunk(payload))
+  console.log('+++++++++++++++++NEW CHAT+++++++',chat)
+  if(chat){
+    history.push('/@me')
+  }
+}
   //form should only display if the user is the owner of the server
 
 
@@ -66,8 +83,11 @@ console.log('serverrrrrrrrrrrrrrrrrrrrrr', currentServer)
             onClick={()=> submitRole()}
             disabled={!isOwner || currentServer.ownerId === user.id}
             />
+          <button
+          onClick={()=> startChat()}
+          >Direct Message</button>
     </form>
   )
-}
+  }
 
 export default UserPreviewForm

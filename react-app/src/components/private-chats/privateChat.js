@@ -23,6 +23,7 @@ function PrivateChats() {
 
   return (
     <div className="chat-index-wrapper">
+      <h2>Direct Messages</h2>
       <ul className="chat-list-wrapper">
         {liveChats?.map((chat) => (
           <li key={chat?.id}

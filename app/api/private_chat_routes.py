@@ -34,18 +34,21 @@ def create_private_chat():
    Create a private chat
    """
    # Getting the user to connect to
-   userId = request.body.userId
-   connecting_user = User.get_or_404(userId)
-
+   data = request.get_json()
+   userId = data['userId']
+   print('daaaaaaaaaaaaaaaaaaaatttttttttaaaaaaaaaa', userId, '=================')
+   connecting_user = User.query.get_or_404(userId)
+   print('connecting==========', connecting_user)
    # Query to get the current user
-   user = User.get_or_404(current_user.id)
+   user = User.query.get_or_404(current_user.id)
+   print('connectingUSER==========', user)
 
    # Create a new Private Chat Instance
    new_private_chat = PrivateChat()
 
    # Connect both users to the new Private Chat Instance
-   current_user.privatechats.append(new_private_chat)
    user.privatechats.append(new_private_chat)
+   connecting_user.privatechats.append(new_private_chat)
    db.session.commit()
 
    return { 'privatechat': new_private_chat.to_dict() }

@@ -34,7 +34,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar />
       <Switch>
         <Route path='/login' exact={true}>
           <LoginForm />
@@ -50,6 +49,8 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path='/@me' exact={true} >
           <ServersIndex />
+          <NavBar />
+
           <PrivateChats />
         </ProtectedRoute>
         <ProtectedRoute path='/servers/:serverId' exact={true} >
