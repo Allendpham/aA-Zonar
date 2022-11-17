@@ -6,6 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.schema import Column, ForeignKey, Table
 from sqlalchemy.types import Integer
 from .servers import server_admins, server_users
+from .privatechat import private_chat_users
 
 # Base = declarative_base() <--- USELESS
 
@@ -29,6 +30,13 @@ class User(db.Model, UserMixin):
     admin = db.relationship('Server',
                         secondary=server_admins,
                         back_populates='admins')
+
+    userchannels = db.relationship('ChannelMessage', back_populates='channelusers')
+
+    privatechats = db.relationship('PrivateChat',
+                    secondary=private_chat_users,
+                    backref='userPrivateChats')
+
 
     @property
     def password(self):

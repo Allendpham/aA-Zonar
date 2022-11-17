@@ -7,9 +7,14 @@ import NavBar from './components/NavBar';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import User from './components/User';
-import ServersIndex from './components/servers/ServerIndex';
-import ServerIndexItem from './components/servers/ServerIndexItem';
+// import ServersIndex from './components/servers/ServerIndex';
+// import ServerIndexItem from './components/servers/ServerIndexItem';
+import SplashPage from './components/splashpage/SplashPage';
+import ServersIndex from './components/servers/ServerIndex/ServerIndex';
+import ServerPage from './components/servers/ServerPage';
 import { authenticate } from './store/session';
+import PrivateChats from './components/private-chats/privateChat';
+import { loadPrivateChatsThunk } from './store/privatechat';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -20,6 +25,7 @@ function App() {
       await dispatch(authenticate());
       setLoaded(true);
     })();
+    dispatch(loadPrivateChatsThunk())
   }, [dispatch]);
 
   if (!loaded) {
@@ -28,7 +34,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar />
       <Switch>
         <Route path='/login' exact={true}>
           <LoginForm />
@@ -44,13 +49,20 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path='/@me' exact={true} >
           <ServersIndex />
+          <NavBar />
+
+          <PrivateChats />
         </ProtectedRoute>
         <ProtectedRoute path='/servers/:serverId' exact={true} >
-          <ServerIndexItem />
+          <ServerPage />
         </ProtectedRoute>
-        <ProtectedRoute path='/' exact={true} >
+        {/* <ProtectedRoute path='/' exact={true} >
           <Redirect to='/@me'></Redirect>
-        </ProtectedRoute>
+        </ProtectedRoute> */}
+        <Route path='/' exact={true}>
+          <SplashPage />
+        </Route>
+
 
       </Switch>
     </BrowserRouter>
