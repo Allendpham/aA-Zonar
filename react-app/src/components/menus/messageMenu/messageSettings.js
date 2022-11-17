@@ -14,6 +14,7 @@ const MessageSettingOptions = ({message, user, populateSocket, chat}) => {
    const serverId = useSelector(state => state?.channel?.currentChannel?.channel?.serverId)
    const server = useSelector(state => state?.server?.currentServer?.server)
 
+
    useEffect(() => {
       // dispatch(getChannelThunk(message.channelId))
       dispatch(getServerThunk(serverId))

@@ -4,7 +4,7 @@ import MessageSettingOptions from './messageSettings';
 
 function MessageSettingModal({message, user, populateSocket, chat}) {
   const [showModal, setShowModal] = useState(false);
-  console.log('..............................', message)
+
 
   return (
     <div className="message-settings-wrapper">
