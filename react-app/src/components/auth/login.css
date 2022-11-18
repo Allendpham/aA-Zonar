@@ -87,6 +87,7 @@
     height: 46px;
     font-size: 15px;
     font-weight: 700;
+    margin-bottom: 15px;
 }
 
 .login-submit:hover {
