@@ -19,9 +19,9 @@ const UserPreviewForm = ({setShowModal, currentServer, user}) => {
   const [currRoom, setCurrRoom] = useState("")
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([])
-  // const [chat, setChat] = useState()
   const currUser = useSelector(state => state.session.user)
   const currentChats = useSelector(state => Object.values(state.privatechat.allPrivateChats))
+
 
   useEffect(() => {
     socket = io();
