@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import {io} from 'socket.io-client';
 import { createPrivateChatThunk } from '../../../store/privatechat';
 import { getServerThunk } from '../../../store/server';
+import {createChannelMessagesThunk, getPrivateChatMessagesThunk} from '../../store/message';
+
+
+let socket;
 
 const UserPreviewForm = ({setShowModal, currentServer, user}) => {
   const dispatch = useDispatch()
@@ -10,9 +15,69 @@ const UserPreviewForm = ({setShowModal, currentServer, user}) => {
 
   const [adminRole, setAdminRole] = useState(false)
   const [isOwner, setOwner] = useState(false)
+  const [chatInput, setChatInput] = useState("");
+  const [currRoom, setCurrRoom] = useState("")
+  const [messages, setMessages] = useState([]);
+  const [users, setUsers] = useState([])
+  // const [chat, setChat] = useState()
   const currUser = useSelector(state => state.session.user)
   const currentChats = useSelector(state => Object.values(state.privatechat.allPrivateChats))
-console.log('serverrrrrrrrrrrrrrrrrrrrrr', currentChats)
+
+  useEffect(() => {
+    socket = io();
+    socket.on('chat', (chatId) => {
+      setMessages((message) => [...message, chatId.message])
+    })
+    return (() => {
+      socket.disconnect()
+    })
+  },[])
+
+  useEffect(() => {
+    setMessages([])
+    dispatch(getPrivateChatMessagesThunk(chatId))
+    socket.emit('join', {chat: chatId} )
+    socket.emit('fetch', {chat: chatId} )
+
+    async function fetchData() {
+      const response = await fetch('/api/users/');
+      const responseData = await response.json();
+      setUsers(responseData.users);
+    }
+    fetchData();
+  }, [chatId])
+
+  useEffect(() => {
+    socket.on('last_100_messages', (data) => {
+    const history = data.messages
+        setMessages((state) => [...history.slice(-10)]);
+    });
+    }, []);
+
+    const populateSocket = () => {
+      socket.emit('fetch', {chat: chatId})
+    }
+
+    const updateChatInput = (e) => {
+      setChatInput(e.target.value)
+  };
+
+  const sendChat = async (e) => {
+    e.preventDefault()
+    socket.emit("fetch", { chat: chatId });
+
+    let payload = {
+        userId: user.id,
+        channelId: channel.id,
+        message: chatInput
+    }
+    let new_message = await dispatch(createChannelMessagesThunk(payload))
+    socket.emit("chat", { msg: {...new_message}, room: currRoom});
+
+  setChatInput("")
+}
+
+
   useEffect(() =>{
     if(currentServer?.ownerId === currUser?.id) setOwner(true)
     if(currentServer.admins.filter(admin => admin.id === user.id).length > 0){
@@ -64,7 +129,6 @@ const startChat = async () =>{
     return
   }
   let chat = await dispatch(createPrivateChatThunk(payload))
-  console.log('+++++++++++++++++NEW CHAT+++++++',chat)
   if(chat){
     history.push('/@me')
   }
@@ -75,18 +139,29 @@ const startChat = async () =>{
 
 
   return(
-    <form className='user-preview-form'>
-        <label>AdminRole</label>
-        <input
-            type='checkbox'
-            checked={adminRole}
-            onClick={()=> submitRole()}
-            disabled={!isOwner || currentServer.ownerId === user.id}
+    <div>
+      <form className='user-preview-form'>
+          <label>AdminRole</label>
+          <input
+              type='checkbox'
+              checked={adminRole}
+              onClick={()=> submitRole()}
+              disabled={!isOwner || currentServer.ownerId === user.id}
+              />
+            <button
+            onClick={()=> startChat()}
+            >Direct Message</button>
+      </form>
+      <form onSubmit={sendChat}>
+            <input
+                placeholder={`Message @${user.id}`}
+                value={chatInput}
+                onChange={updateChatInput}
             />
-          <button
-          onClick={()=> startChat()}
-          >Direct Message</button>
-    </form>
+      </form>
+
+
+    </div>
   )
   }
 

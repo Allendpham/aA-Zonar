@@ -36,7 +36,7 @@ function PrivateChats() {
         ))}
       </ul>
         < Chat chat={chatId} />
-        < UserSettings />
+        < UserSettings/>
     </div>
   );
 }
