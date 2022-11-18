@@ -1,0 +1,16 @@
+#channel-bar{
+  height: 100vh;
+  min-width: 240px;
+  background-color: rgb(47,49,54);
+}
+#user-bar{
+  display: flex;
+  justify-content: center;
+  background-color: rgb(41,43,47) ;
+  min-width: 240px;
+  min-height: 52px;
+  max-width: 240px;
+  max-height: 52px;
+  position: absolute;
+  bottom: 0;
+}

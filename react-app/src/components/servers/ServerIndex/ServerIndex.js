@@ -22,16 +22,15 @@ function ServerIndex() {
    return(
       <div className='server-index-wrapper'>
          <ul className='servers-list-wrapper'>
-            <li>
                <input
                   id='home-button'
                   className='server-index-item'
                   type='image'
-                  src='https://res.cloudinary.com/degkakjou/image/upload/v1668658495/Zonar/pngfind.com-discord-icon-small_sjbpuo.png'
+                  src='https://res.cloudinary.com/degkakjou/image/upload/v1668750845/Zonar/osDIwkc_xpz4lw.png'
                   onClick={()=> history.push(`/@me`)}
                >
                </input>
-            </li>
+
             <div className='bar-split'></div>
             {servers?.map(server => (
                <li key={server?.id}>
@@ -41,7 +40,7 @@ function ServerIndex() {
          <div className='bar-split'></div>
 
          <li>
-            <ServerFormModal />
+         <ServerFormModal />
          </li>
          <li>
          <ExploreServersModal />

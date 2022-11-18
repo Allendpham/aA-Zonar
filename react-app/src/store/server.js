@@ -5,6 +5,7 @@ const LOAD_SERVERS = 'servers/LOAD_SERVER'
 const GET_SERVER = 'servers/GET_SERVER'
 const ADD_SERVER = 'servers/ADD_SERVER'
 const REMOVE_SERVER = 'servers/REMOVE_SERVER'
+const CLEAR_SERVER = 'server/CLEAR_SERVER'
 //ACTIONS
 const loadServers = (servers) =>({
   type: LOAD_SERVERS,
@@ -25,6 +26,10 @@ const addServer = (server) => ({
 const removeServer = (server) => ({
   type: REMOVE_SERVER,
   server
+})
+
+export const clearServer = () =>({
+  type: CLEAR_SERVER
 })
 //THUNKS
 export const loadServersThunk = ()=> async (dispatch) => {
@@ -162,6 +167,9 @@ export default function serverReducer(state = initialState, action){
       const deleteState = { ...state };
       delete deleteState.allServers[action.serverId];
       return deleteState;
+    case CLEAR_SERVER:
+      return {
+        ...state, allServers:{...state.allServers}, currentServer:{}}
     default:
       return state;
   }

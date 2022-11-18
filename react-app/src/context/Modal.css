@@ -26,9 +26,12 @@
   flex-direction: column;
   position: absolute;
   background-color: white;
+  border: 1px transparent solid;
+  border-radius: 4px;
   width: 400px;
   height: fit-content;
   padding: 25px;
+  overflow: hidden;
 }
 
 #modal-content form{
@@ -48,11 +51,11 @@
   padding: 2px 5px;
 }
 
-#modal-content button{
+/* #modal-content button{
   height: 40px;
   width: 400px;
   border: 1px solid rgba(107, 106, 106, 0.5);
   border-radius: 3px;
   background-color: #3C4047;
   color: #FCFCF4;
-}
+} */

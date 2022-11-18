@@ -27,14 +27,12 @@ const ServerForm = ({setShowModal}) => {
     let server = await dispatch(addServerThunk(payload))
 
     if(server){
-      setShowModal(false)
       dispatch(loadServersThunk())
+      setShowModal(false)
+      history.push(`/servers/${server.id}`)
     }
   }
 
-  const handleCancelClick = (e) => {
-    e.preventDefault();
-  };
 
   return(
     <form className='server-form' onSubmit={handleSubmit}>
@@ -48,8 +46,8 @@ const ServerForm = ({setShowModal}) => {
         placeholder='Server Name'
         value={name}
         onChange={updateName}/>
-      <button type='submit'>Submit</button>
-      <button type='button' onClick={handleCancelClick}>Cancel</button>
+      <button className='create-server-submit' type='submit'>Create</button>
+
     </form>
   )
 }
