@@ -41,7 +41,7 @@ function ServerIndex() {
          <div className='bar-split'></div>
 
          <li>
-            <ServerFormModal />
+         <ServerFormModal />
          </li>
          <li>
          <ExploreServersModal />
