@@ -39,3 +39,7 @@
 .fa-x{
   scale: .8;
 }
+
+.direct-msg-title{
+  cursor: unset !important;
+}

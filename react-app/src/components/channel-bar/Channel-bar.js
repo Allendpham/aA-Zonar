@@ -17,7 +17,6 @@ const [title, setTitle] = useState('')
 const [location, setLocation] = useState('')
 const [chatId, setChatId] = useState('')
 
-console.log('currentserver',server)
 useEffect(() =>{
   server.server? setTitle(<h3>{server.server.name}</h3>): setTitle(<h3>Direct Messages</h3>)
   server.server? setLocation('server'):setLocation('home')
@@ -27,12 +26,7 @@ const getChannel = (id) => {
   setChatId(id)
   dispatch(getOnePrivateChatThunk(chatId))
 }
-const displaySettings = () =>{
-  const settingsButton = document.querySelector('#server-settings-button')
-  // setShowModal(false)
-  // console.log('SETTINGS', settingsButton)
-  settingsButton.click()
-}
+
 let content;
 if(location === 'server'){
   content = (
@@ -57,9 +51,8 @@ if(location === 'server'){
 }else{
   content = (
     <div id='channel-bar'>
-    <div id='channel-bar-title-container' className='direct-messages-title'>
-      {title}
-    </div>
+      <button id='server-settings-button' className='direct-msg-title'>Direct Messages</button>
+
     <ul className="chat-list-wrapper">
         {liveChats?.map((chat) => (
           <li key={chat?.id}
