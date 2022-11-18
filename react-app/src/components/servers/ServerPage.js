@@ -8,9 +8,6 @@ import ChannelFormModal from '../channels/ChannelFormModal';
 import ChannelSettingsModal from '../channels/ChannelSettingsModal';
 import Chat from '../chat';
 import UsersList from '../users/usersList';
-import { getChannelMessagesThunk } from '../../store/message';
-import UserServers from './ServerIndex/ServerIndex';
-import UserSettings from '../users/userSettings';
 
 const ServerPage = () => {
    const dispatch = useDispatch();
@@ -64,7 +61,6 @@ const ServerPage = () => {
          <ul>{allChannels?.map(ele => (
             <li key={ele.id} onClick={() => showChannel(ele)}>{ele.name}<ChannelSettingsModal channelId={ele?.id}/></li>
          ))}</ul>
-         < UserSettings />
          </div>
          {content}
          <UsersList currentServer={singleServer}/>

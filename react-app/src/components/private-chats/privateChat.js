@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch, } from "react-redux";
 import { Link } from "react-router-dom";
 import { getOnePrivateChatThunk, loadPrivateChatsThunk } from "../../store/privatechat";
+import { clearServer } from "../../store/server";
 import Chat from "../chat";
-import UserSettings from "../users/userSettings";
 
 function PrivateChats() {
   const dispatch = useDispatch();
@@ -13,6 +13,7 @@ function PrivateChats() {
 
   useEffect(() => {
     dispatch(loadPrivateChatsThunk());
+    dispatch(clearServer())
   }, [dispatch]);
   if (!liveChats) return <h1>Loading...</h1>;
   //Need to filter servers for only servers that the user is a part of
@@ -36,7 +37,6 @@ function PrivateChats() {
         ))}
       </ul>
         < Chat chat={chatId} />
-        < UserSettings />
     </div>
   );
 }

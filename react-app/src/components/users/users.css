@@ -7,6 +7,46 @@
     background-color: #36393e;
 }
 
+.settings-bar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 220px;
+    height: 100%;
+}
+#gear{
+    color: rgb(167,168,172);
+    background-color: transparent;
+    border: 1px transparent solid;
+    border-radius: 4px;
+    margin-bottom: 0px !important;
+    margin-right: 5px;
+    padding: 0;
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+    transition: background-color .15s ease-out, color .15s ease-out, border-radius .15s ease-out;
+
+}
+#gear i{
+    scale:1.4;
+}
+
+#gear:hover{
+background-color: #42464e;
+}
+#user-tag p{
+    padding: 0;
+    margin: 0;
+    color: white;
+    opacity: .3;
+    /* font-weight: bold; */
+}
+#user-tag > p:first-child{
+    font-weight: bold;
+    opacity: .9;
+}
 .left-bar {
     /* border: 1px solid red; */
     background: #2e3136;
@@ -48,7 +88,7 @@
 
 .logout-button:hover {
     background-color: #42464e;
-    
+
 }
 
 .card-title {
@@ -100,7 +140,7 @@
     margin-top: -50px;
     height: 140%;
     width: 13%;
-    
+
 }
 
 .card-info-div {
