@@ -58,7 +58,7 @@ const UpdateServerForm = ({setShowModal}) => {
     e.preventDefault()
 
     const leave_server = await fetch(`/api/servers/${currServer.id}/users`)
-    // dispatch(loadServersThunk());
+    dispatch(loadServersThunk());
     history.push("/@me");
     return leave_server
   }
