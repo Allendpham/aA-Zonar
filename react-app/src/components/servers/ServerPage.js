@@ -51,7 +51,6 @@ const ServerPage = () => {
 
          <div className='server-index-item-wrapper'>
          <h1>{singleServer?.name}</h1>
-         <ServerSettingsModal />
          </div>
          <div className='text-channels'>
             <h2>TEXT CHANNELS

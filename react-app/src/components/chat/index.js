@@ -13,7 +13,6 @@ const Chat = ({channel, chat = null}) => {
     const [currRoom, setCurrRoom] = useState("")
     const [users, setUsers] = useState([])
     const user = useSelector(state => state.session.user)
-
     useEffect(() => {
         socket = io();
         // open socket connection
