@@ -11,7 +11,7 @@ const ServerForm = ({setShowModal}) => {
   const [previewImg, setImage] = useState('') //default image
   const updateName = (e) => setName(e.target.value);
   const updateImage = (e) => setImage(e.target.value);
-  
+
   useEffect(()=>{
   }, [dispatch, user])
 
@@ -32,9 +32,6 @@ const ServerForm = ({setShowModal}) => {
     }
   }
 
-  const handleCancelClick = (e) => {
-    e.preventDefault();
-  };
 
   return(
     <form className='server-form' onSubmit={handleSubmit}>
@@ -48,8 +45,8 @@ const ServerForm = ({setShowModal}) => {
         placeholder='Server Name'
         value={name}
         onChange={updateName}/>
-      <button type='submit'>Submit</button>
-      <button type='button' onClick={handleCancelClick}>Cancel</button>
+      <button className='create-server-submit' type='submit'>Create</button>
+
     </form>
   )
 }

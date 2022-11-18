@@ -18,18 +18,18 @@ function CreateServerPopup({setShowModal}) {
 
    switch(formPosition){
     case 1:
-        content = (  <div className="explore-list-wrapper">
+        content = (  <div className="create-list-wrapper">
         <h2>Create a server</h2>
         <p>Your server is where you and your friends hang out. Make yours and start talking.</p>
         <CreateItem setPosition={setPosition}formPosition={formPosition}/>
         <div className='create-server-footer'>
-          <h3>Have an invite already?</h3>
-          <button>Join a Server</button>
+          <h4 className='create-server-footer-title'>Have an invite already?</h4>
+          <button className='create-server-join'>Join a Server</button>
         </div>
         </div>)
       break
     case 2:
-      content = (  <div className="explore-list-wrapper">
+      content = (  <div className="create-list-wrapper">
         <h2>Tell us more about your server</h2>
         <p>In order to help you with your setup, is your new server for just a few friends or a larger community?</p>
         <CreateItem setPosition={setPosition} formPosition={formPosition}/>
@@ -39,7 +39,7 @@ function CreateServerPopup({setShowModal}) {
         </div>)
       break
     case 3:
-      content = (  <div className="explore-list-wrapper">
+      content = (  <div className="create-list-wrapper">
         <h2>Customize your server</h2>
         <p>Give your new server a personality with a name and icon. You can always change it later.</p>
         <ServerForm setShowModal={setShowModal}/>
