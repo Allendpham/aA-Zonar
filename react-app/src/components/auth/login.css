@@ -1,15 +1,29 @@
 .login-page {
-    /* background-image: url('https://i.imgur.com/HnFvFmD.jpg'); */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
+    width: 100vw;
     max-height: 100%;
     min-height: 100%;
     background-image: url('https://i.imgur.com/gvWM8y7.png');
     background-size: cover;
     background-repeat: none;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: flex-start;
+    border-radius: 5px;
+    color: #fdfefe;
+    height: 498px;
+    width: 416px;
+    padding: 34px;
+    background-color: #36393f;
+    padding-left: 45px;
 }
 
 .login-form {
@@ -23,6 +37,7 @@
     width: 410px;
     padding: 34px;
     background-color: #36393f;
+    padding-left: 45px;
 }
 
 .login-welcome {
@@ -42,21 +57,23 @@
 }
 
 .login-text-div {
-    margin: 5px 0;
+    margin-bottom: 20px;
 }
 
 .login-text {
-    color: #fdfefe;
+    color: #B9BBBE;
+    font-size: 12px;
     margin: 0 0 5px;
+    font-weight: 700;
 }
 
 .login-input {
     color: #e7f0fe;
     border-style: none;
+    background-color: #202225;
     padding: 10px;
     width: 90%;
     height: 20px;
-    color: black;
     border-radius: 4px;
     box-shadow: none;
 }
@@ -66,18 +83,26 @@
     color: #fdfefe;
     border-radius: 4px;
     border-style: none;
-    margin: 20px 0;
     width: 95%;
-    height: 30%;
+    height: 46px;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.login-submit:hover {
+    cursor: pointer;
 }
 
 .register {
     font-size: 13px;
     margin-top: 3px;
+    color: #B9BBBE;
 }
 
 .signup-link:link {
     color: #0ca9ed;
+    text-decoration: none;
+    font-size: 14px;
 }
 
 .signup-link:visited {
@@ -85,7 +110,20 @@
 }
 .signup-link:hover {
     color: #0ca9ed;
+    text-decoration:underline;
 }
 .signup-link:active {
     color: #0ca9ed;
+}
+
+.signup-form-body {
+    display: flex;
+    flex-direction: column;
+    height: 325px;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.signup-form-body input {
+    margin-top: 8px;
 }
