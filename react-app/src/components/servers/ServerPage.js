@@ -8,6 +8,7 @@ import ChannelFormModal from '../channels/ChannelFormModal';
 import ChannelSettingsModal from '../channels/ChannelSettingsModal';
 import Chat from '../chat';
 import UsersList from '../users/usersList';
+import '../chat/chat.css'
 
 const ServerPage = () => {
    const dispatch = useDispatch();
@@ -35,8 +36,16 @@ const ServerPage = () => {
    }
 
 
-   singleChannel && singleChannel?.channel?.serverId == serverId ?
-   content = (<div>Single Channel: {singleChannel.channel.name} <Chat channel={singleChannel.channel}/> </div>): content=(<div></div>)
+   singleChannel && singleChannel?.channel?.serverId == serverId
+     ? (content = (
+         <div className="server-parent">
+           <div className="server-title">
+             <h3>#{singleChannel.channel.name}</h3>
+           </div>
+           <Chat channel={singleChannel.channel} />
+         </div>
+       ))
+     : (content = <div></div>);
 
    if(!singleServer) {
       return null;

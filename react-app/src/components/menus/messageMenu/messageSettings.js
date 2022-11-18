@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { updateChannelMessageThunk, deleteChannelMessageThunk, updatePrivateChatMessageThunk, deletePrivateChatMessageThunk } from '../../../store/message';
 import { getChannelThunk } from '../../../store/channel';
 import { getServerThunk } from '../../../store/server';
+import '../../chat/chat.css'
 
 const MessageSettingOptions = ({message, user,users, populateSocket, chat}) => {
    const dispatch = useDispatch()
@@ -13,6 +14,9 @@ const MessageSettingOptions = ({message, user,users, populateSocket, chat}) => {
    const serverId = useSelector(state => state?.channel?.currentChannel?.channel?.serverId)
    const server = useSelector(state => state?.server?.currentServer?.server)
    const poster = Object.values(users).find(member => member.id == message?.userId)
+   const dayjs = require('dayjs')
+   console.log(dayjs().$d)
+
 
    useEffect(() => {
       dispatch(getServerThunk(serverId))
@@ -89,11 +93,20 @@ if(message.userId === user.id){
    shown ? updateContent = setSettingsButt : updateContent = null
 
    return (
-   <div onMouseEnter={()=> setShown(true)} onMouseLeave={() => setShown(false)} >
-      <div id="message-settings-button"> {poster?.username} - {messageInput}</div>
-      {updateContent}
-      {deleteContent}
-   </div>
+     <div
+       onMouseEnter={() => setShown(true)}
+       onMouseLeave={() => setShown(false)}
+     >
+       <div id="message-settings-button" className="chat-message">
+         <div className="message-header">
+           <div className="chat-profile-pic"></div>
+           <h4 className="chat-name">{poster?.username}</h4>
+         </div>
+         <div className='message-text'>{messageInput}</div>
+       </div>
+       {updateContent}
+       {deleteContent}
+     </div>
    );
 }
 
