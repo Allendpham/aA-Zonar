@@ -26,7 +26,6 @@ const ChannelForm = ({setShowModal}) => {
 
     let server = await dispatch(createChannelThunk(payload, serverId))
 
-
     if(server){
       setShowModal(false)
       dispatch(loadServerChannelsThunk(serverId))

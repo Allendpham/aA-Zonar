@@ -12,7 +12,7 @@ const UserPreviewForm = ({setShowModal, currentServer, user}) => {
   const [isOwner, setOwner] = useState(false)
   const currUser = useSelector(state => state.session.user)
   const currentChats = useSelector(state => Object.values(state.privatechat.allPrivateChats))
-
+console.log('serverrrrrrrrrrrrrrrrrrrrrr', currentChats)
   useEffect(() =>{
     if(currentServer?.ownerId === currUser?.id) setOwner(true)
     if(currentServer.admins.filter(admin => admin.id === user.id).length > 0){
@@ -64,7 +64,7 @@ const startChat = async () =>{
     return
   }
   let chat = await dispatch(createPrivateChatThunk(payload))
-
+  console.log('+++++++++++++++++NEW CHAT+++++++',chat)
   if(chat){
     history.push('/@me')
   }

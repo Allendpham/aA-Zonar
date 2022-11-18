@@ -168,7 +168,7 @@ export const deletePrivateChatMessageThunk = (messageId) => async(dispatch) => {
  const response = await fetch(`/api/private_chat_messages/${messageId}`,{
      method: 'DELETE'
    })
-   
+
    if(response.ok){
      dispatch(deleteChannelMessage(messageId))
      return;
