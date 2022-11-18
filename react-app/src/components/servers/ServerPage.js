@@ -8,6 +8,7 @@ import ChannelFormModal from '../channels/ChannelFormModal';
 import ChannelSettingsModal from '../channels/ChannelSettingsModal';
 import Chat from '../chat';
 import UsersList from '../users/usersList';
+import '../chat/chat.css'
 
 const ServerPage = () => {
    const dispatch = useDispatch();
@@ -18,6 +19,8 @@ const ServerPage = () => {
    const singleChannel = useSelector(state => state.channel?.currentChannel)
    // const channel_messages = useSelector(state => (Object.values(state.message), () => true))
    const currUser = useSelector(state => state.session.user)
+   
+
    let content;
 
    useEffect(()=> {
@@ -35,8 +38,16 @@ const ServerPage = () => {
    }
 
 
-   singleChannel && singleChannel?.channel?.serverId == serverId ?
-   content = (<div>Single Channel: {singleChannel.channel.name} <Chat channel={singleChannel.channel}/> </div>): content=(<div></div>)
+   singleChannel && singleChannel?.channel?.serverId == serverId
+     ? (content = (
+         <div className="server-parent">
+           <div className="server-title">
+             <h3>#{singleChannel.channel.name}</h3>
+           </div>
+           <Chat channel={singleChannel.channel} />
+         </div>
+       ))
+     : (content = <div></div>);
 
    if(!singleServer) {
       return null;

@@ -4,6 +4,8 @@ import { io } from 'socket.io-client';
 import { getChannelMessagesThunk, createChannelMessagesThunk, getPrivateChatMessagesThunk, createPrivateChatMessagesThunk } from '../../store/message';
 import MessageSettingOptions from '../menus/messageMenu/messageSettings';
 import { store } from '../../index';
+import './chat.css'
+
 let socket;
 
 const Chat = ({channel, chat = null}) => {
@@ -105,19 +107,23 @@ const Chat = ({channel, chat = null}) => {
         setChatInput("")
     }
 
+
     return (user && (
-        <div>
-            <div>
+        <div className='chat-div'>
+            <div className='all-messages-div'>
                 {messages?.map((message, ind) => (
                     <MessageSettingOptions populateSocket={populateSocket} key={message?.id} message={message} user={user} users={users} chat={chat}/>
                 ))}
             </div>
-            <form onSubmit={sendChat}>
+            <form className='message-bar-div' onSubmit={sendChat}>
                 <input
+                    className='message-bar'
                     value={chatInput}
+                    // placeholder={channel.name}
                     onChange={updateChatInput}
+                    // type='submit'
                 />
-                <button type="submit">Send</button>
+                <button className='message-submit-btn' type="submit"></button>
             </form>
         </div>
     )
