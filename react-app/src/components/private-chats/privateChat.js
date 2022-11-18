@@ -3,6 +3,7 @@ import { useSelector, useDispatch, } from "react-redux";
 import { Link } from "react-router-dom";
 import { getOnePrivateChatThunk, loadPrivateChatsThunk } from "../../store/privatechat";
 import Chat from "../chat";
+import UserSettings from "../users/userSettings";
 
 function PrivateChats() {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function PrivateChats() {
         ))}
       </ul>
         < Chat chat={chatId} />
+        < UserSettings />
     </div>
   );
 }

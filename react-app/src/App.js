@@ -49,7 +49,7 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path='/@me' exact={true} >
           <ServersIndex />
-          <NavBar />
+          {/* <NavBar /> */}
 
           <PrivateChats />
         </ProtectedRoute>
