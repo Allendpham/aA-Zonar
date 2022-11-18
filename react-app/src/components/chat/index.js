@@ -108,26 +108,38 @@ const Chat = ({channel, chat = null}) => {
     }
 
 
-    return (user && (
-        <div className='chat-div'>
-            <div className='all-messages-div'>
-                {messages?.map((message, ind) => (
-                    <MessageSettingOptions populateSocket={populateSocket} key={message?.id} message={message} user={user} users={users} chat={chat}/>
-                ))}
-            </div>
-            <form className='message-bar-div' onSubmit={sendChat}>
-                <input
-                    className='message-bar'
-                    value={chatInput}
-                    // placeholder={channel.name}
-                    onChange={updateChatInput}
-                    // type='submit'
+    return (
+      user && (
+        <div className="chat-div">
+          <div className="chat-message-div">
+            <div className="all-messages-div">
+              {messages?.map((message, ind) => (
+                <MessageSettingOptions
+                  populateSocket={populateSocket}
+                  key={message?.id}
+                  message={message}
+                  user={user}
+                  users={users}
+                  chat={chat}
                 />
-                <button className='message-submit-btn' type="submit"></button>
+              ))}
+            </div>
+          </div>
+          <div className='message-form'>
+            <form className="message-bar-div" onSubmit={sendChat}>
+              <input
+                className="message-bar"
+                value={chatInput}
+                // placeholder={channel.name}
+                onChange={updateChatInput}
+                // type='submit'
+              />
+              <button className="message-submit-btn" type="submit"></button>
             </form>
+          </div>
         </div>
-    )
-    )
+      )
+    );
 };
 
 
