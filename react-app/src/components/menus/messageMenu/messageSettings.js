@@ -62,54 +62,79 @@ const MessageSettingOptions = ({message, user,users, populateSocket, chat}) => {
    }
 
    let messageInput;
-   settings?
-      messageInput =
-      (<form id='update-message-form'
-         onSubmit={handleSubmit}
-         onKeyPress={(e) => e === 'ENTER' ? handleSubmit() : null}>
-      <input
-         type='text'
-         value={currmessage}
-         onChange={updateMessage}
-      />
-   </form>) :messageInput = (message.message)
+   settings
+     ? (messageInput = (
+         <form
+           id="update-message-form"
+           onSubmit={handleSubmit}
+           onKeyPress={(e) => (e === "ENTER" ? handleSubmit() : null)}
+         >
+           <input
+             className="edit-form"
+             type="text"
+             value={currmessage}
+             onChange={updateMessage}
+           />
+           <br />
+           <p className='edit-text'>press enter to save</p>
+         </form>
+       ))
+     : (messageInput = message.message);
 
 
    let deleteButt;
    for(const person in server?.admins){
       if(server?.admins[person].id === user.id || user.id === server.ownerId){
-         deleteButt = (<button onClick={() => handleDelete()}>delete</button>)
+         deleteButt = (
+           <button className="msg-setting" onClick={() => handleDelete()}>
+             <i className="fa-solid fa-trash-can"></i>
+           </button>
+         );
       }
    }
 if(message.userId === user.id){
-   deleteButt = (<button onClick={() => handleDelete()}>delete</button>)
+   deleteButt = (
+     <button className="msg-setting" onClick={() => handleDelete()}>
+       <i className="fa-solid fa-trash-can"></i>
+     </button>
+   );
 
 }
    let deleteContent
    shown ? deleteContent = deleteButt : deleteContent = null
 
    let setSettingsButt
-   message.userId === user.id ?
-      setSettingsButt = (<button onClick={() => setSettings(!settings)}>edit</button>) :
-         setSettingsButt = null
+   message.userId === user.id
+     ? (setSettingsButt = (
+         <button className="msg-setting" onClick={() => setSettings(!settings)}>
+           <i className="fa-solid fa-pen"></i>
+         </button>
+       ))
+     : (setSettingsButt = null);
 
    let updateContent
    shown ? updateContent = setSettingsButt : updateContent = null
 
    return (
      <div
+       //  className='message-modal'
        onMouseEnter={() => setShown(true)}
        onMouseLeave={() => setShown(false)}
      >
        <div id="message-settings-button" className="chat-message">
          <div className="message-header">
            <div className="chat-profile-pic"></div>
-           <h4 className="chat-name">{poster?.username}</h4> <p className='timestamp'>{date}</p>
+           <h4 className="chat-name">{poster?.username}</h4>{" "}
+           <p className="timestamp">{date}</p>
+            <div className='message-modal'>
+               {updateContent}
+               {deleteContent}
+            </div>
          </div>
-         <div className='message-text'>{messageInput}</div>
+         <div className="message-text">
+            {messageInput}
+            </div>
        </div>
-       {updateContent}
-       {deleteContent}
      </div>
    );
 }
