@@ -11,7 +11,7 @@ const ServerForm = ({setShowModal}) => {
   const [previewImg, setImage] = useState('') //default image
   const updateName = (e) => setName(e.target.value);
   const updateImage = (e) => setImage(e.target.value);
-
+  
   useEffect(()=>{
   }, [dispatch, user])
 
