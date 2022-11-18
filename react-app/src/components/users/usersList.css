@@ -1,0 +1,37 @@
+.userListContainer{
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+    display: inline-block;
+    width: 240px;
+    height: 100%;
+    font-size: 16px;
+    line-height: 16px;
+    word-spacing: 0px;
+    text-decoration: none solid rgb(0,0,0);
+    background-color: #2f3136;
+    letter-spacing: 0.24px;
+}
+
+.userOuterContainer{
+    display: inline;
+    flex-direction: column;
+    align-content: space-between;
+}
+
+.userListTitle{
+    color: #96989D;
+    font-size: 12px;
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+.usersListing{
+    color: #dcddde;
+    background-color: inherit;
+    border: none;
+    list-style: none;
+    width: 208px;
+    height: 42px;
+
+}
