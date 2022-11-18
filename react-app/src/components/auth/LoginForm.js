@@ -43,34 +43,32 @@ const LoginForm = () => {
         <h3 className="login-subheading">We're so excited to see you again!</h3>
         <div className="login-text-div">
           <label htmlFor="email">
-            <p className="login-text">Email</p>
+            <p className="login-text">EMAIL</p>
           </label>
 
           <input
             className="login-input"
             name="email"
             type="text"
-            placeholder="Email"
             value={email}
             onChange={updateEmail}
           />
         </div>
         <div className="login-text-div">
           <label htmlFor="password">
-            <p className="login-text">Password</p>
+            <p className="login-text">PASSWORD</p>
           </label>
 
           <input
             className="login-input"
             name="password"
             type="password"
-            placeholder="Password"
             value={password}
             onChange={updatePassword}
           />
           <br />
-          <button className='login-submit' type="submit">Log in</button>
         </div>
+          <button className='login-submit' type="submit">Log in</button>
           <button className='login-submit' onClick={() => {dispatch(login('kyle@aa.io', 'password'))}}>Demo Login</button>
         <p className='register'>
           Need an account?{" "}
