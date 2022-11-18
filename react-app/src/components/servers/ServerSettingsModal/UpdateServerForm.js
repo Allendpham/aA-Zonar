@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { updateServerThunk, getServerThunk, removeServerThunk, loadServersThunk } from '../../../store/server';
-
-const UpdateServerForm = ({setShowModal}) => {
+import './index.css'
+const UpdateServerForm = ({setShowModal, update = null}) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const {serverId} = useParams();
@@ -11,9 +11,9 @@ const UpdateServerForm = ({setShowModal}) => {
   const currServer = useSelector(state => state.server.currentServer.server)
   const [name, setName] = useState(currServer?.name)
   const [previewImg, setImage] = useState(currServer?.preview_img) //default image
+  const [showSettings, setShowSettings] = useState(false)
   const updateName = (e) => setName(e.target.value);
   const updateImage = (e) => setImage(e.target.value);
-
   useEffect(()=>{
     dispatch(loadServersThunk())
 
@@ -39,10 +39,10 @@ const UpdateServerForm = ({setShowModal}) => {
     dispatch(loadServersThunk())
   }
 
-  const handleCancelClick = (e) => {
-    e.preventDefault();
-    setShowModal(false)
-  };
+  // const handleCancelClick = (e) => {
+  //   e.preventDefault();
+  //   setShowModal(false)
+  // };
 
   const handleDeleteClick = async  (e) => {
     e.preventDefault();
@@ -64,9 +64,16 @@ const UpdateServerForm = ({setShowModal}) => {
     return leave_server
   }
 
+  const exitImage = <img id='exit-image'src='https://res.cloudinary.com/degkakjou/image/upload/v1668802855/Zonar/exiticon_bkbhme.png'/>
 
   return(
-    <form className='server-form' onSubmit={handleSubmit}>
+    <div className='server-dropdown'>
+    <button
+      className='update-form-button'
+      onClick={()=>{setShowSettings(!showSettings)}}
+      ><p>Server Settings</p> <i className="fa-solid fa-gear"></i></button>
+    {showSettings &&
+      <form className='update-form' onSubmit={handleSubmit}>
       <input
         type='text'
         placeholder='Server Image'
@@ -78,14 +85,15 @@ const UpdateServerForm = ({setShowModal}) => {
         value={name}
         onChange={updateName}/>
       <button type='submit'>Submit</button>
-      <button type='button' onClick={handleCancelClick}>Cancel</button>
+      {/* <button type='button' onClick={handleCancelClick}>Cancel</button> */}
+    </form>}
       {user.id === currServer.ownerId &&
-      (<button type='button' onClick={handleDeleteClick}>Delete Server</button>)
+      (<button className='update-form-button' type='button' onClick={handleDeleteClick}><p>Delete Server</p>{exitImage}</button>)
       }
       {user.id !== currServer.ownerId &&
-      (<button type='button' onClick={handleLeaveClick}>Leave Server</button>)
+      (<button className='update-form-button delete-server'type='button' onClick={handleLeaveClick}><p>Leave Server</p>{exitImage}</button>)
       }
-    </form>
+    </div>
   )
 }
 

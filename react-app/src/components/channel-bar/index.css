@@ -14,3 +14,28 @@
   position: absolute;
   bottom: 0;
 }
+
+#server-settings-button{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 240px;
+  min-height: 48px;
+  max-width: 240px;
+  max-height: 48px;
+  background-color: inherit;
+  border: 1px solid transparent;
+  border-bottom: 1px solid black;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+#server-settings-button i{
+  color: rgb(185,187,190);
+}
+.fa-x{
+  scale: .8;
+}

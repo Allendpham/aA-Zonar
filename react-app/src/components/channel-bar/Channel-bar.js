@@ -3,24 +3,50 @@ import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import './index.css'
 import UserSettings from '../users/userSettings';
+import { getOnePrivateChatThunk, loadPrivateChatsThunk } from "../../store/privatechat";
+import ServerSettingsModal from '../servers/ServerSettingsModal';
+
 
 const ChannelBar = () => {
+const dispatch = useDispatch()
 const server = useSelector(state => state.server.currentServer)
+const liveChats = useSelector((state) => Object.values(state.privatechat.allPrivateChats));
+const user = useSelector((state) => state.session.user);
+const channels = useSelector((state) => Object.values(state.channel.allChannels))
 const [title, setTitle] = useState('')
 const [location, setLocation] = useState('')
+const [chatId, setChatId] = useState('')
+
 console.log('currentserver',server)
 useEffect(() =>{
   server.server? setTitle(<h3>{server.server.name}</h3>): setTitle(<h3>Direct Messages</h3>)
   server.server? setLocation('server'):setLocation('home')
 },[server])
 
+const getChannel = (id) => {
+  setChatId(id)
+  dispatch(getOnePrivateChatThunk(chatId))
+}
+const displaySettings = () =>{
+  const settingsButton = document.querySelector('#server-settings-button')
+  // setShowModal(false)
+  // console.log('SETTINGS', settingsButton)
+  settingsButton.click()
+}
 let content;
 if(location === 'server'){
   content = (
     <div id='channel-bar'>
-    <div id='channel-bar-title-container'>
-      {title}
-    </div>
+      <ServerSettingsModal/>
+    <ul className="channel-list-wrapper">
+        {channels?.map((channel) => (
+          <li key={channel?.id}
+              className="channel-links"
+            >
+              {channel.name}
+          </li>
+        ))}
+      </ul>
     <div id='user-bar'>
 
     <UserSettings/>
@@ -31,9 +57,19 @@ if(location === 'server'){
 }else{
   content = (
     <div id='channel-bar'>
-    <div id='channel-bar-title-container'>
+    <div id='channel-bar-title-container' className='direct-messages-title'>
       {title}
     </div>
+    <ul className="chat-list-wrapper">
+        {liveChats?.map((chat) => (
+          <li key={chat?.id}
+              className="chat-links"
+              onClick={() => getChannel(chat.id)}
+            >
+              {chat.users?.filter(users => users.username != user.username ).map(name => name.username).join(' ')}
+          </li>
+        ))}
+      </ul>
     <div id='user-bar'>
 
     <UserSettings/>
