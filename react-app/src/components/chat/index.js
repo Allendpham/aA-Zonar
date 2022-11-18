@@ -120,7 +120,7 @@ const Chat = ({channel, chat = null}) => {
                 <input
                     className='message-bar'
                     value={chatInput}
-                    placeholder={channel.name}
+                    // placeholder={channel.name}
                     onChange={updateChatInput}
                     // type='submit'
                 />

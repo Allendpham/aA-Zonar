@@ -6,6 +6,10 @@ import { getChannelThunk } from '../../../store/channel';
 import { getServerThunk } from '../../../store/server';
 import '../../chat/chat.css'
 
+const dayjs = require("dayjs");
+let relativeTime = require("dayjs/plugin/relativeTime");
+dayjs.extend(relativeTime);
+
 const MessageSettingOptions = ({message, user,users, populateSocket, chat}) => {
    const dispatch = useDispatch()
    const [currmessage, setMessage] = useState(message.message)
@@ -14,8 +18,8 @@ const MessageSettingOptions = ({message, user,users, populateSocket, chat}) => {
    const serverId = useSelector(state => state?.channel?.currentChannel?.channel?.serverId)
    const server = useSelector(state => state?.server?.currentServer?.server)
    const poster = Object.values(users).find(member => member.id == message?.userId)
-   const dayjs = require('dayjs')
-   console.log(dayjs().$d)
+   const date = dayjs(message?.updatedAt).fromNow(false);
+   console.log(date)
 
 
    useEffect(() => {
@@ -100,7 +104,7 @@ if(message.userId === user.id){
        <div id="message-settings-button" className="chat-message">
          <div className="message-header">
            <div className="chat-profile-pic"></div>
-           <h4 className="chat-name">{poster?.username}</h4>
+           <h4 className="chat-name">{poster?.username}</h4> <p className='timestamp'>{date}</p>
          </div>
          <div className='message-text'>{messageInput}</div>
        </div>

@@ -19,6 +19,8 @@ const ServerPage = () => {
    const singleChannel = useSelector(state => state.channel?.currentChannel)
    // const channel_messages = useSelector(state => (Object.values(state.message), () => true))
    const currUser = useSelector(state => state.session.user)
+   
+
    let content;
 
    useEffect(()=> {

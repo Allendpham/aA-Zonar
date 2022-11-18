@@ -1,5 +1,5 @@
 .server-parent {
-    /* border: 1px solid blue; */
+    border: 1px solid blue;
     background-color: #36393e;
     width: 80%;
     height: 100%;
@@ -14,6 +14,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    overflow: auto;
 }
 
 .chat-message {
@@ -37,6 +38,13 @@
     margin-top: 15px;
 }
 
+.timestamp {
+    /* border: 1px solid red; */
+    font-size: 11px;
+    margin-top: 19px;
+    margin-left: 6px;
+}
+
 .chat-profile-pic {
     border: 1px solid white;
         background-color: lightgrey;
@@ -49,9 +57,15 @@
 }
 
 .server-title {
-    position: absolute;
+    border: 1px solid red;
+    position: sticky;
+    margin-top: 5px;
+    justify-content: flex-start;
+    background-color: #36393e;
+    /* width: 99%; */
+    z-index: 1;
     margin-left: 1%;
-    top: 5px;
+    margin-top: 0;
     color: #cccdce;
 }
 
