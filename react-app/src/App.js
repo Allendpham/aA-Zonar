@@ -15,6 +15,8 @@ import ServerPage from './components/servers/ServerPage';
 import { authenticate } from './store/session';
 import PrivateChats from './components/private-chats/privateChat';
 import { loadPrivateChatsThunk } from './store/privatechat';
+import UserSettings from './components/users/userSettings';
+import UserAccount from './components/users/userAccount';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -35,35 +37,33 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path='/login' exact={true}>
+        <Route path="/login" exact={true}>
           <LoginForm />
         </Route>
-        <Route path='/sign-up' exact={true}>
+        <Route path="/sign-up" exact={true}>
           <SignUpForm />
         </Route>
-        <ProtectedRoute path='/users' exact={true} >
-          <UsersList/>
+        <ProtectedRoute path="/users" exact={true}>
+          <UsersList />
         </ProtectedRoute>
-        <ProtectedRoute path='/users/:userId' exact={true} >
+        <ProtectedRoute path="/users/:userId" exact={true}>
           <User />
         </ProtectedRoute>
-        <ProtectedRoute path='/@me' exact={true} >
+        <ProtectedRoute path="/@me" exact={true}>
           <ServersIndex />
-          <NavBar />
-
+          {/* <NavBar /> */}
           <PrivateChats />
+          {/* <UserSettings path='/@me/settings' /> */}
         </ProtectedRoute>
-        <ProtectedRoute path='/servers/:serverId' exact={true} >
+        <ProtectedRoute path="/servers/:serverId" exact={true}>
           <ServerPage />
         </ProtectedRoute>
-        {/* <ProtectedRoute path='/' exact={true} >
-          <Redirect to='/@me'></Redirect>
-        </ProtectedRoute> */}
-        <Route path='/' exact={true}>
+        <ProtectedRoute path='/@me/settings'>
+          < UserAccount />
+        </ProtectedRoute>
+        <Route path="/" exact={true}>
           <SplashPage />
         </Route>
-
-
       </Switch>
     </BrowserRouter>
   );
