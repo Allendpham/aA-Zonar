@@ -60,13 +60,16 @@ export const createChannelMessagesThunk = (payload) => async (dispatch) => {
 }
 
 export const updateChannelMessageThunk = (payload, messageId) => async(dispatch) => {
+
   const response = await fetch(`/api/channel_messages/${messageId}`,{
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     })
+
     if(response.ok){
       const data = await response.json();
+
       dispatch(addChannelMessage(data))
       return data;
     }else if (response.status < 500) {
@@ -83,11 +86,13 @@ export const deleteChannelMessageThunk = (messageId) => async(dispatch) => {
   const response = await fetch(`/api/channel_messages/${messageId}`,{
       method: 'DELETE'
     })
+
     if(response.ok){
       dispatch(deleteChannelMessage(messageId))
       return;
     }else if (response.status < 500) {
       const data = await response.json();
+
       if (data.errors) {
         return data.errors;
       }
@@ -137,13 +142,16 @@ export const createPrivateChatMessagesThunk = (payload) => async (dispatch) => {
 }
 
 export const updatePrivateChatMessageThunk = (payload, messageId) => async(dispatch) => {
+
  const response = await fetch(`/api/private_chat_messages/${messageId}`,{
      method: "PUT",
      headers: { "Content-Type": "application/json" },
      body: JSON.stringify(payload),
    })
+
    if(response.ok){
      const data = await response.json();
+
      dispatch(addChannelMessage(data))
      return data;
    }else if (response.status < 500) {
@@ -166,6 +174,7 @@ export const deletePrivateChatMessageThunk = (messageId) => async(dispatch) => {
      return;
    }else if (response.status < 500) {
      const data = await response.json();
+
      if (data.errors) {
        return data.errors;
      }
