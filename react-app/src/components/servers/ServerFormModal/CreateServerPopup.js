@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import ExploreServersModal from '../ExploreServersModal';
+import ExploreServerIndex from '../ExploreServersModal/ExploreServerIndex';
 import CreateItem from './CreateItem';
 import './index.css'
 import ServerForm from './ServerForm';
@@ -11,6 +13,12 @@ function CreateServerPopup({setShowModal}) {
       // dispatch(loadServersThunk())
    }, [dispatch])
    let content;
+   const exploreServers = () => {
+    const exploreButton = document.querySelector('#explore-button')
+    setShowModal(false)
+    exploreButton.click()
+
+   }
    let backButton = <button className='create-server-back-button'onClick={()=> setPosition(formPosition -1)}>Back</button>
 
    switch(formPosition){
@@ -21,7 +29,9 @@ function CreateServerPopup({setShowModal}) {
         <CreateItem setPosition={setPosition}formPosition={formPosition}/>
         <div className='create-server-footer'>
           <h4 className='create-server-footer-title'>Have an invite already?</h4>
-          <button className='create-server-join'>Join a Server</button>
+          <button
+          onClick={()=> exploreServers()}
+          className='create-server-join'>Join a Server</button>
         </div>
         </div>)
       break
