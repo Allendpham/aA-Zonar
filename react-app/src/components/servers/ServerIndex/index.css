@@ -53,7 +53,7 @@ button{
 
 #home-button{
   object-fit: scale-down;
-  background-image: url('https://res.cloudinary.com/degkakjou/image/upload/v1668657898/Zonar/pngfind.com-discord-icon-png-283551_l2blab.png');
+  max-width: 48px;
 }
 
 

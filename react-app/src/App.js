@@ -43,12 +43,12 @@ function App() {
         <Route path="/sign-up" exact={true}>
           <SignUpForm />
         </Route>
-        <ProtectedRoute path="/users" exact={true}>
+        {/* <ProtectedRoute path="/users" exact={true}>
           <UsersList />
         </ProtectedRoute>
         <ProtectedRoute path="/users/:userId" exact={true}>
           <User />
-        </ProtectedRoute>
+        </ProtectedRoute> */}
         <ProtectedRoute path="/@me" exact={true}>
           <ServersIndex />
           {/* <NavBar /> */}
@@ -56,6 +56,7 @@ function App() {
           {/* <UserSettings path='/@me/settings' /> */}
         </ProtectedRoute>
         <ProtectedRoute path="/servers/:serverId" exact={true}>
+          <ServersIndex />
           <ServerPage />
         </ProtectedRoute>
         <ProtectedRoute path='/@me/settings'>
