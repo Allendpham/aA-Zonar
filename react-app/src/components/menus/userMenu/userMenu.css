@@ -1,9 +1,9 @@
 
-.user-preview-button{
+#user-preview-button{
     border: none;
-    background-color: white;
+    background-color: inherit;
     text-decoration: none;
-    background: white;
-    color: white;
+    /* background: white; */
+    /* color: white; */
     border-style: none;
 }

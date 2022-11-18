@@ -19,7 +19,7 @@ const ServerPage = () => {
    const singleChannel = useSelector(state => state.channel?.currentChannel)
    // const channel_messages = useSelector(state => (Object.values(state.message), () => true))
    const currUser = useSelector(state => state.session.user)
-   
+
 
    let content;
 
@@ -61,7 +61,6 @@ const ServerPage = () => {
       <div className='server-content-wrapper'>
 
          <div className='server-index-item-wrapper'>
-         <h1>{singleServer?.name}</h1>
          </div>
          <div className='text-channels'>
             <h2>TEXT CHANNELS
