@@ -14,9 +14,10 @@ const UpdateServerForm = ({setShowModal}) => {
   const updateName = (e) => setName(e.target.value);
   const updateImage = (e) => setImage(e.target.value);
 
-  // useEffect(()=>{
-  //   dispatch(getServerThunk(serverId))
-  // }, [dispatch])
+  useEffect(()=>{
+    dispatch(loadServersThunk())
+
+  }, [dispatch])
 
   if(!currServer) return null;
 
@@ -43,12 +44,12 @@ const UpdateServerForm = ({setShowModal}) => {
     setShowModal(false)
   };
 
-  const handleDeleteClick = (e) => {
+  const handleDeleteClick = async  (e) => {
     e.preventDefault();
 
 
     //Display some type of modal/confirmation message where user has to confirm and input name of server to confirm delete
-    dispatch(removeServerThunk(serverId))
+    await dispatch(removeServerThunk(serverId))
     setShowModal(false)
     dispatch(loadServersThunk())
     history.push('/@me')
