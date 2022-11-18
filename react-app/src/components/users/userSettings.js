@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import LogoutButton from "../auth/LogoutButton";
 import User from "../User";
 import UserAccount from "./userAccount";
+import './users.css'
 
 const UserSettings = () => {
 const history = useHistory()

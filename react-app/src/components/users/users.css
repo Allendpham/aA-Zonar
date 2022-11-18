@@ -1,0 +1,135 @@
+.user-account-div {
+    /* border: 1px solid red; */
+    width: 150%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: #36393e;
+}
+
+.left-bar {
+    /* border: 1px solid red; */
+    background: #2e3136;
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.left-bar-content {
+    /* border: 1px solid yellow; */
+    margin-top: 25%;
+    color: #b8bbbe;
+    margin-left: 15%;
+}
+
+.user-settings {
+    font-size: 12px;
+    padding: 6px 10px;
+    margin-bottom: 2px;
+}
+
+.account-text {
+    font-size: 16px;
+    padding: 6px 10px;
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.logout-button {
+    background: none;
+    font-size: 16px;
+    color: inherit;
+    border: none;
+    padding: 6px 10px;
+    cursor: pointer;
+    outline: inherit;
+}
+
+.logout-button:hover {
+    background-color: #42464e;
+    
+}
+
+.card-title {
+    color: #b8bbbe;
+    display: flex;
+    align-items: flex-start;
+    margin-top: 8%;
+    margin-left: 3%;
+}
+
+.account-card {
+    /* border: 1px solid red; */
+    border-radius: 10px;
+    background-color: #2f3237;
+    color: #b8bbbe;
+    align-self: center;
+    margin-bottom: 5%;
+    margin-left: -4%;
+    width: 660px;
+    height: 400px;
+}
+
+.card-header {
+    /* border: 1px solid yellow; */
+    border-radius: 10px;
+    height: 300px;
+    margin-top: 100px;
+    background-color: #202225;
+    display: flex;
+    flex-direction: column;
+}
+
+.header-name {
+    margin-left: 5%;
+    /* z-index: 1; */
+}
+
+.pic-title {
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-pic {
+    border: 10px solid #202225;
+    background-color: lightgrey;
+    z-index: 2;
+    border-radius: 50%;
+    margin-left: 25px;
+    margin-top: -50px;
+    height: 140%;
+    width: 13%;
+    
+}
+
+.card-info-div {
+    /* border: 1px solid green; */
+    border-radius: 10px;
+    background-color: #2e3136;
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    align-items: flex-start;
+    width: 90%;
+    height: 75%;
+}
+
+.card-info {
+    margin-top: 35px;
+    margin-left: 15px;
+}
+
+.info-text {
+    font-size: 12px;
+    margin: 0 0 5px 0;
+}
+
+.info {
+    margin: 0 0 25px 0;
+
+}
+
+.edit-text {
+    color: red;
+}

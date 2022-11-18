@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import LogoutButton from "../auth/LogoutButton";
+import './users.css'
 
 
 const UserAccount = () => {
@@ -12,30 +13,35 @@ const currUser = useSelector((state) => state?.session?.user);
     }
 
     return (
-      <div>
+      <div className="user-account-div">
         <div className="left-bar">
-          USER SETTINGS
-          <br />
-          My Account
-          <br />
-          <LogoutButton />
+          <div className="left-bar-content">
+            <p className="user-settings">USER SETTINGS</p>
+            <p className="account-text">My Account</p>
+            <LogoutButton />
+          </div>
         </div>
-        My Account
+        <h3 className="card-title">My Account</h3>
         <div className="account-card">
           <div className="card-header">
-            {/* profile picture */}
-            {currUser.username}
+            <div className="pic-title">
+              <div className="profile-pic"> </div>
+              <h3 className="header-name">
+                {currUser.username} #00{currUser.id}
+              </h3>
+            </div>
+            <div className="card-info-div">
+              <div className="card-info">
+                <p className="info-text">USERNAME</p>
+                <p className="info">
+                  {currUser.username} #00{currUser.id}
+                </p>
+                <p className="info-text">EMAIL</p>
+                <p className="info">{currUser.email}</p>
+                <p className="edit-text">Editing disabled</p>
+              </div>
+            </div>
           </div>
-          <div className="card-info">
-            USERNAME
-            <br />
-            {currUser.username} #00{currUser.id}
-            <br />
-            EMAIL
-            <br />
-            {currUser.email}
-          </div>
-          Editing disabled
         </div>
         <div className="esc-button">
           <button onClick={() => handleClick()}>X ESC</button>
