@@ -43,8 +43,12 @@ const currUser = useSelector((state) => state?.session?.user);
             </div>
           </div>
         </div>
-        <div className="esc-button">
-          <button onClick={() => handleClick()}>X ESC</button>
+        <div className="esc-button-div">
+          <button className="esc-button" onClick={() => handleClick()}>
+            X
+          </button>
+          <br />
+          <p className="esc-text">ESC</p>
         </div>
       </div>
     );

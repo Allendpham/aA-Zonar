@@ -133,3 +133,36 @@
 .edit-text {
     color: red;
 }
+
+.esc-button-div {
+    margin-top: 20px;
+    color: #b8bbbe;
+    height: fit-content;
+    cursor: pointer;
+}
+
+.esc-button-div:hover {
+    color: white;
+}
+
+.esc-text {
+    font-size: 12px;
+    margin: 0 0 0 3px;
+}
+
+.esc-button {
+    background: none;
+    font-size: 16px;
+    color: #b8bbbe;
+    border: none;
+    /* padding: 10px 10px; */
+    cursor: pointer;
+    border: 1px #b8bbbe solid;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+}
+
+/* .esc-button:hover {
+    color: white;
+} */
