@@ -7,10 +7,7 @@ import os
 
 # create your SocketIO instance
 if os.environ.get("FLASK_ENV") == "production":
-    origins = [
-         "http://aa-zonar.onrender.com/",
-        "https://aa-zonar.onrender.com/"
-    ]
+  origins = "*"
 else:
     origins = "*"
 
