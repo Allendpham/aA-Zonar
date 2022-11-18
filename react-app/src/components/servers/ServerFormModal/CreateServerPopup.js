@@ -5,10 +5,7 @@ import './index.css'
 import ServerForm from './ServerForm';
 function CreateServerPopup({setShowModal}) {
    const dispatch = useDispatch();
-   const user = useSelector(state => state.session.user)
    const [formPosition, setPosition ] = useState(1)
-   let servers = useSelector(state => Object.values(state.server.allServers));
-   servers = servers?.filter(server => server['users'].filter(person => person.id == user.id).length == 0)
 
    useEffect(() => {
       // dispatch(loadServersThunk())

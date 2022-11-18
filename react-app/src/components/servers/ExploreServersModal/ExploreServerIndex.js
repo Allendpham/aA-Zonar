@@ -24,7 +24,7 @@ function ExploreServerIndex({setShowModal}) {
        <ul className="explore-list">
        {servers?.map(server => (
                <li key={server?.id}>
-                  <ExploreItem server={server}/>
+                  <ExploreItem setShowModal={setShowModal}server={server}/>
                </li>
             ))}
        </ul>

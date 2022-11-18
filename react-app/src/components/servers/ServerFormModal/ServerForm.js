@@ -27,8 +27,9 @@ const ServerForm = ({setShowModal}) => {
     let server = await dispatch(addServerThunk(payload))
 
     if(server){
-      setShowModal(false)
       dispatch(loadServersThunk())
+      setShowModal(false)
+      history.push(`/servers/${server.id}`)
     }
   }
 

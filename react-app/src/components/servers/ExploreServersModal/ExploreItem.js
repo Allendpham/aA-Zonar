@@ -13,7 +13,7 @@ function ExploreItem({setShowModal, server}) {
 
   if(!server) return(<h2>Loading...</h2>);
   const goToServer = () =>{
-    // setShowModal(false)
+    setShowModal(false)
     dispatch(getServerThunk(server.id))
     history.push(`/servers/${server.id}`)
   }
