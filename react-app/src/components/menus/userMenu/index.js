@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal } from '../../../context/userMenuModal';
+import { Modals } from '../../../context/userMenuModal';
 import UserPreviewForm from './UserPreview';
 import './userMenu.css'
 
@@ -25,9 +25,9 @@ function UserPreviewModal({currentServer, user}) {
         </p>
       </button>
       {showModal && (
-        <Modal onClose={() => setShowModal(false)}>
+        <Modals onClose={() => setShowModal(false)}>
           <UserPreviewForm setShowModal={setShowModal} currentServer={currentServer} user={user}/>
-        </Modal>
+        </Modals>
       )}
     </div>
   );

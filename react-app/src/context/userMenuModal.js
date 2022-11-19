@@ -2,9 +2,9 @@ import React, { useContext, useRef, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './userMenuModal.css';
 
-const ModalContext = React.createContext();
+const ModalContexts = React.createContext();
 
-export function ModalProvider({ children }) {
+export function ModalsProvider({ children }) {
   const modalRef = useRef();
   const [value, setValue] = useState();
 
@@ -14,16 +14,16 @@ export function ModalProvider({ children }) {
 
   return (
     <>
-      <ModalContext.Provider value={value}>
+      <ModalContexts.Provider value={value}>
         {children}
-      </ModalContext.Provider>
+      </ModalContexts.Provider>
       <div ref={modalRef} />
     </>
   );
 }
 
-export function Modal({ onClose, children }) {
-  const modalNode = useContext(ModalContext);
+export function Modals({ onClose, children }) {
+  const modalNode = useContext(ModalContexts);
   if (!modalNode) return null;
 
   return ReactDOM.createPortal(

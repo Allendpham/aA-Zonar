@@ -5,7 +5,7 @@ import { createPrivateChatThunk } from '../../../store/privatechat';
 import { getServerThunk } from '../../../store/server';
 import './userPreview.css'
 
-const UserPreviewForm = ({setShowModal, currentServer, user}) => {
+const UserPreviewForm = ({currentServer, user}) => {
   const dispatch = useDispatch()
   const history = useHistory()
 
