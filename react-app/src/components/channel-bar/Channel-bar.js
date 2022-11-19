@@ -15,14 +15,17 @@ const server = useSelector(state => state.server.currentServer)
 const liveChats = useSelector((state) => Object.values(state.privatechat.allPrivateChats));
 const currUser = useSelector((state) => state.session.user);
 const channels = useSelector((state) => Object.values(state.channel.allChannels))
+const currChannel = useSelector(state => state.channel.currentChannel.channel)
 const [title, setTitle] = useState('')
 const [location, setLocation] = useState('')
 const [chatId, setChatId] = useState('')
+const [selected, setSelected] = useState(currChannel)
 
 useEffect(() =>{
   server.server? setTitle(<h3>{server.server.name}</h3>): setTitle(<h3>Direct Messages</h3>)
   server.server? setLocation('server'):setLocation('home')
-},[server])
+},[server, currChannel])
+
 
 
 const getChat =async (id)=>{
@@ -33,22 +36,26 @@ const getChat =async (id)=>{
 const showChannel = async (channel) => {
   dispatch(clearChat())
   await dispatch(getChannelThunk(channel.id))
+
 }
+
 let content;
 if(location === 'server'){
   content = (
     <div id='channel-bar'>
       <ServerSettingsModal/>
-    <div><p>Text Channels</p><i className="fa-solid fa-plus"></i></div>
-    <ul className="channel-list-wrapper">
+    <div className="channel-list-wrapper">
+    <div className='text-channel-header'><p>TEXT CHANNELS</p><i className="fa-solid fa-plus"></i></div>
         {channels?.map((channel) => (
-          <li key={channel?.id}
+          <button
+              id={`${channel.id}${channel.name}`}
+              key={channel?.id}
               className="channel-links"
               onClick={() => showChannel(channel)}>
-              {channel.name}
-          </li>
+              <i class="fa-regular fa-hashtag"></i> {channel.name}
+          </button>
         ))}
-      </ul>
+      </div>
     <div id='user-bar'>
 
     <UserSettings/>
@@ -61,16 +68,16 @@ if(location === 'server'){
     <div id='channel-bar'>
       <button id='server-settings-button' className='direct-msg-title'>Direct Messages</button>
 
-    <ul className="chat-list-wrapper">
+    <div className="chat-list-wrapper">
         {liveChats?.map((chat) => (
-          <li key={chat?.id}
+          <button key={chat?.id}
               className="chat-links"
               onClick={() => getChat(chat.id)}
             >
               {chat.users.map(user => user.username).filter(username => username != currUser.username)}
-          </li>
+          </button>
         ))}
-      </ul>
+      </div>
     <div id='user-bar'>
 
     <UserSettings/>

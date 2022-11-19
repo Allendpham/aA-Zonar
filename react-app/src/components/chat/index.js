@@ -42,10 +42,20 @@ const Chat = ({channel}) => {
             dispatch(getChannelMessagesThunk(channel.id))
             socket.emit('join', {channel: channel})
             socket.emit('fetch', {channel: channel} )
-        } else {
+            let selected = document.getElementById(`${channel.id}${channel.name}`)
+            let nodes = document.getElementsByClassName('channel-links')
+            for(let node of nodes){
+              if(node.id == `${channel.id}${channel.name}` ){
+                node.classList.add('selected-link')
+              }else{
+                node.classList.remove('selected-link')
+              }
+            }
+          } else {
             dispatch(getPrivateChatMessagesThunk(currentChat.id))
             socket.emit('join', {chat: currentChat.id} )
             socket.emit('fetch', {chat: currentChat.id} )
+
         }
         async function fetchData() {
             const response = await fetch('/api/users/');

@@ -2,6 +2,57 @@
   height: 100vh;
   min-width: 240px;
   background-color: rgb(47,49,54);
+  font-size: 12px;
+}
+
+.channel-list-wrapper{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  color: rgb(150,152,157);
+  font-weight: 600;
+  width: 240px;
+}
+.channel-list-wrapper button{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: inherit;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  color: rgb(150,152,157);
+  font-weight: 600;
+  max-width: 224px;
+  max-height: 34px;
+  min-width: 224px;
+  min-height: 34px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color .15s ease-out, color .15s ease-out, border-radius .15s ease-out;
+
+}
+.channel-list-wrapper button:hover{
+  background-color: rgb(150,152,157, 0.2);
+  color: white;
+}
+.selected-link{
+  background-color: rgb(150,152,157, 0.2) !important;
+  color: white !important;
+}
+.channel-list-wrapper i{
+  padding-right: 7px;
+  scale: 1.4;
+}
+.text-channel-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top:10px;
+  max-width: 224px;
+  max-height: 34px;
+  min-width: 224px;
+  min-height: 34px;
+
 }
 #user-bar{
   display: flex;
