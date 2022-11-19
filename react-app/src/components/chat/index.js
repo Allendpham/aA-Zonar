@@ -8,13 +8,15 @@ import './chat.css'
 
 let socket;
 
-const Chat = ({channel, chat = null}) => {
+const Chat = ({channel}) => {
     const dispatch = useDispatch();
     const [chatInput, setChatInput] = useState("");
     const [messages, setMessages] = useState([]);
     const [currRoom, setCurrRoom] = useState("")
     const [users, setUsers] = useState([])
     const user = useSelector(state => state.session.user)
+    const currentChat = useSelector(state => state.privatechat.currentPrivateChat)
+    console.log(currentChat)
     useEffect(() => {
         socket = io();
         // open socket connection
@@ -36,15 +38,14 @@ const Chat = ({channel, chat = null}) => {
 
     useEffect(() =>{
         setMessages([])
-
-        if (chat === null) {
+        if (channel != null)  {
             dispatch(getChannelMessagesThunk(channel.id))
             socket.emit('join', {channel: channel})
             socket.emit('fetch', {channel: channel} )
         } else {
-            dispatch(getPrivateChatMessagesThunk(chat))
-            socket.emit('join', {chat: chat} )
-            socket.emit('fetch', {chat: chat} )
+            dispatch(getPrivateChatMessagesThunk(currentChat.id))
+            socket.emit('join', {chat: currentChat.id} )
+            socket.emit('fetch', {chat: currentChat.id} )
         }
         async function fetchData() {
             const response = await fetch('/api/users/');
@@ -53,7 +54,7 @@ const Chat = ({channel, chat = null}) => {
           }
           fetchData();
 
-    }, [channel, chat])
+    }, [channel, currentChat])
 
     useEffect(() => {
         socket.on('last_100_messages', (data) => {
@@ -65,10 +66,10 @@ const Chat = ({channel, chat = null}) => {
 
 
     const populateSocket = () => {
-         if (chat === null) {
+         if (channel != null) {
              socket.emit('fetch', {channel: channel} )
          } else {
-             socket.emit("fetch", { chat: chat });
+             socket.emit("fetch", { chat: currentChat.id });
          }
     }
 
@@ -78,12 +79,12 @@ const Chat = ({channel, chat = null}) => {
 
     const sendChat = async (e) => {
         e.preventDefault()
-        if (chat !== null) {
-            socket.emit('fetch', {channel: channel} )
+        if (channel == null) {
+            socket.emit("fetch", { chat: currentChat.id });
 
             let payload = {
                 userId: user.id,
-                privateChatId: chat,
+                privateChatId: currentChat.id,
                 message: chatInput,
             };
             let new_message = await dispatch(
@@ -94,7 +95,8 @@ const Chat = ({channel, chat = null}) => {
                 room: currRoom,
             });
         } else {
-            socket.emit("fetch", { chat: chat });
+
+            socket.emit('fetch', {channel: channel})
 
             let payload = {
                 userId: user.id,
@@ -108,26 +110,38 @@ const Chat = ({channel, chat = null}) => {
     }
 
 
-    return (user && (
-        <div className='chat-div'>
-            <div className='all-messages-div'>
-                {messages?.map((message, ind) => (
-                    <MessageSettingOptions populateSocket={populateSocket} key={message?.id} message={message} user={user} users={users} chat={chat}/>
-                ))}
-            </div>
-            <form className='message-bar-div' onSubmit={sendChat}>
-                <input
-                    className='message-bar'
-                    value={chatInput}
-                    // placeholder={channel.name}
-                    onChange={updateChatInput}
-                    // type='submit'
+    return (
+      user && (
+        <div className="chat-div">
+          <div className="chat-message-div">
+            <div className="all-messages-div">
+              {messages?.map((message, ind) => (
+                <MessageSettingOptions
+                  populateSocket={populateSocket}
+                  key={message?.id}
+                  message={message}
+                  user={user}
+                  users={users}
+                  chat={currentChat.id}
                 />
-                <button className='message-submit-btn' type="submit"></button>
+              ))}
+            </div>
+          </div>
+          <div className='message-form'>
+            <form className="message-bar-div" onSubmit={sendChat}>
+              <input
+                className="message-bar"
+                value={chatInput}
+                // placeholder={channel.name}
+                onChange={updateChatInput}
+                // type='submit'
+              />
+              <button className="message-submit-btn" type="submit"></button>
             </form>
+          </div>
         </div>
-    )
-    )
+      )
+    );
 };
 
 

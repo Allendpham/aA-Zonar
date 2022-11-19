@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch} from 'react-redux';
-import { getServerThunk, loadServersThunk } from '../../../store/server';
+import { clearServer, getServerThunk, loadServersThunk } from '../../../store/server';
 import ServerFormModal from '../ServerFormModal';
 import { Link, useHistory } from 'react-router-dom';
 import ExploreServersModal from '../ExploreServersModal';
@@ -19,6 +19,10 @@ function ServerIndex() {
 
    if(!servers.length) return(<ExploreServersModal />);
    //Need to filter servers for only servers that the user is a part of
+   const goHome=()=>{
+      dispatch(clearServer())
+      history.push(`/@me`)
+   }
    return(
       <div className='server-index-wrapper'>
          <ul className='servers-list-wrapper'>
@@ -27,7 +31,7 @@ function ServerIndex() {
                   className='server-index-item'
                   type='image'
                   src='https://res.cloudinary.com/degkakjou/image/upload/v1668750845/Zonar/osDIwkc_xpz4lw.png'
-                  onClick={()=> history.push(`/@me`)}
+                  onClick={()=> goHome()}
                >
                </input>
 

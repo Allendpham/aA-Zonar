@@ -18,6 +18,7 @@ import { loadPrivateChatsThunk } from './store/privatechat';
 import UserSettings from './components/users/userSettings';
 import UserAccount from './components/users/userAccount';
 import ChannelBar from './components/channel-bar/Channel-bar';
+import Chat from './components/chat'
 import { clearServer } from './store/server';
 
 function App() {
@@ -55,7 +56,7 @@ function App() {
           <ServersIndex />
           <ChannelBar />
           {/* <NavBar /> */}
-          <PrivateChats />
+          <PrivateChats/>
           {/* <UserSettings path='/@me/settings' /> */}
         </ProtectedRoute>
         <ProtectedRoute path="/servers/:serverId" exact={true}>
