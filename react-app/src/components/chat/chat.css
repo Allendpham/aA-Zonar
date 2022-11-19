@@ -88,6 +88,7 @@
     /* border: 1px solid red; */
     position: relative;
     height: 47px;
+    max-height: 47px;
     border-bottom: 1px solid black;
     justify-content: flex-start;
     width: 97%;
