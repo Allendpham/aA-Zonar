@@ -1,9 +1,36 @@
 
+.user-preview-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    height: 42px;
+    width: 230px;
+    text-align: center;
+}
 #user-preview-button{
+    /* border: 3px solid black; */
+    /* border-radius: 30px; */
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    margin-left: 10px;
     border: none;
     background-color: inherit;
-    text-decoration: none;
-    /* background: white; */
-    /* color: white; */
-    border-style: none;
+    color:#DCDDDE;
+    width: 100%;
+    padding-left: 0;
+    /* padding-right: 0; */
+    text-align: center;
+    /* text-decoration: none; */
+    /* border-style: none; */
+    /* width: 100%; */
+    height: 100%;
+}
+
+#user-preview-button:hover {
+    /* color: transparent; */
+    background-color: rgba(220, 221, 222, .1)
+    /* width: 100%; */
 }

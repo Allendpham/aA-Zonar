@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal } from '../../../context/Modal';
+import { Modal } from '../../../context/userMenuModal';
 import UserPreviewForm from './UserPreview';
 import './userMenu.css'
 
@@ -19,7 +19,11 @@ function UserPreviewModal({currentServer, user}) {
 
   return (
     <div className="user-preview-wrapper">
-      <button id="user-preview-button" onClick={() => {setShowModal(true)}}>{user.username} {isOwner} {isAdmin}</button>
+      <button id="user-preview-button" onClick={() => {setShowModal(true)}}>
+        <p id='user-butt-text'>
+          {user.username} {isOwner} {isAdmin}
+        </p>
+      </button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <UserPreviewForm setShowModal={setShowModal} currentServer={currentServer} user={user}/>

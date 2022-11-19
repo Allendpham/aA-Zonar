@@ -1,0 +1,16 @@
+#userPreviewContainer{
+    /* position: absolute; */
+    width: 100%;
+    height: 100%;
+}
+
+#userPreviewHeader{
+    height: 50px;
+    width: 100%;
+    background-color: blueviolet;
+}
+
+
+.user-preview-form{
+    width: 100px;
+}

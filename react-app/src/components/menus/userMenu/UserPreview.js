@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { createPrivateChatThunk } from '../../../store/privatechat';
 import { getServerThunk } from '../../../store/server';
+import './userPreview.css'
 
 const UserPreviewForm = ({setShowModal, currentServer, user}) => {
   const dispatch = useDispatch()
@@ -12,7 +13,7 @@ const UserPreviewForm = ({setShowModal, currentServer, user}) => {
   const [isOwner, setOwner] = useState(false)
   const currUser = useSelector(state => state.session.user)
   const currentChats = useSelector(state => Object.values(state.privatechat.allPrivateChats))
-console.log('serverrrrrrrrrrrrrrrrrrrrrr', currentChats)
+
   useEffect(() =>{
     if(currentServer?.ownerId === currUser?.id) setOwner(true)
     if(currentServer.admins.filter(admin => admin.id === user.id).length > 0){
@@ -75,18 +76,22 @@ const startChat = async () =>{
 
 
   return(
-    <form className='user-preview-form'>
-        <label>AdminRole</label>
-        <input
-            type='checkbox'
-            checked={adminRole}
-            onClick={()=> submitRole()}
-            disabled={!isOwner || currentServer.ownerId === user.id}
-            />
-          <button
-          onClick={()=> startChat()}
-          >Direct Message</button>
-    </form>
+    <div id='userPreviewContainer'>
+      <div id='userPreviewHeader'></div>
+      <p>{user.username}</p>
+      <form className='user-preview-form'>
+          <label id='userRole'>AdminRole</label>
+          <input
+              type='checkbox'
+              checked={adminRole}
+              onClick={()=> submitRole()}
+              disabled={!isOwner || currentServer.ownerId === user.id}
+              />
+            <button id='startDm'
+            onClick={()=> startChat()}
+            >Direct Message</button>
+      </form>
+    </div>
   )
   }
 

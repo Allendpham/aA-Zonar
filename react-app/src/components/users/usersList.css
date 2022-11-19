@@ -17,21 +17,31 @@
     display: inline;
     flex-direction: column;
     align-content: space-between;
+    /* align-items: flex-end; */
+    /* justify-content: flex-end; */
 }
 
 .userListTitle{
+    /* display: flex; */
+    /* flex-direction: row; */
+    /* align-content: flex-end; */
+    /* align-items: flex-end;/ */
+    /* justify-content: flex-end; */
     color: #96989D;
     font-size: 12px;
     font-weight: 500;
     margin-left: 10px;
+
 }
 
 .usersListing{
     color: #dcddde;
-    background-color: inherit;
-    border: none;
+    /* background-color: inherit; */
+    /* border: none; */
+    padding: 0;
+    width: fit-content;
     list-style: none;
-    width: 208px;
-    height: 42px;
+    height: 100vh;
+
 
 }
