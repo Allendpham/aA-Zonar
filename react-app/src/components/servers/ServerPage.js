@@ -9,6 +9,7 @@ import ChannelSettingsModal from '../channels/ChannelSettingsModal';
 import Chat from '../chat';
 import UsersList from '../users/usersList';
 import '../chat/chat.css'
+import { clearChat } from '../../store/privatechat';
 
 const ServerPage = () => {
    const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const ServerPage = () => {
    let content;
 
    useEffect(()=> {
+      dispatch(clearChat())
       dispatch(getServerThunk(serverId))
       dispatch(loadServerChannelsThunk(serverId))
    }, [dispatch, serverId])

@@ -3,28 +3,40 @@ import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import './index.css'
 import UserSettings from '../users/userSettings';
-import { getOnePrivateChatThunk, loadPrivateChatsThunk } from "../../store/privatechat";
+import { clearChat, getOnePrivateChatThunk, loadPrivateChatsThunk } from "../../store/privatechat";
 import ServerSettingsModal from '../servers/ServerSettingsModal';
+import { clearServer } from '../../store/server';
+import { getChannelThunk } from '../../store/channel';
 
 
 const ChannelBar = () => {
 const dispatch = useDispatch()
 const server = useSelector(state => state.server.currentServer)
 const liveChats = useSelector((state) => Object.values(state.privatechat.allPrivateChats));
-const user = useSelector((state) => state.session.user);
+const currUser = useSelector((state) => state.session.user);
 const channels = useSelector((state) => Object.values(state.channel.allChannels))
+const currChannel = useSelector(state => state.channel.currentChannel.channel)
 const [title, setTitle] = useState('')
 const [location, setLocation] = useState('')
 const [chatId, setChatId] = useState('')
+const [selected, setSelected] = useState(currChannel)
 
 useEffect(() =>{
   server.server? setTitle(<h3>{server.server.name}</h3>): setTitle(<h3>Direct Messages</h3>)
   server.server? setLocation('server'):setLocation('home')
-},[server])
+},[server, currChannel])
 
-const getChannel = (id) => {
+
+
+const getChat =async (id)=>{
   setChatId(id)
-  dispatch(getOnePrivateChatThunk(chatId))
+  dispatch(clearServer())
+  await dispatch(getOnePrivateChatThunk(chatId))
+}
+const showChannel = async (channel) => {
+  dispatch(clearChat())
+  await dispatch(getChannelThunk(channel.id))
+
 }
 
 let content;
@@ -32,15 +44,26 @@ if(location === 'server'){
   content = (
     <div id='channel-bar'>
       <ServerSettingsModal/>
-    <ul className="channel-list-wrapper">
+    <div className="channel-list-wrapper">
+    <div className='text-channel-header'><p>TEXT CHANNELS</p><i className="fa-solid fa-plus"></i></div>
         {channels?.map((channel) => (
-          <li key={channel?.id}
+          <button
+              id={`${channel.id}${channel.name}`}
+              key={channel?.id}
               className="channel-links"
-            >
-              {channel.name}
-          </li>
+              onClick={() => showChannel(channel)}>
+              <div>
+                <i class="fa-regular fa-hashtag"></i> {channel.name}
+                </div>
+              <button
+                  id='channel-settings-button'
+
+                  >
+            <i className="fa-solid fa-gear"></i>
+          </button>
+          </button>
         ))}
-      </ul>
+      </div>
     <div id='user-bar'>
 
     <UserSettings/>
@@ -53,16 +76,17 @@ if(location === 'server'){
     <div id='channel-bar'>
       <button id='server-settings-button' className='direct-msg-title'>Direct Messages</button>
 
-    <ul className="chat-list-wrapper">
+    <div className="channel-list-wrapper">
         {liveChats?.map((chat) => (
-          <li key={chat?.id}
-              className="chat-links"
-              onClick={() => getChannel(chat.id)}
+          <button key={chat?.id}
+              id={`${chat.id}${chat.users.map(user => user.username).join('')}`}
+              className="channel-links"
+              onClick={() => getChat(chat.id)}
             >
-              {chat.users?.filter(users => users.username != user.username ).map(name => name.username).join(' ')}
-          </li>
+              {chat.users.map(user => user.username).filter(username => username != currUser.username)}
+          </button>
         ))}
-      </ul>
+      </div>
     <div id='user-bar'>
 
     <UserSettings/>

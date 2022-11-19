@@ -2,7 +2,7 @@
 const LOAD_PRIVATE_CHATS = 'privatechats/LOAD_PRIVATE_CHATS'
 const GET_ONE_PRIVATE_CHAT = 'privatechats/GET_ONE_PRIVATE_CHAT'
 const CREATE_PRIVATE_CHAT = 'privatechats/CREATE_PRIVATE_CHAT'
-
+const CLEAR_CURRENT_CHAT = 'privatechats/CLEAR_CURRENT_CHAT'
 // Action Creators
 const loadPrivateChats = (privatechats) => ({
    type: LOAD_PRIVATE_CHATS,
@@ -18,7 +18,9 @@ const createPrivateChat = (privatechat) => ({
    type: CREATE_PRIVATE_CHAT,
    privatechat
 })
-
+export const clearChat = () =>({
+  type: CLEAR_CURRENT_CHAT
+})
 
 // Thunks
 export const loadPrivateChatsThunk = () => async (dispatch) => {
@@ -89,6 +91,8 @@ export default function privateChatReducer(state = initialState, action){
       case CREATE_PRIVATE_CHAT:
          return {...state, allPrivateChats:{...state.allPrivateChats,
             [action.privatechat.id]: action.privatechat}}
+      case CLEAR_CURRENT_CHAT:
+          return {...state, allPrivateChats:{...state.allPrivateChats}, currentPrivateChat:{}}
       default:
          return state
    }
