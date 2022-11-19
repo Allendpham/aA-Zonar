@@ -21,6 +21,9 @@ const SignUpForm = () => {
         setErrors(data)
       }
     }
+    // else {
+    //   setErrors(errors.push('Passwords do not match'))
+    // }
   };
 
   const updateUsername = (e) => {
