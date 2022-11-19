@@ -19,8 +19,11 @@
   flex-direction: column;
   justify-items: center;
   align-items: center;
-  /* margin: auto; */
   margin: 10px 0px;
+  padding: 10px 0px;
+  border-top: 2px solid rgba(255,255,255, .08);
+  border-bottom: 2px solid rgba(255,255,255, .08);
+
 
 }
 .update-form input{
@@ -54,15 +57,16 @@
   justify-content: space-between;
   align-items: center;
   width: 80%;
+  height: 30px;
   background-color: inherit;
   border: 1px solid transparent;
-  border-bottom: 2px solid rgba(255,255,255, .08);
+  /* border-bottom: 2px solid rgba(255,255,255, .08); */
   color: rgb(185,187,190);
   cursor: pointer;
   font-size: 14px;
   font-weight:400;
-  padding: 5px 0px;
-  margin: 10px 5px;
+  padding: 5px 10px 5px 0px;
+  margin: 5px 0px;
 }
 .update-form-button p{
   padding: unset;
@@ -70,15 +74,15 @@
 }
 
 .delete-server{
-  border-top: 2px solid rgba(255,255,255, .08);
+  /* border-top: 2px solid rgba(255,255,255, .08); */
+  color: rgb(237,66,69);
   border-bottom: unset;
-  margin-top: -1px;
-
+  padding-right: 5px;
+  margin-bottom: 10px;
 }
 
-.delete-server:hover{
+.update-form-button:hover{
   border-radius: 5px;
-
   background-color: rgb(64, 78, 237);
 }
 

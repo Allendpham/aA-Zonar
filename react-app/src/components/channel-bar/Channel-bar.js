@@ -27,17 +27,17 @@ useEffect(() =>{
   server.server? setTitle(<h3>{server.server.name}</h3>): setTitle(<h3>Direct Messages</h3>)
   server.server? setLocation('server'):setLocation('home')
 },[server, currChannel])
-console.log(server.server?.admins.map(admin => admin.id).includes(currUser?.id))
 
 
 const getChat =async (id)=>{
-  setChatId(id)
   dispatch(clearServer())
-  await dispatch(getOnePrivateChatThunk(chatId))
+  setChatId(id)
+  dispatch(getOnePrivateChatThunk(id))
 }
+
 const showChannel = async (channel) => {
   dispatch(clearChat())
-  await dispatch(getChannelThunk(channel.id))
+  dispatch(getChannelThunk(channel.id))
 
 }
 

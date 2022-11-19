@@ -16,7 +16,8 @@ const Chat = ({channel}) => {
     const [users, setUsers] = useState([])
     const user = useSelector(state => state.session.user)
     const currentChat = useSelector(state => state.privatechat.currentPrivateChat)
-    console.log(currentChat)
+
+    
     useEffect(() => {
         socket = io();
         // open socket connection
