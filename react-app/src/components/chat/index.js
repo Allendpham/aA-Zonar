@@ -17,7 +17,7 @@ const Chat = ({channel}) => {
     const user = useSelector(state => state.session.user)
     const currentChat = useSelector(state => state.privatechat.currentPrivateChat)
 
-    
+
     useEffect(() => {
         socket = io();
         // open socket connection
@@ -45,7 +45,11 @@ const Chat = ({channel}) => {
             socket.emit('fetch', {channel: channel} )
             let nodes = document.getElementsByClassName('channel-links')
             for(let node of nodes){
+              console.log(node)
               if(node.id == `${channel.id}${channel.name}` ){
+                let settingsButton = document.querySelector(`.channel-settings${channel.id}`)
+                console.log('FOUND THE BUTTON', settingsButton)
+                settingsButton.classList.add('selected-settings')
                 node.classList.add('selected-link')
               }else{
                 node.classList.remove('selected-link')

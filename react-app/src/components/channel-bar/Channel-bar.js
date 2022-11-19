@@ -63,11 +63,10 @@ if(location === 'server'){
                 </div>
           </button>
               {server.server?.admins.map(admin => admin.id).includes(currUser?.id) &&
-              <button
-                  id='channel-settings-button'
-                  >
-              <div key={channel.id} onClick={() => showChannel(channel)}><ChannelSettingsModal channelId={channel?.id}/></div>
-              </button>}
+
+              <div className="channel-settings-button-wrapper" key={channel.id} onClick={() => showChannel(channel)}><ChannelSettingsModal channelId={channel?.id}/></div>
+
+              }
           </div>
         ))}
       </div>
