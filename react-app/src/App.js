@@ -3,23 +3,15 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
-import NavBar from './components/NavBar';
 import ProtectedRoute from './components/auth/ProtectedRoute';
-import UsersList from './components/UsersList';
-import User from './components/User';
-// import ServersIndex from './components/servers/ServerIndex';
-// import ServerIndexItem from './components/servers/ServerIndexItem';
 import SplashPage from './components/splashpage/SplashPage';
 import ServersIndex from './components/servers/ServerIndex/ServerIndex';
 import ServerPage from './components/servers/ServerPage';
 import { authenticate } from './store/session';
 import PrivateChats from './components/private-chats/privateChat';
 import { loadPrivateChatsThunk } from './store/privatechat';
-import UserSettings from './components/users/userSettings';
 import UserAccount from './components/users/userAccount';
 import ChannelBar from './components/channel-bar/Channel-bar';
-import Chat from './components/chat'
-import { clearServer } from './store/server';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -46,18 +38,10 @@ function App() {
         <Route path="/sign-up" exact={true}>
           <SignUpForm />
         </Route>
-        {/* <ProtectedRoute path="/users" exact={true}>
-          <UsersList />
-        </ProtectedRoute>
-        <ProtectedRoute path="/users/:userId" exact={true}>
-          <User />
-        </ProtectedRoute> */}
         <ProtectedRoute path="/@me" exact={true}>
           <ServersIndex />
           <ChannelBar />
-          {/* <NavBar /> */}
           <PrivateChats/>
-          {/* <UserSettings path='/@me/settings' /> */}
         </ProtectedRoute>
         <ProtectedRoute path="/servers/:serverId" exact={true}>
           <ServersIndex />

@@ -6,7 +6,7 @@ import UserSettings from '../users/userSettings';
 import { clearChat, getOnePrivateChatThunk, loadPrivateChatsThunk } from "../../store/privatechat";
 import ServerSettingsModal from '../servers/ServerSettingsModal';
 import { clearServer } from '../../store/server';
-import { getChannelThunk } from '../../store/channel';
+import { getChannelThunk, clearChannel } from '../../store/channel';
 import ChannelSettingsModal from '../channels/ChannelSettingsModal';
 import ChannelFormModal from '../channels/ChannelFormModal';
 
@@ -31,6 +31,7 @@ useEffect(() =>{
 
 const getChat =async (id)=>{
   dispatch(clearServer())
+  dispatch(clearChannel())
   setChatId(id)
   dispatch(getOnePrivateChatThunk(id))
 }

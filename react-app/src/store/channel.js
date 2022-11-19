@@ -3,6 +3,7 @@ const LOAD_SERVER_CHANNELS = 'channels/LOAD_SERVER_CHANNELS'
 const GET_CHANNEL = 'channels/GET_CHANNEL'
 const UPDATE_CHANNEL = 'channels/UPDATE_CHANNEL'
 const DELETE_CHANNEL = 'channels/DELETE_CHANNEL'
+const CLEAR_CHANNEL = 'channels/CLEAR_CHANNEL'
 
 /// actions
 const loadServerChannels = (channels) => ({
@@ -23,6 +24,10 @@ const updateChannel = (channel) => ({
 const deleteChannel = (id) => ({
     type: DELETE_CHANNEL,
     id
+})
+
+export const clearChannel = () =>( {
+type: CLEAR_CHANNEL
 })
 
 
@@ -157,6 +162,9 @@ export default function channelReducer(state = initialState, action){
           const deleteState = {...state}
           delete deleteState.allChannels[action.id]
           return deleteState
+    case CLEAR_CHANNEL:
+      return {
+        ...state, allChannels:{...state.allChannels}, currentChannel:{}}
     default:
         return state
   }

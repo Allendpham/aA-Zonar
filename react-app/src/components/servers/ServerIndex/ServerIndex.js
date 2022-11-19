@@ -6,6 +6,7 @@ import { Link, useHistory } from 'react-router-dom';
 import ExploreServersModal from '../ExploreServersModal';
 import ServerIndexItem from './ServerIndexItem';
 import './index.css'
+import { clearChannel } from '../../../store/channel';
 
 function ServerIndex() {
    const dispatch = useDispatch();
@@ -21,6 +22,7 @@ function ServerIndex() {
    //Need to filter servers for only servers that the user is a part of
    const goHome=()=>{
       dispatch(clearServer())
+      dispatch(clearChannel())
       history.push(`/@me`)
    }
    return(

@@ -1,4 +1,4 @@
-import { createChannelThunk } from "./channel"
+import { createChannelThunk, clearChannel } from "./channel"
 
 //CONSTANTS
 const LOAD_SERVERS = 'servers/LOAD_SERVER'
@@ -31,6 +31,8 @@ const removeServer = (server) => ({
 export const clearServer = () =>({
   type: CLEAR_SERVER
 })
+
+
 //THUNKS
 export const loadServersThunk = ()=> async (dispatch) => {
   const response  = await fetch('/api/servers')
