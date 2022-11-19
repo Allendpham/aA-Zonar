@@ -106,5 +106,4 @@ function normalizeArray(dataArray){
   dataArray.forEach(element => {
     obj[element.id] = element
   })
-  return obj
-4}
+  return obj}
