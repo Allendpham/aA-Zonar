@@ -52,7 +52,15 @@ if(location === 'server'){
               key={channel?.id}
               className="channel-links"
               onClick={() => showChannel(channel)}>
-              <i class="fa-regular fa-hashtag"></i> {channel.name}
+              <div>
+                <i class="fa-regular fa-hashtag"></i> {channel.name}
+                </div>
+              <button
+                  id='channel-settings-button'
+
+                  >
+            <i className="fa-solid fa-gear"></i>
+          </button>
           </button>
         ))}
       </div>
