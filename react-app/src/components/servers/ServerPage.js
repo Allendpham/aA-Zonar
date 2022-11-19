@@ -61,18 +61,17 @@ const ServerPage = () => {
             addChannel = <div></div>
    return(
       <div className='server-content-wrapper'>
-
-         <div className='server-index-item-wrapper'>
-         </div>
-         <div className='text-channels'>
-            <h2>TEXT CHANNELS
+         {/* <div className='server-index-item-wrapper'>
+         </div> */}
+         {/* <div className='text-channels'>
+            <h2>TEXT CHANNELS */}
                {/* <ChannelFormModal/> */}
-               {addChannel}
-            </h2>
-         <ul>{allChannels?.map(ele => (
-            <li key={ele.id} onClick={() => showChannel(ele)}>{ele.name}<ChannelSettingsModal channelId={ele?.id}/></li>
-         ))}</ul>
-         </div>
+               {/* {addChannel} */}
+            {/* </h2> */}
+         {/* <ul>{allChannels?.map(ele => ( */}
+            {/* <li key={ele.id} onClick={() => showChannel(ele)}>{ele.name}<ChannelSettingsModal channelId={ele?.id}/></li> */}
+         {/* ))}</ul> */}
+         {/* </div> */}
          {content}
          <UsersList currentServer={singleServer}/>
       </div>
