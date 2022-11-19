@@ -68,10 +68,11 @@ if(location === 'server'){
     <div id='channel-bar'>
       <button id='server-settings-button' className='direct-msg-title'>Direct Messages</button>
 
-    <div className="chat-list-wrapper">
+    <div className="channel-list-wrapper">
         {liveChats?.map((chat) => (
           <button key={chat?.id}
-              className="chat-links"
+              id={`${chat.id}${chat.users.map(user => user.username).join('')}`}
+              className="channel-links"
               onClick={() => getChat(chat.id)}
             >
               {chat.users.map(user => user.username).filter(username => username != currUser.username)}
