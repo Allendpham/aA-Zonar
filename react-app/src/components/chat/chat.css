@@ -72,13 +72,26 @@
     margin-bottom: 0;
 }
 
+.chat-profile-pic-wrapper {
+    border: 1px solid black;
+    /* background-color: lightgrey; */
+    /* z-index: 2; */
+    border-radius: 50%;
+    margin: 3% 3%;
+    margin-bottom: 0;
+    /* margin-top: -50px; */
+    height: 45px;
+    width: 45px;
+}
+
 .chat-profile-pic {
-    border: 1px solid white;
-        background-color: lightgrey;
+    /* border: 1px solid black; */
+    object-fit: contain;
+        /* background-color: lightgrey; */
         /* z-index: 2; */
         border-radius: 50%;
-        margin: 3% 3%;
-        margin-bottom: 0;
+        /* margin: 3% 3%; */
+        /* margin-bottom: 0; */
         /* margin-top: -50px; */
         height: 45px;
         width: 45px;

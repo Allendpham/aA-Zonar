@@ -19,8 +19,19 @@ const MessageSettingOptions = ({message, user,users, populateSocket, chat}) => {
    const server = useSelector(state => state?.server?.currentServer?.server)
    const poster = Object.values(users).find(member => member.id == message?.userId)
    const date = dayjs(message?.updatedAt).fromNow(false);
-   console.log(date)
+  //  console.log(date)
 
+
+const profilePicArr = [
+  "https://i.imgur.com/hqaxlhA.png",
+  "https://i.imgur.com/oYJZeqX.png",
+  "https://i.imgur.com/T7RAT9x.png",
+  "https://i.imgur.com/7CLZbES.png",
+  "https://i.imgur.com/RBj7WlI.png",
+];
+
+const randProfilePic = Math.floor(Math.random() * profilePicArr.length)
+console.log('this is profile pic', randProfilePic)
 
    useEffect(() => {
       dispatch(getServerThunk(serverId))
@@ -123,7 +134,9 @@ if(message.userId === user.id){
      >
        <div id="message-settings-button" className="chat-message">
          <div className="message-header">
-           <div className="chat-profile-pic"></div>
+           <div className='chat-profile-pic-wrapper'> 
+            <img className='chat-profile-pic' src={profilePicArr[randProfilePic]} alt='profile-pic'/>
+           </div>
            <h4 className="chat-name">{poster?.username}</h4>{" "}
            <p className="timestamp">{date}</p>
             <div className='message-modal'>
