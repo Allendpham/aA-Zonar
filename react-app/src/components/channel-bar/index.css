@@ -20,16 +20,60 @@
   cursor: pointer;
   transition: background-color .15s ease-out, color .15s ease-out, border-radius .15s ease-out;
   opacity: 0;
+  z-index: 4;
+  position: relative;
+  right: 20px;
 }
 #channel-settings-button i{
   scale:1;
   padding:0;
 }
 
+#channel-settings-button-wrapper{
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  visibility: hidden;
+  background-color: transparent;
+}
 
-#channel-settings-button:hover{
+
+#channel-settings-button button:hover{
 background-color: #42464e;
-opacity: 1;
+
+}
+
+#create-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(167,168,172);
+  background-color: transparent;
+  border: 1px transparent solid;
+  border-radius: 4px;
+  margin-bottom: 0px !important;
+  margin-right: 5px;
+  padding: 0;
+  height: 32px !important;
+  width: 32px !important;
+  cursor: pointer;
+  transition: background-color .15s ease-out, color .15s ease-out, border-radius .15s ease-out;
+  z-index: 2;
+
+}
+#create-button:hover{
+  background-color: rgb(150,152,157, 0.2);
+  color: white;
+}
+
+#create-button i{
+  padding: 0;
+}
+
+.channel-list-item:hover #channel-settings-button{
+  opacity: 1 ;
 }
 .channel-list-wrapper{
   display:flex;
@@ -55,7 +99,26 @@ opacity: 1;
   padding: 10px;
   cursor: pointer;
   transition: background-color .15s ease-out, color .15s ease-out, border-radius .15s ease-out;
+  z-index: 2;
+}
 
+.channel-list-item{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: inherit;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  color: rgb(150,152,157);
+  font-weight: 600;
+  max-width: 224px;
+  max-height: 34px;
+  min-width: 224px;
+  min-height: 34px;
+  padding: 0;
+  cursor: pointer;
+  transition: background-color .15s ease-out, color .15s ease-out, border-radius .15s ease-out;
+  z-index: 2;
 }
 .channel-links:hover{
   background-color: rgb(150,152,157, 0.2);

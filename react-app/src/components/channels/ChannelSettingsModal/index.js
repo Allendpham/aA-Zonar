@@ -6,8 +6,8 @@ function ChannelSettingsModal({channelId}) {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <div className="channel-settings-wrapper">
-      <button id="channel-settings-button" onClick={() => {setShowModal(true)}}>Channel Settings</button>
+    <div className="channel-settings-button-wrapper">
+      <button id="channel-settings-button" onClick={() => {setShowModal(true)}}><i className="fa-solid fa-gear"></i></button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <UpdateChannelForm setShowModal={setShowModal} channelId={channelId}/>

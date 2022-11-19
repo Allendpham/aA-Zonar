@@ -64,7 +64,7 @@ const UpdateServerForm = ({setShowModal, update = null}) => {
     return leave_server
   }
 
-  const exitImage = <img id='exit-image'src='https://res.cloudinary.com/degkakjou/image/upload/v1668802855/Zonar/exiticon_bkbhme.png'/>
+  const exitImage = <img id='exit-image'src='https://res.cloudinary.com/degkakjou/image/upload/v1668832853/Zonar/exiticon-removebg-preview_o5r0hu.png'/>
 
   return(
     <div className='server-dropdown'>
@@ -88,7 +88,7 @@ const UpdateServerForm = ({setShowModal, update = null}) => {
       {/* <button type='button' onClick={handleCancelClick}>Cancel</button> */}
     </form>}
       {user.id === currServer.ownerId &&
-      (<button className='update-form-button' type='button' onClick={handleDeleteClick}><p>Delete Server</p>{exitImage}</button>)
+      (<button className='update-form-button delete-server' type='button' onClick={handleDeleteClick}><p>Delete Server</p>{exitImage}</button>)
       }
       {user.id !== currServer.ownerId &&
       (<button className='update-form-button delete-server'type='button' onClick={handleLeaveClick}><p>Leave Server</p>{exitImage}</button>)

@@ -7,6 +7,8 @@ import { clearChat, getOnePrivateChatThunk, loadPrivateChatsThunk } from "../../
 import ServerSettingsModal from '../servers/ServerSettingsModal';
 import { clearServer } from '../../store/server';
 import { getChannelThunk } from '../../store/channel';
+import ChannelSettingsModal from '../channels/ChannelSettingsModal';
+import ChannelFormModal from '../channels/ChannelFormModal';
 
 
 const ChannelBar = () => {
@@ -25,7 +27,7 @@ useEffect(() =>{
   server.server? setTitle(<h3>{server.server.name}</h3>): setTitle(<h3>Direct Messages</h3>)
   server.server? setLocation('server'):setLocation('home')
 },[server, currChannel])
-
+console.log(server.server?.admins.map(admin => admin.id).includes(currUser?.id))
 
 
 const getChat =async (id)=>{
@@ -45,8 +47,11 @@ if(location === 'server'){
     <div id='channel-bar'>
       <ServerSettingsModal/>
     <div className="channel-list-wrapper">
-    <div className='text-channel-header'><p>TEXT CHANNELS</p><i className="fa-solid fa-plus"></i></div>
+    <div className='text-channel-header'><p>TEXT CHANNELS</p>
+    {server.server?.admins.map(admin => admin.id).includes(currUser?.id) &&
+<ChannelFormModal/>}</div>
         {channels?.map((channel) => (
+          <div className='channel-list-item'>
           <button
               id={`${channel.id}${channel.name}`}
               key={channel?.id}
@@ -55,13 +60,14 @@ if(location === 'server'){
               <div>
                 <i class="fa-regular fa-hashtag"></i> {channel.name}
                 </div>
+          </button>
+              {server.server?.admins.map(admin => admin.id).includes(currUser?.id) &&
               <button
                   id='channel-settings-button'
-
                   >
-            <i className="fa-solid fa-gear"></i>
-          </button>
-          </button>
+              <div key={channel.id} onClick={() => showChannel(channel)}><ChannelSettingsModal channelId={channel?.id}/></div>
+              </button>}
+          </div>
         ))}
       </div>
     <div id='user-bar'>

@@ -11,7 +11,7 @@
   position: absolute;
   top: 55px;
   left: 80px;
-  /* margin: 0 auto; */
+  z-index: 5;
 }
 
 .update-form{
@@ -61,8 +61,8 @@
   cursor: pointer;
   font-size: 14px;
   font-weight:400;
-  padding: 10px 0px;
-  margin-bottom: 0px;
+  padding: 5px 0px;
+  margin: 10px 5px;
 }
 .update-form-button p{
   padding: unset;
@@ -74,6 +74,12 @@
   border-bottom: unset;
   margin-top: -1px;
 
+}
+
+.delete-server:hover{
+  border-radius: 5px;
+
+  background-color: rgb(64, 78, 237);
 }
 
 #exit-image{
