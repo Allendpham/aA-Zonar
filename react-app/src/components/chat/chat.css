@@ -170,16 +170,25 @@
 
 .msg-setting:hover {
     background-color: #40444a;
+    
+}
+
+.fa-solid {
+    color: #cccdce;
 }
 
 .message-modal {
-    /* border: 1px solid red; */
-    margin-left: 60%;
-    margin-top: 0;
+    margin-left: 75%;
+    margin-top: -20px;
+    z-index: 1;
     /* display: flex;
     justify-items: flex-start;
     align-items: flex-start; */
 }
+
+/* .message-modal-hover {
+    border: 0.5px solid black;
+} */
 
 .edit-form {
     /* border: 1px solid red; */

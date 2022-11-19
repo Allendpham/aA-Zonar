@@ -128,7 +128,7 @@ if(message.userId === user.id){
 
    return (
      <div
-       //  className='message-modal'
+      //  className='message-modal-hover'
        onMouseEnter={() => setShown(true)}
        onMouseLeave={() => setShown(false)}
      >
