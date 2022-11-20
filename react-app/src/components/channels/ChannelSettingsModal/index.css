@@ -1,0 +1,24 @@
+.update-channel-form button,
+.channel-form button{
+  border-radius: 4px;
+  border: 2px solid rgba(54,57,63, .1);
+  background-color: rgba(54,57,63);
+  color: #DCDDDE;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 70%;
+  height: 20px;
+  cursor: pointer;
+  margin-top: 3px;
+}
+
+.update-channel-form button:hover,
+.channel-form button:hover{
+  border-radius: 7px;
+  background-color: rgb(64, 78, 237);
+}
+
+.update-channel-form button#update-channel-delete{
+  color: rgb(237,66,69);
+}

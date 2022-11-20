@@ -12,6 +12,8 @@ const UpdateServerForm = ({setShowMenu, setClicked, update = null}) => {
   const [name, setName] = useState(currServer?.name)
   const [previewImg, setImage] = useState(currServer?.preview_img) //default image
   const [showSettings, setShowSettings] = useState(false)
+  const [confirmDelete, setConfirmDelete] = useState(false)
+
   const updateName = (e) => setName(e.target.value);
   const updateImage = (e) => setImage(e.target.value);
   useEffect(()=>{
@@ -42,7 +44,11 @@ const UpdateServerForm = ({setShowMenu, setClicked, update = null}) => {
 
   const handleDeleteClick = async  (e) => {
     e.preventDefault();
-
+    if(!confirmDelete){
+      alert(`Deleting this server will remove all access to all channels and past messages.\nPlease click the DELETE button again to confirm.`)
+      setConfirmDelete(true)
+      return
+    }
 
     //Display some type of modal/confirmation message where user has to confirm and input name of server to confirm delete
     await dispatch(removeServerThunk(serverId))

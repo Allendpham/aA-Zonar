@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { getChannelThunk, updateChannelThunk, deleteChannelThunk, loadServerChannelsThunk } from '../../../store/channel';
-
+import './index.css'
 const UpdateChannelForm = ({setShowModal, channelId}) => {
   const dispatch = useDispatch()
   const history = useHistory()
@@ -11,7 +11,7 @@ const UpdateChannelForm = ({setShowModal, channelId}) => {
   const chosenChannel = channels[channelId]
 
   const [name, setName] = useState(chosenChannel?.name)
-
+  const [confirmDelete, setConfirmDelete] = useState(false)
   const updateName = (e) => setName(e.target.value);
 
 
@@ -45,7 +45,11 @@ const UpdateChannelForm = ({setShowModal, channelId}) => {
 
   const handleDeleteClick = (e) => {
     e.preventDefault();
-
+    if(!confirmDelete){
+      alert(`Deleting this channel will remove all access to past messages.\nPlease click the DELETE button again to confirm.`)
+      setConfirmDelete(true)
+      return
+    }
 
     //Display some type of modal/confirmation message where user has to confirm and input name of server to confirm delete
     dispatch(deleteChannelThunk(channelId))
@@ -62,8 +66,8 @@ const UpdateChannelForm = ({setShowModal, channelId}) => {
         value={name}
         onChange={updateName}/>
       <button type='submit'>Submit</button>
-      <button type='button' onClick={handleCancelClick}>Cancel</button>
-      <button type='button' onClick={handleDeleteClick}>Delete Channel</button>
+      {/* <button type='button' onClick={handleCancelClick}>Cancel</button> */}
+      <button type='button' id='update-channel-delete' onClick={handleDeleteClick}>Delete Channel</button>
     </form>
   )
 }
