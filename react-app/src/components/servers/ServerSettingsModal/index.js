@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Modal } from '../../../context/Modal';
 import UpdateServerForm from './UpdateServerForm';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,19 +7,26 @@ function ServerSettingsModal() {
   const [showMenu, setShowMenu] = useState(false);
   const [clicked, setClicked] = useState(false)
   const currServer = useSelector(state => state.server.currentServer.server)
+  const servMenu = useRef(null)
   let clickImage;
+  const closeOpenMenus = (e)=>{
+    if(servMenu.current && showMenu && !servMenu.current.contains(e.target)){
+      setShowMenu(false)
+    }
+}
   useEffect(() => {
-    if (!showMenu) return;
+    // if (!showMenu) return;
 
-    const closeMenu = () => {
-      setShowMenu(false);
-    };
+    // const closeMenu = () => {
+    //   setShowMenu(false);
+    //   setClicked(false)
+    // };
 
-    document.addEventListener('click', closeMenu);
+    document.addEventListener('click', closeOpenMenus);
 
-    return () => document.removeEventListener("click", closeMenu);
+    return () => document.removeEventListener("click", closeOpenMenus);
   }, [showMenu]);
-  
+
   const click = () =>{
     setShowMenu(!showMenu)
     setClicked(!clicked)
@@ -27,7 +34,7 @@ function ServerSettingsModal() {
   clicked? clickImage = <i className="fa-solid fa-x"></i>:clickImage = <i className="fa-solid fa-angle-down"></i>
 
   return (
-    <div className="">
+    <div ref={servMenu} className="">
       <button id="server-settings-button" onClick={() => {click()}}><p>{currServer?.name}</p>{clickImage}</button>
       {showMenu && (
           <UpdateServerForm setShowMenu={setShowMenu}/>
