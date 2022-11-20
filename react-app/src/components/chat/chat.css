@@ -22,7 +22,6 @@ h4, p{
 .all-messages-div{
     overflow-y: scroll;
     height: 100%;
-    /* min-height: 100%; */
     margin-top:22px;
 
 }
@@ -53,11 +52,7 @@ h4, p{
 }
 
 .chat-message-div {
-    /* position: relative; */
-    /* top: 32px; */
-    /* margin: 32px 0px; */
     max-height: 100%;
-    /* min-height: 100%; */
     height: 100%;
     width: 100%;
     display: flex;
@@ -72,6 +67,9 @@ h4, p{
     margin: 10px 15px;
     max-width: 100%;
     height: fit-content;
+    padding: 5px;
+    border: 1px transparent solid;
+    border-radius: 5px;
 
 }
 
@@ -226,8 +224,8 @@ h4, p{
 }
 .message-modal {
     position: relative;
-    top: -15px;
-    left: 280px;
+    top: -10px;
+    left: 45%;
     height: 30px;
     z-index: 5;
     border: 1px solid rgb(150,152,157);

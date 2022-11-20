@@ -100,16 +100,12 @@ if(message.userId === user.id){
 
 }
 
-   let setSettingsButt
-   message.userId === user.id
-     ? (setSettingsButt = (
+   let setSettingsButt = (
          <button className="msg-setting" onClick={() => setSettings(!settings)}>
            <i className="fa-solid fa-pen"></i>
          </button>
-       ))
-     : (setSettingsButt = null);
+   )
 
-     console.log(poster?.profile_pic)
    return (
      <div
 
