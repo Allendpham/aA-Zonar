@@ -39,9 +39,9 @@ const ChannelForm = ({setShowModal}) => {
     }
   }
 
-  const handleCancelClick = (e) => {
-    e.preventDefault();
-  };
+  // const handleCancelClick = (e) => {
+  //   e.preventDefault();
+  // };
 
   return(
     <form className='channel-form' onSubmit={handleSubmit}>
@@ -54,7 +54,7 @@ const ChannelForm = ({setShowModal}) => {
         value={name}
         onChange={updateName}/>
       <button type='submit'>Submit</button>
-      <button type='button' onClick={handleCancelClick}>Cancel</button>
+      {/* <button type='button' onClick={handleCancelClick}>Cancel</button> */}
     </form>
   )
 }

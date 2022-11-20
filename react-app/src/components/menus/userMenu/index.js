@@ -1,21 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import {useDispatch} from 'react-redux'
 import { Modals } from '../../../context/userMenuModal';
 import UserPreviewForm from './UserPreview';
 import './userMenu.css'
+import { useSelector } from 'react-redux';
+import { getServerThunk } from '../../../store/server';
 
 function UserPreviewModal({currentServer, user}) {
+  const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false);
 
   let isOwner
-  currentServer.ownerId === user.id ? isOwner = 'Crown' : isOwner = null
-
   let isAdmin
+  useEffect(() => {
+    dispatch(getServerThunk(currentServer.id))
+  },[])
+
+  currentServer.ownerId === user.id ? isOwner = 'Crown' : isOwner = null
   for(const admins of currentServer.admins){
     if(admins.id === user.id) {
       isAdmin = 'admin'
     }
   }
-
 
   return (
     <div className="user-preview-wrapper">
