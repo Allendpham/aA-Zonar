@@ -19,11 +19,16 @@
     justify-content: flex-start;
     border-radius: 5px;
     color: #fdfefe;
-    height: 525px;
+    min-height: 525px;
+    /* height: fit-content; */
     width: 416px;
     padding: 34px;
     background-color: #36393f;
     padding-left: 45px;
+}
+
+.signup-form button{
+    margin-top: 25px !important;
 }
 
 .login-form {
@@ -33,7 +38,7 @@
     justify-content: flex-start;
     border-radius: 5px;
     color: #fdfefe;
-    height: 354px;
+    min-height: 354px;
     width: 410px;
     padding: 34px;
     background-color: #36393f;
@@ -68,6 +73,7 @@
 }
 
 .login-input {
+    margin-bottom: 5px;
     color: #e7f0fe;
     border-style: none;
     background-color: #202225;
@@ -88,6 +94,7 @@
     font-size: 15px;
     font-weight: 700;
     margin-bottom: 15px;
+
 }
 
 .login-submit:hover {
