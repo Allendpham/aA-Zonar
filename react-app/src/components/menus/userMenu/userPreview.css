@@ -6,7 +6,7 @@
 }
 
 #userPreviewHeader{
-    height: 50px;
+    height: 62px;
     width: 100%;
     background-color: blueviolet;
 }
@@ -15,6 +15,7 @@
 #userPreviewCard{
     background-color: black;
     margin: 25px;
+    margin-top: 50px;
     border-top-left-radius: 7px;
     border-top-right-radius: 7px;
     border-bottom-left-radius: 7px;
@@ -41,5 +42,18 @@
     border-radius: 2px;
     color: #2f3136;
     text-align: start;
+
+}
+
+#userPreviewHeader img{
+    margin-top: 25px;
+    margin-left: 25px;
+    border: 5px solid #202225;
+    border-radius: 50%;
+    min-height: 60px;
+    min-width: 60px;
+    max-height: 60x;
+    max-width: 60px;
+    object-fit:cover;
 
 }
