@@ -9,6 +9,7 @@ function ServerSettingsModal() {
   const currServer = useSelector(state => state.server.currentServer.server)
   const servMenu = useRef(null)
   let clickImage;
+  
   const closeOpenMenus = (e)=>{
     if(servMenu.current && showMenu && !servMenu.current.contains(e.target)){
       setShowMenu(false)

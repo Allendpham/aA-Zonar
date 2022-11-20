@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { login } from '../../store/session';
+import ErrorDisplay from './ErrorDisplay';
 import "./login.css";
 
 const LoginForm = () => {
@@ -39,9 +40,7 @@ const LoginForm = () => {
     <div className="login-page">
       <form className="login-form" onSubmit={onLogin}>
         <div>
-          {errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
-          ))}
+        <ErrorDisplay id={'login-error-list'} errors={errors}/>
         </div>
         <h2 className="login-welcome">Welcome Back!</h2>
         <h3 className="login-subheading">We're so excited to see you again!</h3>
@@ -52,6 +51,7 @@ const LoginForm = () => {
 
           <input
             className="login-input"
+            id='login-email'
             name="email"
             type="text"
             value={email}
@@ -65,6 +65,7 @@ const LoginForm = () => {
 
           <input
             className="login-input"
+            id='login-password'
             name="password"
             type="password"
             value={password}

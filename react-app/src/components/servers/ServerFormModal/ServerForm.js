@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { addServerThunk, loadServersThunk } from '../../../store/server';
+import ErrorDisplay from '../../auth/ErrorDisplay';
 
 const ServerForm = ({setShowModal}) => {
   const dispatch = useDispatch()
@@ -32,7 +33,6 @@ const ServerForm = ({setShowModal}) => {
       return
     }
     if(server){
-      dispatch(loadServersThunk())
       setShowModal(false)
       history.push(`/servers/${server.id}`)
     }
@@ -41,10 +41,8 @@ const ServerForm = ({setShowModal}) => {
 
   return(
     <form className='server-form' onSubmit={handleSubmit}>
-   <div>
-          {errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
-          ))}
+      <div>
+          <ErrorDisplay id={'server-error-list'} errors={errors}/>
         </div>
       <input
         type='text'

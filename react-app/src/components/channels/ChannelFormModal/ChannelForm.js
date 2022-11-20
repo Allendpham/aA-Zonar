@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { createChannelThunk, getChannelThunk, loadServerChannelsThunk } from '../../../store/channel';
+import ErrorDisplay from '../../auth/ErrorDisplay';
 
 const ChannelForm = ({setShowModal}) => {
   const dispatch = useDispatch()
@@ -45,9 +46,7 @@ const ChannelForm = ({setShowModal}) => {
   return(
     <form className='channel-form' onSubmit={handleSubmit}>
             <div>
-          {errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
-          ))}
+          <ErrorDisplay id='channel-error-list' errors={errors}/>
         </div>
       <input
         type='text'

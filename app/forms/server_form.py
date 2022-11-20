@@ -20,4 +20,4 @@ def server_name_exists(form, field):
 class ServerForm(FlaskForm):
     ownerId = IntegerField('ownerId', validators=[DataRequired()])
     name = StringField('server name', validators=[DataRequired(message='Please enter a server name'), server_name_exists])
-    preview_img = StringField('preview img', validators=[Regexp('(?:http\:|https\:)?\/\/.*\.(?:png|jpg|jpeg)', message = 'Please use a valid image URL (https://ex.jpg/jpeg/png)')])
+    preview_img = StringField('preview img', validators=[Regexp('^$|(?:http\:|https\:)?\/\/.*\.(?:png|jpg|jpeg)', message = 'Please use a valid image URL (https://ex.jpg/jpeg/png)')])

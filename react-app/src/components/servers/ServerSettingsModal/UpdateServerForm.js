@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { updateServerThunk, getServerThunk, removeServerThunk, loadServersThunk } from '../../../store/server';
+import ErrorDisplay from '../../auth/ErrorDisplay';
 import './index.css'
 const UpdateServerForm = ({setShowMenu, setClicked, update = null}) => {
   const dispatch = useDispatch()
@@ -40,7 +41,7 @@ const UpdateServerForm = ({setShowMenu, setClicked, update = null}) => {
       return
     }
     if(server){
-
+      setClicked(false)
       setShowMenu(false)
     }
     dispatch(getServerThunk(serverId))
@@ -86,9 +87,7 @@ const UpdateServerForm = ({setShowMenu, setClicked, update = null}) => {
     {showSettings &&
       <form className='update-form' onSubmit={handleSubmit}>
       <div>
-          {errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
-          ))}
+      <ErrorDisplay id={'server-error-list'} errors={errors}/>
         </div>
       <input
         type='text'

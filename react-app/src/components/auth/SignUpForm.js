@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom';
 import { signUp } from '../../store/session';
+import ErrorDisplay from './ErrorDisplay';
 import "./login.css"
 
 const SignUpForm = () => {
@@ -50,9 +51,7 @@ const SignUpForm = () => {
     <div className='login-page'>
       <form className='signup-form' onSubmit={onSignUp}>
         <div>
-          {errors.length > 0 && errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
-          ))}
+        <ErrorDisplay id={'signup-error-list'} errors={errors}/>
         </div>
         <h2 className="login-welcome">Create an account</h2>
         <div className='signup-form-body'>
@@ -60,6 +59,7 @@ const SignUpForm = () => {
             <label className='login-text'>USERNAME</label>
             <input
               className="login-input"
+              id='sign-up-username'
               type='text'
               name='username'
               onChange={updateUsername}
@@ -70,6 +70,7 @@ const SignUpForm = () => {
             <label className='login-text'>EMAIL</label>
             <input
               className="login-input"
+              id='sign-up-email'
               type='text'
               name='email'
               onChange={updateEmail}
@@ -80,6 +81,7 @@ const SignUpForm = () => {
             <label className='login-text'>PASSWORD</label>
             <input
               className="login-input"
+              id='sign-up-password'
               type='password'
               name='password'
               onChange={updatePassword}
@@ -91,6 +93,7 @@ const SignUpForm = () => {
             <input
               className="login-input"
               type='password'
+              id='sign-up-confirm-password'
               name='repeat_password'
               onChange={updateRepeatPassword}
               value={repeatPassword}
