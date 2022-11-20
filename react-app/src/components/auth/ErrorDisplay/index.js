@@ -10,10 +10,10 @@ function ErrorDisplay({errors, id}) {
   useEffect(() => {
 
   },[errors])
-console.log(errors)
+
 
   for(let field of splashInputs){
-    console.log(field.id)
+
     if(field.id === 'sign-up-email'){
       (errors.includes('email : Please enter an email')||errors.includes('email : Please enter a valid e-mail address.'))?
       field.classList.add('error-border'):field.classList.remove('error-border')

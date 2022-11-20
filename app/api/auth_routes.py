@@ -3,6 +3,7 @@ from app.models import User, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
+from random import choice
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -59,13 +60,27 @@ def sign_up():
     """
     Creates a new user and logs them in
     """
+    profilePicArr = [
+    "https://i.imgur.com/hqaxlhA.png",
+    "https://i.imgur.com/oYJZeqX.png",
+    "https://i.imgur.com/T7RAT9x.png",
+    "https://i.imgur.com/7CLZbES.png",
+    "https://i.imgur.com/RBj7WlI.png",
+    ]
+    
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+        if len(form.data['profile_pic']) == 0:
+            profile_pic = choice(profilePicArr)
+        else:
+            profile_pic = form.data['profile_pic']
+
         user = User(
             username=form.data['username'],
             email=form.data['email'],
-            password=form.data['password']
+            password=form.data['password'],
+            profile_pic=profile_pic
         )
         db.session.add(user)
         db.session.commit()

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom';
 import { signUp } from '../../store/session';
@@ -14,6 +14,7 @@ const SignUpForm = () => {
   const [repeatPassword, setRepeatPassword] = useState('');
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
+  let randInd;
 
   const profilePicArr = [
     "https://i.imgur.com/hqaxlhA.png",
@@ -22,14 +23,13 @@ const SignUpForm = () => {
     "https://i.imgur.com/7CLZbES.png",
     "https://i.imgur.com/RBj7WlI.png",
   ];
-  const randPic = Math.floor(Math.random() * profilePicArr.length);
+  const randPic = () => Math.floor(Math.random() * profilePicArr.length);
 
   const onSignUp = async (e) => {
     e.preventDefault();
     if (password === repeatPassword) {
-      if(!profilePic.length) setProfilePic(profilePicArr[randPic])
 
-      const data = await dispatch(signUp(username, email, password));
+      const data = await dispatch(signUp(username, email, password, profilePic));
       if (data) {
         setErrors(data)
       }

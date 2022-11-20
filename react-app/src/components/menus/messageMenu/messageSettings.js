@@ -109,6 +109,7 @@ if(message.userId === user.id){
        ))
      : (setSettingsButt = null);
 
+     console.log(poster?.profile_pic)
    return (
      <div
 
