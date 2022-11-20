@@ -44,16 +44,15 @@ const Chat = ({channel}) => {
             socket.emit('join', {channel: channel})
             socket.emit('fetch', {channel: channel} )
             let nodes = document.getElementsByClassName('channel-links')
+            let settingsButtons = document.getElementsByClassName(`channel-settings-button`)
             for(let node of nodes){
-              console.log(node)
-              if(node.id == `${channel.id}${channel.name}` ){
-                let settingsButton = document.querySelector(`.channel-settings${channel.id}`)
-                console.log('FOUND THE BUTTON', settingsButton)
-                settingsButton.classList.add('selected-settings')
-                node.classList.add('selected-link')
-              }else{
-                node.classList.remove('selected-link')
+              node.id == `${channel.id}${channel.name}`?
+                node.classList.add('selected-link') : node.classList.remove('selected-link')
               }
+            for(let node of settingsButtons){
+              node.id == `settings${channel.id}`?
+              node.classList.add('selected-settings'):node.classList.remove('selected-settings')
+              console.log(node)
             }
           } else {
             dispatch(getPrivateChatMessagesThunk(currentChat.id))

@@ -4,7 +4,7 @@
   background-color: rgb(47,49,54);
   font-size: 12px;
 }
-#channel-settings-button{
+.channel-settings-button{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,7 +22,7 @@
   opacity: 0;
   z-index: 4;
 }
-#channel-settings-button i{
+.channel-settings-button .fa-solid{
   scale:1;
   padding:0;
 }
@@ -41,13 +41,12 @@
   z-index: 4;
 }
 
-#channel-settings-button:hover{
+.channel-settings-button:hover{
 background-color: #42464e;
 
 }
 
-#channel-list-item .selected-settings,
-#channel-settings-button.selected-settings
+.selected-settings
 {
   opacity: 1 !important;
 }
@@ -79,7 +78,7 @@ background-color: #42464e;
   padding: 0;
 }
 
-.channel-list-item:hover #channel-settings-button{
+.channel-list-item:hover .channel-settings-button{
   opacity: 1 ;
 }
 .channel-list-wrapper{

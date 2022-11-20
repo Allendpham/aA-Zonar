@@ -7,7 +7,7 @@ function ChannelSettingsModal({channelId}) {
 
   return (
     <div >
-      <button id="channel-settings-button" className={`channel-settings${channelId}`} onClick={() => {setShowModal(true)}}><i className="fa-solid fa-gear"></i></button>
+      <button id={`settings${channelId}`} className="channel-settings-button" onClick={() => {setShowModal(true)}}><i className="fa-solid fa-gear"></i></button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <UpdateChannelForm setShowModal={setShowModal} channelId={channelId}/>
