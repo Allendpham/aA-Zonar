@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { updateServerThunk, getServerThunk, removeServerThunk, loadServersThunk } from '../../../store/server';
 import './index.css'
-const UpdateServerForm = ({setShowModal, update = null}) => {
+const UpdateServerForm = ({setShowMenu, update = null}) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const {serverId} = useParams();
@@ -33,16 +33,12 @@ const UpdateServerForm = ({setShowModal, update = null}) => {
     let server = await dispatch(updateServerThunk(payload, serverId))
 
     if(server){
-      setShowModal(false)
+      setShowMenu(false)
     }
     dispatch(getServerThunk(serverId))
     dispatch(loadServersThunk())
   }
 
-  // const handleCancelClick = (e) => {
-  //   e.preventDefault();
-  //   setShowModal(false)
-  // };
 
   const handleDeleteClick = async  (e) => {
     e.preventDefault();
@@ -50,7 +46,7 @@ const UpdateServerForm = ({setShowModal, update = null}) => {
 
     //Display some type of modal/confirmation message where user has to confirm and input name of server to confirm delete
     await dispatch(removeServerThunk(serverId))
-    setShowModal(false)
+    setShowMenu(false)
     dispatch(loadServersThunk())
     history.push('/@me')
   }
