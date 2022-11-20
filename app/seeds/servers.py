@@ -18,6 +18,7 @@ def seed_servers():
     db.session.add(allen)
     db.session.add(brin)
     db.session.add(tom)
+    db.session.commit()
 
     demo_server = Server(
         ownerId=4,
