@@ -131,8 +131,17 @@ h4, p{
         border-radius: 50%;
         min-height: 45px;
         min-width: 45px;
+        max-height: 45px;
+        max-width: 45px;
+    }
+.chat-profile-pic img{
+    border-radius: 50%;
+    min-height: 45px;
+    min-width: 45px;
+    max-height: 45px;
+    max-width: 45px;
+    object-fit:cover;
 }
-
 .server-title {
     /* border: 1px solid red; */
     position: relative;

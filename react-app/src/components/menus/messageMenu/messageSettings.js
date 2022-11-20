@@ -118,7 +118,7 @@ if(message.userId === user.id){
             <div>
 
            <div className="chat-profile-pic">
-            {/* <img src={poster?.profile_pic}/> */}
+            <img src={poster?.profile_pic}/>
            </div>
            <h4 className="chat-name">{poster?.username}</h4>{" "}
            <p className="timestamp">{date}</p>
