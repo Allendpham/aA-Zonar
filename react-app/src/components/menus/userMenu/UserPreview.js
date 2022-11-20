@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { createPrivateChatThunk } from '../../../store/privatechat';
+import { createPrivateChatThunk, getOnePrivateChatThunk } from '../../../store/privatechat';
 import { getServerThunk } from '../../../store/server';
 import './userPreview.css'
 
@@ -22,7 +22,15 @@ const UserPreviewForm = ({currentServer, user}) => {
   },[])
 
   const matchedChats = currentChats.map(chat => chat.users.map(mbr => mbr.id)).filter(item => item.includes(user.id))
-
+  let targetChat;
+  for(const chats in currentChats){
+    for(const users in currentChats[chats].users){
+        if(currentChats[chats].users[users].id === user.id){
+          targetChat = currentChats[chats]
+        }
+    }
+  }
+  console.log(targetChat)
   useEffect(()=>{
     dispatch(getServerThunk(currentServer.id))
   }, [adminRole])
@@ -61,11 +69,13 @@ const startChat = async () =>{
     userId: user.id
   }
   if(matchedChats.length > 0){
+    dispatch(getOnePrivateChatThunk(targetChat.id))
     history.push('/@me')
     return
   }
   let chat = await dispatch(createPrivateChatThunk(payload))
   if(chat){
+    dispatch(getOnePrivateChatThunk(chat.id))
     history.push('/@me')
   }
 }
