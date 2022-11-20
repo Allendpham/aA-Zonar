@@ -2,6 +2,152 @@
   height: 100vh;
   min-width: 240px;
   background-color: rgb(47,49,54);
+  font-size: 12px;
+}
+.channel-settings-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(167,168,172);
+  background-color: transparent;
+  border: 1px transparent solid;
+  border-radius: 4px;
+  margin-bottom: 0px !important;
+  margin-right: 5px;
+  padding: 0;
+  height: 32px !important;
+  width: 32px !important;
+  cursor: pointer;
+  transition: background-color .15s ease-out, color .15s ease-out, border-radius .15s ease-out;
+  opacity: 0;
+  z-index: 4;
+}
+.channel-settings-button .fa-solid{
+  scale:1;
+  padding:0;
+}
+
+.channel-settings-button-wrapper{
+  position: relative;
+  right: 35px;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  cursor: unset;
+  z-index: 4;
+}
+
+.channel-settings-button-wrapper div{
+  z-index: 4;
+}
+
+.channel-settings-button:hover{
+background-color: #42464e;
+
+}
+
+.selected-settings
+{
+  opacity: 1 !important;
+}
+
+#create-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(167,168,172);
+  background-color: transparent;
+  border: 1px transparent solid;
+  border-radius: 4px;
+  margin-bottom: 0px !important;
+  margin-right: 5px;
+  padding: 0;
+  height: 32px !important;
+  width: 32px !important;
+  cursor: pointer;
+  transition: background-color .15s ease-out, color .15s ease-out, border-radius .15s ease-out;
+  z-index: 2;
+
+}
+#create-button:hover{
+  background-color: rgb(150,152,157, 0.2);
+  color: white;
+}
+
+#create-button i{
+  padding: 0;
+}
+
+.channel-list-item:hover .channel-settings-button{
+  opacity: 1 ;
+}
+.channel-list-wrapper{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  color: rgb(150,152,157);
+  font-weight: 600;
+  width: 240px;
+}
+.channel-links{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: inherit;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  color: rgb(150,152,157);
+  font-weight: 600;
+  max-width: 224px;
+  max-height: 34px;
+  min-width: 224px;
+  min-height: 34px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color .15s ease-out, color .15s ease-out, border-radius .15s ease-out;
+  z-index: 2;
+}
+
+.channel-list-item{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: inherit;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  color: rgb(150,152,157);
+  font-weight: 600;
+  max-width: 224px;
+  max-height: 34px;
+  min-width: 224px;
+  min-height: 34px;
+  padding: 0;
+  cursor: pointer;
+  transition: background-color .15s ease-out, color .15s ease-out, border-radius .15s ease-out;
+  z-index: 2;
+}
+.channel-links:hover{
+  background-color: rgb(150,152,157, 0.2);
+  color: white;
+}
+.selected-link{
+  background-color: rgb(150,152,157, 0.2) !important;
+  color: white !important;
+}
+.channel-list-wrapper i{
+  padding-right: 7px;
+  scale: 1.4;
+}
+.text-channel-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top:10px;
+  max-width: 224px;
+  max-height: 34px;
+  min-width: 224px;
+  min-height: 34px;
+
 }
 #user-bar{
   display: flex;
@@ -13,4 +159,46 @@
   max-height: 52px;
   position: absolute;
   bottom: 0;
+}
+.userListContainer{
+  flex-direction: column;
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-block;
+  max-width: 240px;
+  height: 100%;
+
+
+  text-decoration: none solid rgb(0,0,0);
+  background-color: #2f3136;
+  letter-spacing: 0.24px;
+}
+#server-settings-button{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 240px;
+  min-height: 48px;
+  max-width: 240px;
+  max-height: 48px;
+  background-color: inherit;
+  border: 1px solid transparent;
+  border-bottom: 1px solid black;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+#server-settings-button i{
+  color: rgb(185,187,190);
+}
+.fa-x{
+  scale: .8;
+}
+
+.direct-msg-title{
+  cursor: unset !important;
 }

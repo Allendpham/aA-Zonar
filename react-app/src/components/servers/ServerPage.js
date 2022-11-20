@@ -8,19 +8,24 @@ import ChannelFormModal from '../channels/ChannelFormModal';
 import ChannelSettingsModal from '../channels/ChannelSettingsModal';
 import Chat from '../chat';
 import UsersList from '../users/usersList';
+import '../chat/chat.css'
+import { clearChat } from '../../store/privatechat';
 
 const ServerPage = () => {
    const dispatch = useDispatch();
    const {serverId} = useParams();
    const servers = useSelector(state => Object.values(state.server.allServers))
    const singleServer = useSelector(state => state.server.currentServer.server)
-   const allChannels = useSelector(state => Object.values(state.channel.allChannels))
+   // const allChannels = useSelector(state => Object.values(state.channel.allChannels))
    const singleChannel = useSelector(state => state.channel?.currentChannel)
    // const channel_messages = useSelector(state => (Object.values(state.message), () => true))
    const currUser = useSelector(state => state.session.user)
+
+
    let content;
 
    useEffect(()=> {
+      dispatch(clearChat())
       dispatch(getServerThunk(serverId))
       dispatch(loadServerChannelsThunk(serverId))
    }, [dispatch, serverId])
@@ -31,12 +36,20 @@ const ServerPage = () => {
 
    const showChannel = (channel) => {
 
-      dispatch(getChannelThunk(channel.id))
+      // dispatch(getChannelThunk(channel.id))
    }
 
 
-   singleChannel && singleChannel?.channel?.serverId == serverId ?
-   content = (<div>Single Channel: {singleChannel.channel.name} <Chat channel={singleChannel.channel}/> </div>): content=(<div></div>)
+   singleChannel && singleChannel?.channel?.serverId == serverId
+     ? (content = (
+         <div className="server-parent">
+           <div className="server-title">
+             <h3>#{singleChannel.channel.name}</h3>
+           </div>
+           <Chat channel={singleChannel.channel} />
+         </div>
+       ))
+     : (content = <div></div>);
 
    if(!singleServer) {
       return null;
@@ -48,20 +61,17 @@ const ServerPage = () => {
             addChannel = <div></div>
    return(
       <div className='server-content-wrapper'>
-
-         <div className='server-index-item-wrapper'>
-         <h1>{singleServer?.name}</h1>
-         <ServerSettingsModal />
-         </div>
-         <div className='text-channels'>
-            <h2>TEXT CHANNELS
+         {/* <div className='server-index-item-wrapper'>
+         </div> */}
+         {/* <div className='text-channels'>
+            <h2>TEXT CHANNELS */}
                {/* <ChannelFormModal/> */}
-               {addChannel}
-            </h2>
-         <ul>{allChannels?.map(ele => (
-            <li key={ele.id} onClick={() => showChannel(ele)}>{ele.name}<ChannelSettingsModal channelId={ele?.id}/></li>
-         ))}</ul>
-         </div>
+               {/* {addChannel} */}
+            {/* </h2> */}
+         {/* <ul>{allChannels?.map(ele => ( */}
+            {/* <li key={ele.id} onClick={() => showChannel(ele)}>{ele.name}<ChannelSettingsModal channelId={ele?.id}/></li> */}
+         {/* ))}</ul> */}
+         {/* </div> */}
          {content}
          <UsersList currentServer={singleServer}/>
       </div>

@@ -1,18 +1,39 @@
-import React, { useState } from 'react';
-import { Modal } from '../../../context/Modal';
+import React, { useEffect, useState } from 'react';
+import {useDispatch} from 'react-redux'
+import { Modals } from '../../../context/userMenuModal';
 import UserPreviewForm from './UserPreview';
+import './userMenu.css'
+import { useSelector } from 'react-redux';
+import { getServerThunk } from '../../../store/server';
 
 function UserPreviewModal({currentServer, user}) {
+  const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false);
 
+  let isOwner
+  let isAdmin
+  useEffect(() => {
+    dispatch(getServerThunk(currentServer.id))
+  },[])
+
+  currentServer.ownerId === user.id ? isOwner = 'Crown' : isOwner = null
+  for(const admins of currentServer.admins){
+    if(admins.id === user.id) {
+      isAdmin = 'admin'
+    }
+  }
 
   return (
     <div className="user-preview-wrapper">
-      <button id="user-preview-button" onClick={() => {setShowModal(true)}}>{user.username}</button>
+      <button id="user-preview-button" onClick={() => {setShowModal(true)}}>
+        <p id='user-butt-text'>
+          {user.username} {isOwner} {isAdmin}
+        </p>
+      </button>
       {showModal && (
-        <Modal onClose={() => setShowModal(false)}>
+        <Modals onClose={() => setShowModal(false)}>
           <UserPreviewForm setShowModal={setShowModal} currentServer={currentServer} user={user}/>
-        </Modal>
+        </Modals>
       )}
     </div>
   );

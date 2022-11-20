@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { createChannelThunk, loadServerChannelsThunk } from '../../../store/channel';
+import { createChannelThunk, getChannelThunk, loadServerChannelsThunk } from '../../../store/channel';
+import ErrorDisplay from '../../auth/ErrorDisplay';
 
 const ChannelForm = ({setShowModal}) => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { serverId } = useParams()
   const user = useSelector(state => state.session.user)
   const [name, setName] = useState('')
+  const [errors, setErrors] = useState([]);
 
   const updateName = (e) => setName(e.target.value);
 
@@ -24,27 +27,34 @@ const ChannelForm = ({setShowModal}) => {
       serverId
     };
 
-    let server = await dispatch(createChannelThunk(payload, serverId))
-
-    if(server){
+    let channel = await dispatch(createChannelThunk(payload, serverId))
+    if(channel.errors){
+      setErrors(channel.errors)
+      return
+    }
+    if(channel){
       setShowModal(false)
+      await dispatch(getChannelThunk(channel.id))
       dispatch(loadServerChannelsThunk(serverId))
     }
   }
 
-  const handleCancelClick = (e) => {
-    e.preventDefault();
-  };
+  // const handleCancelClick = (e) => {
+  //   e.preventDefault();
+  // };
 
   return(
     <form className='channel-form' onSubmit={handleSubmit}>
+            <div>
+          <ErrorDisplay id='channel-error-list' errors={errors}/>
+        </div>
       <input
         type='text'
         placeholder='Channel Name'
         value={name}
         onChange={updateName}/>
       <button type='submit'>Submit</button>
-      <button type='button' onClick={handleCancelClick}>Cancel</button>
+      {/* <button type='button' onClick={handleCancelClick}>Cancel</button> */}
     </form>
   )
 }

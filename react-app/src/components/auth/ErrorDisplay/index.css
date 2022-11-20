@@ -1,0 +1,23 @@
+.error-list{
+  list-style: none;
+  font-size: 12px;
+  color:rgba(222, 8, 26, 0.8);
+}
+
+.error-list li{
+  margin:5px;
+}
+
+.error-list i {
+  color: rgba(222, 8, 26, 0.8);
+}
+
+#comment-errors{
+  position: relative;
+  left: 20px;
+  top: -5px;
+}
+
+.error-border{
+  border: 2px solid rgba(222, 8, 26, 0.8) !important;
+}

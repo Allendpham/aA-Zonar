@@ -7,7 +7,7 @@ function ExploreItem({setShowModal, server}) {
   const dispatch = useDispatch();
   const history = useHistory()
   const bg_img = server.preview_img? server.preview_img:null
-  const intials = server?.name.split(' ').map(word => word[0].toUpperCase()).join('').slice(0,2)
+  const intials = server?.name.split(' ').map(word => word[0]).join('').slice(0,2)
   useEffect(() => {
   }, [])
 

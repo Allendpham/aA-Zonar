@@ -13,7 +13,16 @@ const SplashPage = () => {
    <div className='splashpagewrapper'>
       <div className='navbar'>
          <NavLink className='home-logo-link' exact to="/"><img src="https://i.imgur.com/osDIwkc.png" className="home-logo"></img>Zonar</NavLink>
-         {/* Include ul with links to all project members social links */}
+         <div className='github-links'>
+            Collaborators :
+            <ul className='collaborators-list'>
+               <li><a target="_blank" href="https://github.com/Allendpham">Allen Pham | </a></li>
+               <li><a target="_blank" href="https://github.com/TheBabblingBrin">Brin Hoover |</a></li>
+               <li><a target="_blank" href="https://github.com/Benties">Ben Thai | </a></li>
+               <li><a target="_blank" href="https://github.com/kgsolano">Kyle Solano | </a></li>
+               <li><a target="_blank" href="https://github.com/Allendpham/aA-Zonar">Project Repo</a></li>
+            </ul>
+         </div>
          <NavLink className='login-link' exact to="/login">Login</NavLink>
       </div>
 

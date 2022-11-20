@@ -3,6 +3,7 @@ const LOAD_SERVER_CHANNELS = 'channels/LOAD_SERVER_CHANNELS'
 const GET_CHANNEL = 'channels/GET_CHANNEL'
 const UPDATE_CHANNEL = 'channels/UPDATE_CHANNEL'
 const DELETE_CHANNEL = 'channels/DELETE_CHANNEL'
+const CLEAR_CHANNEL = 'channels/CLEAR_CHANNEL'
 
 /// actions
 const loadServerChannels = (channels) => ({
@@ -17,12 +18,16 @@ const getChannel = (channel) => ({
 
 const updateChannel = (channel) => ({
     type: UPDATE_CHANNEL,
-    channel
+    channel: channel.channel
 })
 
 const deleteChannel = (id) => ({
     type: DELETE_CHANNEL,
     id
+})
+
+export const clearChannel = () =>( {
+type: CLEAR_CHANNEL
 })
 
 
@@ -50,7 +55,7 @@ export const getChannelThunk = (id) => async (dispatch) => {
 
     if(response.ok){
         const data = await response.json();
-        dispatch(getChannel(data))
+        await dispatch(getChannel(data))
         return data;
       } else if (response.status < 500) {
         const data = await response.json();
@@ -77,7 +82,7 @@ export const createChannelThunk = (payload, serverId) => async (dispatch) => {
       } else if (response.status < 500) {
         const data = await response.json();
         if (data.errors) {
-          return data.errors;
+          return data;
         }
       } else {
         return ['An error occurred. Please try again.']
@@ -100,7 +105,7 @@ export const updateChannelThunk = (payload, id) => async (dispatch) => {
       } else if (response.status < 500) {
         const data = await response.json();
         if (data.errors) {
-          return data.errors;
+          return data;
         }
       } else {
         return ['An error occurred. Please try again.']
@@ -154,9 +159,12 @@ export default function channelReducer(state = initialState, action){
             }
           };
     case DELETE_CHANNEL:
-          const deleteState = {...state}
+          const deleteState = {...state, currentChannel: {}}
           delete deleteState.allChannels[action.id]
           return deleteState
+    case CLEAR_CHANNEL:
+      return {
+        ...state, allChannels:{...state.allChannels}, currentChannel:{}}
     default:
         return state
   }

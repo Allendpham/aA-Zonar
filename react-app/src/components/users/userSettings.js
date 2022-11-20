@@ -10,6 +10,7 @@ const UserSettings = () => {
 const history = useHistory()
 const [settingsBar, setSettingsBar] = useState(true)
 const currUser = useSelector(state => state?.session?.user)
+console.log('this is currUser--------', currUser)
 
 const handleClick = () => {
     history.push('/@me/settings')
@@ -18,32 +19,21 @@ const handleClick = () => {
 
 let content;
 
-settingsBar ?
-    // user settings bar:
-    content = (
+settingsBar
+  ? // user settings bar:
+    (content = (
       <div className="settings-bar">
-        {/* user profile pic first */}
-        <div id='user-tag'>
-          <p>
-            {currUser.username}
-          </p>
-          <p>
-            #00{currUser.id}
-          </p>
-
+          <img src={currUser.profile_pic} alt="profile" className="settings-profile-pic" />
+        <div id="user-tag">
+          <p>{currUser.username}</p>
+          <p>#00{currUser.id}</p>
         </div>
-          <button
-          id='gear'
-          onClick={()=>handleClick()}
-          >
-            <i className="fa-solid fa-gear"></i>
-          </button>
-
+        <button id="gear" onClick={() => handleClick()}>
+          <i className="fa-solid fa-gear"></i>
+        </button>
       </div>
-    ) :
-    content = (
-        < UserAccount/>
-    )
+    ))
+  : (content = <UserAccount />);
 
     return (
         <div>

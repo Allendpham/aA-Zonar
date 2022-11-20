@@ -2,7 +2,7 @@
 const LOAD_PRIVATE_CHATS = 'privatechats/LOAD_PRIVATE_CHATS'
 const GET_ONE_PRIVATE_CHAT = 'privatechats/GET_ONE_PRIVATE_CHAT'
 const CREATE_PRIVATE_CHAT = 'privatechats/CREATE_PRIVATE_CHAT'
-
+const CLEAR_CURRENT_CHAT = 'privatechats/CLEAR_CURRENT_CHAT'
 // Action Creators
 const loadPrivateChats = (privatechats) => ({
    type: LOAD_PRIVATE_CHATS,
@@ -18,9 +18,13 @@ const createPrivateChat = (privatechat) => ({
    type: CREATE_PRIVATE_CHAT,
    privatechat
 })
-
+export const clearChat = () =>({
+  type: CLEAR_CURRENT_CHAT
+})
 
 // Thunks
+
+
 export const loadPrivateChatsThunk = () => async (dispatch) => {
    const response = await fetch(`/api/private_chat/current`)
    //When receiving response: please include the users of all those private chats
@@ -80,25 +84,26 @@ export const createPrivateChatThunk = (payload) => async (dispatch) => {
 // Reducer
 const initialState = {allPrivateChats:{}, currentPrivateChat:{}}
 export default function privateChatReducer(state = initialState, action){
-   switch (action.type){
+  switch (action.type){
       case LOAD_PRIVATE_CHATS:
-         const allChats = normalizeArray(action.privatechats.privatechats)
-         return {...state, allPrivateChats:{...allChats}}
+        const allChats = normalizeArray(action.privatechats.privatechats)
+        return {...state, allPrivateChats:{...allChats}}
       case GET_ONE_PRIVATE_CHAT:
-         return {...state, currentPrivateChat: {...action.privatechat.privatechat}}
+        return {...state, currentPrivateChat: {...action.privatechat.privatechat}}
       case CREATE_PRIVATE_CHAT:
-         return {...state, allPrivateChats:{...state.allPrivateChats,
+        return {...state, allPrivateChats:{...state.allPrivateChats,
             [action.privatechat.id]: action.privatechat}}
+      case CLEAR_CURRENT_CHAT:
+          return {...state, allPrivateChats:{...state.allPrivateChats}, currentPrivateChat:{}}
       default:
-         return state
-   }
+        return state
+  }
 }
 
 function normalizeArray(dataArray){
-   if (!dataArray instanceof Array) throw new Error('Normalize problem: data invalid')
-   const obj = {}
-   dataArray.forEach(element => {
-     obj[element.id] = element
-   })
-   return obj
- }
+  if (!dataArray instanceof Array) throw new Error('Normalize problem: data invalid')
+  const obj = {}
+  dataArray.forEach(element => {
+    obj[element.id] = element
+  })
+  return obj}

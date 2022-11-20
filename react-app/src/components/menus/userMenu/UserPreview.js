@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { createPrivateChatThunk } from '../../../store/privatechat';
+import { createPrivateChatThunk, getOnePrivateChatThunk } from '../../../store/privatechat';
 import { getServerThunk } from '../../../store/server';
+import './userPreview.css'
 
-const UserPreviewForm = ({setShowModal, currentServer, user}) => {
+const UserPreviewForm = ({currentServer, user}) => {
   const dispatch = useDispatch()
   const history = useHistory()
 
@@ -12,7 +13,7 @@ const UserPreviewForm = ({setShowModal, currentServer, user}) => {
   const [isOwner, setOwner] = useState(false)
   const currUser = useSelector(state => state.session.user)
   const currentChats = useSelector(state => Object.values(state.privatechat.allPrivateChats))
-console.log('serverrrrrrrrrrrrrrrrrrrrrr', currentChats)
+
   useEffect(() =>{
     if(currentServer?.ownerId === currUser?.id) setOwner(true)
     if(currentServer.admins.filter(admin => admin.id === user.id).length > 0){
@@ -20,8 +21,17 @@ console.log('serverrrrrrrrrrrrrrrrrrrrrr', currentChats)
     }
   },[])
 
-  const matchedChats = currentChats.map(chat => chat.users.map(mbr => mbr.id)).filter(item => item.includes(user.id))
 
+  const matchedChats = currentChats.map(chat => chat.users.map(mbr => mbr.id)).filter(item => item.includes(user.id))
+  let targetChat;
+  for(const chats in currentChats){
+    for(const users in currentChats[chats].users){
+        if(currentChats[chats].users[users].id === user.id){
+          targetChat = currentChats[chats]
+        }
+    }
+  }
+  console.log(targetChat)
   useEffect(()=>{
     dispatch(getServerThunk(currentServer.id))
   }, [adminRole])
@@ -60,33 +70,45 @@ const startChat = async () =>{
     userId: user.id
   }
   if(matchedChats.length > 0){
+    dispatch(getOnePrivateChatThunk(targetChat.id))
     history.push('/@me')
     return
   }
   let chat = await dispatch(createPrivateChatThunk(payload))
-  console.log('+++++++++++++++++NEW CHAT+++++++',chat)
   if(chat){
+    dispatch(getOnePrivateChatThunk(chat.id))
     history.push('/@me')
   }
 }
   //form should only display if the user is the owner of the server
+let dmButton;
+currUser.id !== user.id ?
+  dmButton = (<button id='startDm'
+              onClick={()=> startChat()}
+              >Message @{user.username}</button>)
+              :
+  dmButton = null
 
 
 
 
   return(
-    <form className='user-preview-form'>
-        <label>AdminRole</label>
-        <input
-            type='checkbox'
-            checked={adminRole}
-            onClick={()=> submitRole()}
-            disabled={!isOwner || currentServer.ownerId === user.id}
-            />
-          <button
-          onClick={()=> startChat()}
-          >Direct Message</button>
-    </form>
+    <div id='userPreviewContainer'>
+      <div id='userPreviewHeader'></div>
+      <div id='userPreviewCard'>
+        <h2>{user.username}</h2>
+        <form className='user-preview-form'>
+            <label id='userRole'>Admin</label>
+            <input
+                type='checkbox'
+                checked={adminRole}
+                onClick={()=> submitRole()}
+                disabled={!isOwner || currentServer.ownerId === user.id}
+                />
+              {dmButton}
+        </form>
+      </div>
+    </div>
   )
   }
 

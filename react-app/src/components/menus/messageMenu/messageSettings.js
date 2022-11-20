@@ -4,15 +4,22 @@ import { useHistory, useParams } from 'react-router-dom';
 import { updateChannelMessageThunk, deleteChannelMessageThunk, updatePrivateChatMessageThunk, deletePrivateChatMessageThunk } from '../../../store/message';
 import { getChannelThunk } from '../../../store/channel';
 import { getServerThunk } from '../../../store/server';
+import '../../chat/chat.css'
+
+const dayjs = require("dayjs");
+let relativeTime = require("dayjs/plugin/relativeTime");
+dayjs.extend(relativeTime);
 
 const MessageSettingOptions = ({message, user,users, populateSocket, chat}) => {
    const dispatch = useDispatch()
    const [currmessage, setMessage] = useState(message.message)
    const [settings, setSettings] = useState(false)
-   const [shown, setShown] = useState(false)
    const serverId = useSelector(state => state?.channel?.currentChannel?.channel?.serverId)
    const server = useSelector(state => state?.server?.currentServer?.server)
    const poster = Object.values(users).find(member => member.id == message?.userId)
+   const date = dayjs(message?.updatedAt).fromNow(false);
+   console.log(date)
+
 
    useEffect(() => {
       dispatch(getServerThunk(serverId))
@@ -54,46 +61,79 @@ const MessageSettingOptions = ({message, user,users, populateSocket, chat}) => {
    }
 
    let messageInput;
-   settings?
-      messageInput =
-      (<form id='update-message-form'
-         onSubmit={handleSubmit}
-         onKeyPress={(e) => e === 'ENTER' ? handleSubmit() : null}>
-      <input
-         type='text'
-         value={currmessage}
-         onChange={updateMessage}
-      />
-   </form>) :messageInput = (message.message)
+   settings
+     ? (messageInput = (
+         <form
+           id="update-message-form"
+           onSubmit={handleSubmit}
+           onKeyPress={(e) => (e === "ENTER" ? handleSubmit() : null)}
+         >
+           <input
+             className="edit-form"
+             type="text"
+             value={currmessage}
+             onChange={updateMessage}
+           />
+           <br />
+           <p className='edit-text'>press enter to save</p>
+         </form>
+       ))
+     : (messageInput = message.message);
 
 
    let deleteButt;
    for(const person in server?.admins){
       if(server?.admins[person].id === user.id || user.id === server.ownerId){
-         deleteButt = (<button onClick={() => handleDelete()}>delete</button>)
+         deleteButt = (
+           <button className="msg-setting" onClick={() => handleDelete()}>
+             <i className="fa-solid fa-trash-can"></i>
+           </button>
+         );
       }
    }
 if(message.userId === user.id){
-   deleteButt = (<button onClick={() => handleDelete()}>delete</button>)
+   deleteButt = (
+     <button className="msg-setting" onClick={() => handleDelete()}>
+       <i className="fa-solid fa-trash-can"></i>
+     </button>
+   );
 
 }
-   let deleteContent
-   shown ? deleteContent = deleteButt : deleteContent = null
 
-   let setSettingsButt
-   message.userId === user.id ?
-      setSettingsButt = (<button onClick={() => setSettings(!settings)}>edit</button>) :
-         setSettingsButt = null
-
-   let updateContent
-   shown ? updateContent = setSettingsButt : updateContent = null
+   let setSettingsButt = (
+         <button className="msg-setting" onClick={() => setSettings(!settings)}>
+           <i className="fa-solid fa-pen"></i>
+         </button>
+   )
 
    return (
-   <div onMouseEnter={()=> setShown(true)} onMouseLeave={() => setShown(false)} >
-      <div id="message-settings-button"> {poster?.username} - {messageInput}</div>
-      {updateContent}
-      {deleteContent}
-   </div>
+     <div
+
+     >
+       <div id="message-settings-button" className="chat-message">
+         <div className="message-header">
+            <div>
+
+           <div className="chat-profile-pic">
+            <img src={poster?.profile_pic}/>
+           </div>
+           <h4 className="chat-name">{poster?.username}</h4>{" "}
+           <p className="timestamp">{date}</p>
+            </div>
+            {  message.userId === user.id &&
+            <div className='message-modal'>
+               {setSettingsButt}
+               {deleteButt}
+            </div>
+            }
+         </div>
+         <div className="message-text">
+            <p>
+              {messageInput}
+              </p>
+            </div>
+       </div>
+     </div>
    );
 }
 
