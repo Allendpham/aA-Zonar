@@ -21,9 +21,9 @@ const SignUpForm = () => {
         setErrors(data)
       }
     }
-    // else {
-    //   setErrors(errors.push('Passwords do not match'))
-    // }
+    else {
+     setErrors(['Passwords do not match'])
+    }
   };
 
   const updateUsername = (e) => {
@@ -50,7 +50,7 @@ const SignUpForm = () => {
     <div className='login-page'>
       <form className='signup-form' onSubmit={onSignUp}>
         <div>
-          {errors.map((error, ind) => (
+          {errors.length > 0 && errors.map((error, ind) => (
             <div key={ind}>{error}</div>
           ))}
         </div>
@@ -94,7 +94,6 @@ const SignUpForm = () => {
               name='repeat_password'
               onChange={updateRepeatPassword}
               value={repeatPassword}
-              required={true}
             ></input>
           </div>
         </div>

@@ -14,6 +14,8 @@ const Chat = ({channel}) => {
     const [messages, setMessages] = useState([]);
     const [currRoom, setCurrRoom] = useState("")
     const [users, setUsers] = useState([])
+    const [errors, setErrors] = useState([]);
+    const [currentConvo, setConvo] = useState('')
     const user = useSelector(state => state.session.user)
     const currentChat = useSelector(state => state.privatechat.currentPrivateChat)
     const currentChannel = useSelector(state => state.channel.currentChannel)
@@ -41,6 +43,7 @@ const Chat = ({channel}) => {
     useEffect(() =>{
         setMessages([])
         if (channel != null)  {
+            setConvo(channel.name)
             dispatch(getChannelMessagesThunk(channel.id))
             socket.emit('join', {channel: channel})
             socket.emit('fetch', {channel: channel} )
@@ -57,7 +60,6 @@ const Chat = ({channel}) => {
               console.log(node)
             }
           } else {
-
             dispatch(getPrivateChatMessagesThunk(currentChat.id))
             socket.emit('join', {chat: currentChat.id} )
             socket.emit('fetch', {chat: currentChat.id} )
@@ -69,6 +71,7 @@ const Chat = ({channel}) => {
                 node.classList.remove('selected-link')
               }
             }
+            setConvo(currentChat.users?.map(user => user.username).filter(names => names != user.username))
         }
         async function fetchData() {
             const response = await fetch('/api/users/');
@@ -77,6 +80,7 @@ const Chat = ({channel}) => {
           }
           fetchData();
 
+
     }, [channel, currentChat, currentChannel])
 
     useEffect(() => {
@@ -84,6 +88,8 @@ const Chat = ({channel}) => {
         const history = data.messages
             setMessages((state) => [...history.slice(-10)]);
         });
+
+
         }, []);
 
 
@@ -102,6 +108,11 @@ const Chat = ({channel}) => {
 
     const sendChat = async (e) => {
         e.preventDefault()
+        let inputBar = document.querySelector('.message-bar')
+        inputBar.classList.remove('error-placeholder')
+
+
+
         if (channel == null) {
             socket.emit("fetch", { chat: currentChat.id });
 
@@ -113,6 +124,12 @@ const Chat = ({channel}) => {
             let new_message = await dispatch(
                 createPrivateChatMessagesThunk(payload)
             );
+            if(new_message.errors){
+              setErrors(new_message.errors)
+              inputBar.classList.add('error-placeholder')
+
+              return
+            }
             socket.emit("chat", {
                 msg: { ...new_message },
                 room: currRoom,
@@ -127,9 +144,16 @@ const Chat = ({channel}) => {
                 message: chatInput
             }
             let new_message = await dispatch(createChannelMessagesThunk(payload))
+            if(new_message.errors){
+              setErrors(new_message.errors)
+              inputBar.classList.add('error-placeholder')
+
+              return
+            }
             socket.emit("chat", { msg: {...new_message}, room: currRoom});
         }
         setChatInput("")
+        setErrors([])
     }
 
 
@@ -152,12 +176,16 @@ const Chat = ({channel}) => {
           </div>
           <div className='message-form'>
             <form className="message-bar-div" onSubmit={sendChat}>
+
+            <div>
+
+        </div>
+
               <input
                 className="message-bar"
                 value={chatInput}
-                // placeholder={channel.name}
+                placeholder={errors.length? errors:`Message: ${currentConvo}`}
                 onChange={updateChatInput}
-                // type='submit'
               />
               <button className="message-submit-btn" type="submit"></button>
             </form>

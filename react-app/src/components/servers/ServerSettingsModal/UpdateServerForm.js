@@ -13,6 +13,7 @@ const UpdateServerForm = ({setShowMenu, setClicked, update = null}) => {
   const [previewImg, setImage] = useState(currServer?.preview_img) //default image
   const [showSettings, setShowSettings] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(false)
+  const [errors, setErrors] = useState([]);
 
   const updateName = (e) => setName(e.target.value);
   const updateImage = (e) => setImage(e.target.value);
@@ -26,6 +27,7 @@ const UpdateServerForm = ({setShowMenu, setClicked, update = null}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
     const payload = {
       serverId: serverId,
       ownerId:user.id,
@@ -33,8 +35,12 @@ const UpdateServerForm = ({setShowMenu, setClicked, update = null}) => {
       preview_img: previewImg
     };
     let server = await dispatch(updateServerThunk(payload, serverId))
-
+    if(server.errors){
+      setErrors(server.errors)
+      return
+    }
     if(server){
+
       setShowMenu(false)
     }
     dispatch(getServerThunk(serverId))
@@ -77,6 +83,11 @@ const UpdateServerForm = ({setShowMenu, setClicked, update = null}) => {
       ><p>Server Settings</p> <i className="fa-solid fa-gear"></i></button>
     {showSettings &&
       <form className='update-form' onSubmit={handleSubmit}>
+      <div>
+          {errors.map((error, ind) => (
+            <div key={ind}>{error}</div>
+          ))}
+        </div>
       <input
         type='text'
         placeholder='Server Image'

@@ -9,6 +9,8 @@ const ServerForm = ({setShowModal}) => {
   const user = useSelector(state => state.session.user)
   const [name, setName] = useState('')
   const [previewImg, setImage] = useState('') //default image
+  const [errors, setErrors] = useState([]);
+
   const updateName = (e) => setName(e.target.value);
   const updateImage = (e) => setImage(e.target.value);
 
@@ -25,7 +27,10 @@ const ServerForm = ({setShowModal}) => {
       preview_img: previewImg
     };
     let server = await dispatch(addServerThunk(payload))
-
+    if(server.errors){
+      setErrors(server.errors)
+      return
+    }
     if(server){
       dispatch(loadServersThunk())
       setShowModal(false)
@@ -36,6 +41,11 @@ const ServerForm = ({setShowModal}) => {
 
   return(
     <form className='server-form' onSubmit={handleSubmit}>
+   <div>
+          {errors.map((error, ind) => (
+            <div key={ind}>{error}</div>
+          ))}
+        </div>
       <input
         type='text'
         placeholder='Server Image'

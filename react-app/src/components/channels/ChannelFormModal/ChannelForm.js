@@ -9,6 +9,7 @@ const ChannelForm = ({setShowModal}) => {
   const { serverId } = useParams()
   const user = useSelector(state => state.session.user)
   const [name, setName] = useState('')
+  const [errors, setErrors] = useState([]);
 
   const updateName = (e) => setName(e.target.value);
 
@@ -26,7 +27,10 @@ const ChannelForm = ({setShowModal}) => {
     };
 
     let channel = await dispatch(createChannelThunk(payload, serverId))
-
+    if(channel.errors){
+      setErrors(channel.errors)
+      return
+    }
     if(channel){
       setShowModal(false)
       await dispatch(getChannelThunk(channel.id))
@@ -40,6 +44,11 @@ const ChannelForm = ({setShowModal}) => {
 
   return(
     <form className='channel-form' onSubmit={handleSubmit}>
+            <div>
+          {errors.map((error, ind) => (
+            <div key={ind}>{error}</div>
+          ))}
+        </div>
       <input
         type='text'
         placeholder='Channel Name'

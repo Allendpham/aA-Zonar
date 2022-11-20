@@ -91,8 +91,8 @@ export const addServerThunk = (server) => async (dispatch) =>{
     return data;
   }else if (response.status < 500) {
     const data = await response.json();
-    if (data.errors) {
-      return data.errors;
+    if (data) {
+      return data;
     }
   } else {
     return ['An error occurred. Please try again.']
@@ -100,11 +100,13 @@ export const addServerThunk = (server) => async (dispatch) =>{
 }
 
 export const updateServerThunk = (server, id) => async (dispatch) =>{
+
   const response = await fetch(`/api/servers/${id}`,{
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(server),
   })
+
 
   if(response.ok){
     const data = await response.json();
@@ -112,8 +114,9 @@ export const updateServerThunk = (server, id) => async (dispatch) =>{
     return data;
   }else if (response.status < 500) {
     const data = await response.json();
-    if (data.errors) {
-      return data.errors;
+    if (data) {
+      console.log(data)
+      return data;
     }
   } else {
     return ['An error occurred. Please try again.']

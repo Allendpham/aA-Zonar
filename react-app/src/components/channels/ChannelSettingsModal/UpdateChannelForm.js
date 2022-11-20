@@ -9,6 +9,7 @@ const UpdateChannelForm = ({setShowModal, channelId}) => {
 
   const channels = useSelector(state => state.channel.allChannels)
   const chosenChannel = channels[channelId]
+  const [errors, setErrors] = useState([]);
 
   const [name, setName] = useState(chosenChannel?.name)
   const [confirmDelete, setConfirmDelete] = useState(false)
@@ -29,9 +30,12 @@ const UpdateChannelForm = ({setShowModal, channelId}) => {
       name,
       serverId: chosenChannel.serverId
     };
-    let server = await dispatch(updateChannelThunk(payload, channelId))
-
-    if(server){
+    let channel = await dispatch(updateChannelThunk(payload, channelId))
+    if(channel.errors){
+      setErrors(channel.errors)
+      return
+    }
+    if(channel){
       setShowModal(false)
     }
     dispatch(loadServerChannelsThunk(chosenChannel.serverId))
@@ -60,6 +64,11 @@ const UpdateChannelForm = ({setShowModal, channelId}) => {
 
   return(
     <form className='update-channel-form' onSubmit={handleSubmit}>
+            <div>
+          {errors.map((error, ind) => (
+            <div key={ind}>{error}</div>
+          ))}
+        </div>
       <input
         type='text'
         placeholder='Channel Name'

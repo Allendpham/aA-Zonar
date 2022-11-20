@@ -19,6 +19,10 @@ const LoginForm = () => {
     }
   };
 
+  const loginDemo = (email, password) =>{
+    setEmail(email)
+    setPassword(password)
+  }
   const updateEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -68,8 +72,10 @@ const LoginForm = () => {
           />
           <br />
         </div>
-          <button className='login-submit' type="submit">Log in</button>
-          <button className='login-submit' onClick={() => {dispatch(login('kyle@aa.io', 'password'))}}>Demo Login</button>
+          <button id='login-form-submit' className='login-submit' type="submit">Log in</button>
+          <button className='login-submit' onClick={() => {loginDemo('kyle@aa.io', 'password')}}>Login Demo User 1</button>
+          <button className='login-submit' onClick={() => {loginDemo('demo@aa.io', 'password')}}>Login Demo User 2</button>
+
         <p className='register'>
           Need an account?{" "}
           <Link className="signup-link" to={`/sign-up`}>

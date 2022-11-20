@@ -30,7 +30,7 @@
     overflow: scroll;
     overflow-x: hidden;
     overflow-y: auto;
-    
+
 }
 
 .chat-message {
@@ -172,10 +172,18 @@
     /* border: 1px solid red; */
     border-radius: 5px;
     height: 2rem;
-    
+
 }
 
 .edit-text {
     font-size: 10px;
     color: #cccdce;
+}
+
+.error-placeholder::-webkit-input-placeholder{
+    color: rgb(237,66,69) !important;
+}
+
+.error-placeholder{
+    border: 1px solid rgb(237,66,69) !important;
 }
