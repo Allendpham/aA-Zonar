@@ -18,8 +18,6 @@ function ServerIndex() {
       dispatch(loadServersThunk())
    }, [dispatch])
 
-   if(!servers.length) return(<ExploreServersModal />);
-   //Need to filter servers for only servers that the user is a part of
    const goHome=()=>{
       dispatch(clearServer())
       dispatch(clearChannel())
