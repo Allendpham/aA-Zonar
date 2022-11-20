@@ -4,6 +4,7 @@
    align-items: center;
    /* background-color: rgb(64, 78, 237); */
    height: 100vh;
+   width: 100vw;
    background-image: url('https://i.imgur.com/HnFvFmD.jpg');
    background-size: cover;
    background-repeat: none;
@@ -93,4 +94,28 @@
 .welcome-button:hover {
    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
    color: rgba(64, 78, 237)
+}
+
+.github-links {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   color: white;
+}
+
+.collaborators-list {
+   list-style: none;
+   display: flex;
+   padding-left: 5px;
+}
+
+.collaborators-list a {
+   color: white;
+   text-decoration: none;
+   padding-right: 5px;
+}
+
+.collaborators-list a:hover {
+   text-decoration: underline;
+   font-weight: 700;
 }

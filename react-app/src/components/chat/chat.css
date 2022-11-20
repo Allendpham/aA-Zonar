@@ -1,5 +1,6 @@
 .server-content-wrapper{
     width: 100%;
+    height: 100vh;
 }
 
 .server-parent {
@@ -8,8 +9,8 @@
     width: 100%;
     flex: 100;
     flex-grow: 3;
-    height: 100vh;
-    margin-right:230px;
+    height: 100%;
+    margin-right:240px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -18,12 +19,16 @@
 .chat-div {
     /* border: 5px solid purple; */
     max-height: 92%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 
 }
 
 .chat-message-div {
     /* border: 2px solid green; */
-    max-height: 92%;
+    max-height: 100%;
+    height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -32,6 +37,7 @@
     overflow-y: auto;
 
 }
+
 
 .chat-message {
     /* border: 1px solid red; */
