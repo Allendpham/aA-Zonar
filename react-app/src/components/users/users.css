@@ -154,8 +154,10 @@ background-color: #42464e;
     border-radius: 50%;
     margin-left: 25px;
     margin-top: -50px;
-    height: 140%;
-    width: 13%;
+    min-height: 140%;
+    max-height: 140%;
+    min-width: 13%;
+    max-width: 13%;
 }
 
 .settings-profile-pic {
@@ -165,8 +167,10 @@ background-color: #42464e;
     border-radius: 50%;
     /* margin-left: 25px; */
     /* margin-top: -50px; */
-    height: 40px;
-    width: 40px;
+    min-height: 40px;
+    max-height: 40px;
+    min-width: 40px;
+    max-width: 40px;
 }
 
 .card-info-div {
