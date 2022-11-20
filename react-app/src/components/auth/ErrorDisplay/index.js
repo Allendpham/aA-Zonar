@@ -24,6 +24,11 @@ function ErrorDisplay({errors, id}) {
       field.classList.add('error-border'):field.classList.remove('error-border')
     }
 
+    if(field.id === 'sign-up-profile-pic'){
+      (errors.includes('profile_pic : Please use a valid image URL (https://ex.jpg/jpeg/png)'))?
+      field.classList.add('error-border'):field.classList.remove('error-border')
+    }
+
     if(field.id === 'sign-up-password'){
       (errors.includes('password : This field is required.'))?
       field.classList.add('error-border'):field.classList.remove('error-border')

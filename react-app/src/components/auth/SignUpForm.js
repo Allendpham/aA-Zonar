@@ -92,9 +92,12 @@ const SignUpForm = () => {
             ></input>
           </div>
           <div>
+            <lable className='login-text'>PROFILE PICTURE</lable>
             <input
+                className="login-input"
+                id='sign-up-profile-pic'
                 type='text'
-                placeholder='Profile Picture'
+                name='profilePic'
                 value={profilePic}
                 onChange={updateImage}/>
           </div>
