@@ -65,7 +65,6 @@ const startChat = async () =>{
     return
   }
   let chat = await dispatch(createPrivateChatThunk(payload))
-  console.log('+++++++++++++++++NEW CHAT+++++++',chat)
   if(chat){
     history.push('/@me')
   }
@@ -78,19 +77,21 @@ const startChat = async () =>{
   return(
     <div id='userPreviewContainer'>
       <div id='userPreviewHeader'></div>
-      <p>{user.username}</p>
-      <form className='user-preview-form'>
-          <label id='userRole'>AdminRole</label>
-          <input
-              type='checkbox'
-              checked={adminRole}
-              onClick={()=> submitRole()}
-              disabled={!isOwner || currentServer.ownerId === user.id}
-              />
-            <button id='startDm'
-            onClick={()=> startChat()}
-            >Direct Message</button>
-      </form>
+      <div id='userPreviewCard'>
+        <h2>{user.username}</h2>
+        <form className='user-preview-form'>
+            <label id='userRole'>Admin</label>
+            <input
+                type='checkbox'
+                checked={adminRole}
+                onClick={()=> submitRole()}
+                disabled={!isOwner || currentServer.ownerId === user.id}
+                />
+              <button id='startDm'
+              onClick={()=> startChat()}
+              >Message @{user.username}</button>
+        </form>
+      </div>
     </div>
   )
   }
