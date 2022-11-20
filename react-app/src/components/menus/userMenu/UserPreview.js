@@ -70,6 +70,13 @@ const startChat = async () =>{
   }
 }
   //form should only display if the user is the owner of the server
+let dmButton;
+currUser.id !== user.id ?
+  dmButton = (<button id='startDm'
+              onClick={()=> startChat()}
+              >Message @{user.username}</button>)
+              :
+  dmButton = null
 
 
 
@@ -87,9 +94,7 @@ const startChat = async () =>{
                 onClick={()=> submitRole()}
                 disabled={!isOwner || currentServer.ownerId === user.id}
                 />
-              <button id='startDm'
-              onClick={()=> startChat()}
-              >Message @{user.username}</button>
+              {dmButton}
         </form>
       </div>
     </div>
