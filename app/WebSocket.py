@@ -50,6 +50,6 @@ def fetch_msgs(data):
         messages = PrivateChatMessage.query.filter(PrivateChatMessage.privateChatId == data['chat'])
         room = f"privatechat: {data['chat']}"
 
-    last100Messages = {'messages':[message.to_dict() for message in messages][-10:]} ##change slice to fit CSS goals later
+    last100Messages = {'messages':[message.to_dict() for message in messages]} ##change slice to fit CSS goals later
     print('================MSGS-========================', last100Messages, room)
     emit('last_100_messages', last100Messages, room= room)
