@@ -73,6 +73,7 @@ if(location === 'server'){
 
     <UserSettings/>
     </div>
+
     </div>
 
   )
@@ -96,6 +97,9 @@ if(location === 'server'){
     <div id='user-bar'>
 
     <UserSettings/>
+    </div>
+    <div className='userListContainer'>
+      
     </div>
     </div>
   )

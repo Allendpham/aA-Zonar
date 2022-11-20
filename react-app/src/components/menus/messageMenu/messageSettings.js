@@ -14,7 +14,6 @@ const MessageSettingOptions = ({message, user,users, populateSocket, chat}) => {
    const dispatch = useDispatch()
    const [currmessage, setMessage] = useState(message.message)
    const [settings, setSettings] = useState(false)
-   const [shown, setShown] = useState(false)
    const serverId = useSelector(state => state?.channel?.currentChannel?.channel?.serverId)
    const server = useSelector(state => state?.server?.currentServer?.server)
    const poster = Object.values(users).find(member => member.id == message?.userId)
@@ -100,8 +99,6 @@ if(message.userId === user.id){
    );
 
 }
-   let deleteContent
-   shown ? deleteContent = deleteButt : deleteContent = null
 
    let setSettingsButt
    message.userId === user.id
@@ -112,27 +109,29 @@ if(message.userId === user.id){
        ))
      : (setSettingsButt = null);
 
-   let updateContent
-   shown ? updateContent = setSettingsButt : updateContent = null
-
    return (
      <div
-       //  className='message-modal'
-       onMouseEnter={() => setShown(true)}
-       onMouseLeave={() => setShown(false)}
+
      >
        <div id="message-settings-button" className="chat-message">
          <div className="message-header">
+            <div>
+
            <div className="chat-profile-pic"></div>
            <h4 className="chat-name">{poster?.username}</h4>{" "}
            <p className="timestamp">{date}</p>
-            <div className='message-modal'>
-               {updateContent}
-               {deleteContent}
             </div>
+            {  message.userId === user.id &&
+            <div className='message-modal'>
+               {setSettingsButt}
+               {deleteButt}
+            </div>
+            }
          </div>
          <div className="message-text">
-            {messageInput}
+            <p>
+              {messageInput}
+              </p>
             </div>
        </div>
      </div>

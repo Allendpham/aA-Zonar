@@ -160,7 +160,20 @@ background-color: #42464e;
   position: absolute;
   bottom: 0;
 }
+.userListContainer{
+  flex-direction: column;
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-block;
+  max-width: 240px;
+  height: 100%;
 
+
+  text-decoration: none solid rgb(0,0,0);
+  background-color: #2f3136;
+  letter-spacing: 0.24px;
+}
 #server-settings-button{
   display: flex;
   justify-content: space-between;

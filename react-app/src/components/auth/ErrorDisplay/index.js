@@ -4,7 +4,6 @@ import './index.css'
 
 function ErrorDisplay({errors, id}) {
   const dispatch = useDispatch()
-  const errorBorder = '2px solid rgba(222, 8, 26, 0.8) !important'
   const noErrorBorder = '1px solid rgba(107, 106, 106, 0.5)'
   const nodes = document.getElementsByTagName('form');
   const splashInputs = document.getElementsByClassName('login-input')
@@ -26,7 +25,7 @@ console.log(errors)
     }
 
     if(field.id === 'sign-up-password'){
-      (errors.includes(' password : This field is required.'))?
+      (errors.includes('password : This field is required.'))?
       field.classList.add('error-border'):field.classList.remove('error-border')
     }
 
@@ -35,7 +34,9 @@ console.log(errors)
       field.classList.add('error-border'):field.classList.remove('error-border')
     }
     if(field.id === 'login-password'){
-      (errors.includes('password : This field is required.')|errors.includes('password : No such user exists.'))?
+      (errors.includes('password : This field is required.')
+      |errors.includes('password : No such user exists.')
+      |errors.includes('password : Password was incorrect.'))?
       field.classList.add('error-border'):field.classList.remove('error-border')
     }
     if(field.id === 'login-email'){
@@ -51,10 +52,11 @@ console.log(errors)
       for( let form of node.childNodes.values()){
        if(form.nodeName === 'INPUT') {
         let formPH = form.placeholder
-            form.style.border = noErrorBorder
+            // form.style.border = noErrorBorder
 
             if(formPH === 'Server Name'){
-              (errors.includes('name : Please enter a server name'))?
+              (errors.includes('name : Please enter a server name')
+              |errors.includes('name : Server name is already in use.'))?
               form.classList.add('error-border'):form.classList.remove('error-border')
             }
 
