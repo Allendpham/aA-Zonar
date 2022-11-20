@@ -26,8 +26,7 @@ def joinroom(data):
     user = current_user.to_dict()
     curr_rooms = rooms(sid=None, namespace=None)
     for room in curr_rooms:
-        if room != user:
-            leave_room(room)
+        leave_room(room)
     if 'channel' in data:
         room = f"{data['channel']['name']} {data['channel']['id']} {data['channel']['serverId']}"
     else:
@@ -51,5 +50,4 @@ def fetch_msgs(data):
         room = f"privatechat: {data['chat']}"
 
     last100Messages = {'messages':[message.to_dict() for message in messages][-10:]} ##change slice to fit CSS goals later
-    print('================MSGS-========================', last100Messages, room)
     emit('last_100_messages', last100Messages, room= room)
