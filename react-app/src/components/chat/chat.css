@@ -127,7 +127,7 @@ h4, p{
 
 .chat-profile-pic {
         border: 1px solid white;
-        background-color: lightgrey;
+        background-color: rgb(54,57,63);
         border-radius: 50%;
         min-height: 45px;
         min-width: 45px;
