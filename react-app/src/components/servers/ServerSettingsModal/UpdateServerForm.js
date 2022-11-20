@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { updateServerThunk, getServerThunk, removeServerThunk, loadServersThunk } from '../../../store/server';
 import './index.css'
-const UpdateServerForm = ({setShowMenu, update = null}) => {
+const UpdateServerForm = ({setShowMenu, setClicked, update = null}) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const {serverId} = useParams();
@@ -47,6 +47,7 @@ const UpdateServerForm = ({setShowMenu, update = null}) => {
     //Display some type of modal/confirmation message where user has to confirm and input name of server to confirm delete
     await dispatch(removeServerThunk(serverId))
     setShowMenu(false)
+    setClicked(false)
     dispatch(loadServersThunk())
     history.push('/@me')
   }

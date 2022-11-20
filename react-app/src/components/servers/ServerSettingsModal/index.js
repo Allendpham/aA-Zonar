@@ -12,18 +12,12 @@ function ServerSettingsModal() {
   const closeOpenMenus = (e)=>{
     if(servMenu.current && showMenu && !servMenu.current.contains(e.target)){
       setShowMenu(false)
+      setClicked(false)
     }
 }
+
   useEffect(() => {
-    // if (!showMenu) return;
-
-    // const closeMenu = () => {
-    //   setShowMenu(false);
-    //   setClicked(false)
-    // };
-
     document.addEventListener('click', closeOpenMenus);
-
     return () => document.removeEventListener("click", closeOpenMenus);
   }, [showMenu]);
 
@@ -37,7 +31,7 @@ function ServerSettingsModal() {
     <div ref={servMenu} className="">
       <button id="server-settings-button" onClick={() => {click()}}><p>{currServer?.name}</p>{clickImage}</button>
       {showMenu && (
-          <UpdateServerForm setShowMenu={setShowMenu}/>
+          <UpdateServerForm setShowMenu={setShowMenu} setClicked={setClicked}/>
       )}
     </div>
   );
