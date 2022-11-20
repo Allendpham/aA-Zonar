@@ -55,7 +55,7 @@ export const getChannelThunk = (id) => async (dispatch) => {
 
     if(response.ok){
         const data = await response.json();
-        dispatch(getChannel(data))
+        await dispatch(getChannel(data))
         return data;
       } else if (response.status < 500) {
         const data = await response.json();

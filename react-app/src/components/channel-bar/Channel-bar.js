@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import './index.css'
 import UserSettings from '../users/userSettings';
-import { clearChat, getOnePrivateChatThunk, loadPrivateChatsThunk } from "../../store/privatechat";
+import { clearChat, getOnePrivateChatThunk} from "../../store/privatechat";
 import ServerSettingsModal from '../servers/ServerSettingsModal';
 import { clearServer } from '../../store/server';
 import { getChannelThunk, clearChannel } from '../../store/channel';
@@ -52,19 +51,19 @@ if(location === 'server'){
     {server.server?.admins.map(admin => admin.id).includes(currUser?.id) &&
 <ChannelFormModal/>}</div>
         {channels?.map((channel) => (
-          <div className='channel-list-item'>
+          <div className='channel-list-item' key={`channel-list:${channel.id}`}>
           <button
               id={`${channel.id}${channel.name}`}
-              key={channel?.id}
+              key={`${server?.id}:${channel?.id}`}
               className="channel-links"
               onClick={() => showChannel(channel)}>
               <div>
-                <i class="fa-regular fa-hashtag"></i> {channel.name}
+                <i className="fa-regular fa-hashtag"></i> {channel.name}
                 </div>
           </button>
               {server.server?.admins.map(admin => admin.id).includes(currUser?.id) &&
 
-              <div className="channel-settings-button-wrapper" key={channel.id} onClick={() => showChannel(channel)}><ChannelSettingsModal channelId={channel?.id}/></div>
+              <div className="channel-settings-button-wrapper" key={`settings:${channel?.id}`} onClick={() => showChannel(channel)}><ChannelSettingsModal channelId={channel?.id}/></div>
 
               }
           </div>
@@ -84,7 +83,8 @@ if(location === 'server'){
 
     <div className="channel-list-wrapper">
         {liveChats?.map((chat) => (
-          <button key={chat?.id}
+          <button
+              key={`${currUser?.id}:${chat?.id}`}
               id={`${chat.id}${chat.users.map(user => user.username).join('')}`}
               className="channel-links"
               onClick={() => getChat(chat.id)}

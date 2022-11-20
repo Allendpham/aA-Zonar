@@ -12,7 +12,7 @@ function ServerSettingsModal() {
     setShowModal(!showModal)
     setClicked(!clicked)
   }
-  clicked? clickImage = <i class="fa-solid fa-x"></i>:clickImage = <i class="fa-solid fa-angle-down"></i>
+  clicked? clickImage = <i className="fa-solid fa-x"></i>:clickImage = <i className="fa-solid fa-angle-down"></i>
 
   return (
     <div className="">

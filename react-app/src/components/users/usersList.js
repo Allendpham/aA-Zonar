@@ -9,7 +9,7 @@ const UsersList=({currentServer})=>{
                 Members - {currentServer.users.length}
             </h3>
             <ul className="usersListing">
-                {currentServer.users.map(user=> <li> <UserPreviewModal currentServer={currentServer} user={user}/> </li>)}
+                {currentServer.users.map(user=> <li key={`memberlist:${user.id}:${user.username}`}> <UserPreviewModal currentServer={currentServer} user={user}/> </li>)}
             </ul>
 
         </div>

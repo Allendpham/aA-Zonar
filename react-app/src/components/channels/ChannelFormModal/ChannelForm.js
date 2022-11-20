@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { createChannelThunk, loadServerChannelsThunk } from '../../../store/channel';
+import { createChannelThunk, getChannelThunk, loadServerChannelsThunk } from '../../../store/channel';
 
 const ChannelForm = ({setShowModal}) => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { serverId } = useParams()
   const user = useSelector(state => state.session.user)
   const [name, setName] = useState('')
@@ -24,10 +25,11 @@ const ChannelForm = ({setShowModal}) => {
       serverId
     };
 
-    let server = await dispatch(createChannelThunk(payload, serverId))
+    let channel = await dispatch(createChannelThunk(payload, serverId))
 
-    if(server){
+    if(channel){
       setShowModal(false)
+      await dispatch(getChannelThunk(channel.id))
       dispatch(loadServerChannelsThunk(serverId))
     }
   }

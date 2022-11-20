@@ -16,6 +16,7 @@ const Chat = ({channel}) => {
     const [users, setUsers] = useState([])
     const user = useSelector(state => state.session.user)
     const currentChat = useSelector(state => state.privatechat.currentPrivateChat)
+    const currentChannel = useSelector(state => state.channel.currentChannel)
 
 
     useEffect(() => {
@@ -43,6 +44,7 @@ const Chat = ({channel}) => {
             dispatch(getChannelMessagesThunk(channel.id))
             socket.emit('join', {channel: channel})
             socket.emit('fetch', {channel: channel} )
+            //Finds selected channel link in side bar and highlights item + settings button
             let nodes = document.getElementsByClassName('channel-links')
             let settingsButtons = document.getElementsByClassName(`channel-settings-button`)
             for(let node of nodes){
@@ -55,6 +57,7 @@ const Chat = ({channel}) => {
               console.log(node)
             }
           } else {
+
             dispatch(getPrivateChatMessagesThunk(currentChat.id))
             socket.emit('join', {chat: currentChat.id} )
             socket.emit('fetch', {chat: currentChat.id} )
@@ -74,7 +77,7 @@ const Chat = ({channel}) => {
           }
           fetchData();
 
-    }, [channel, currentChat])
+    }, [channel, currentChat, currentChannel])
 
     useEffect(() => {
         socket.on('last_100_messages', (data) => {
