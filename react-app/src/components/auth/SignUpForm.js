@@ -9,14 +9,26 @@ const SignUpForm = () => {
   const [errors, setErrors] = useState([]);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
+  const [profilePic, setProfilePic] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
+  const profilePicArr = [
+    "https://i.imgur.com/hqaxlhA.png",
+    "https://i.imgur.com/oYJZeqX.png",
+    "https://i.imgur.com/T7RAT9x.png",
+    "https://i.imgur.com/7CLZbES.png",
+    "https://i.imgur.com/RBj7WlI.png",
+  ];
+  const randPic = Math.floor(Math.random() * profilePicArr.length);
+
   const onSignUp = async (e) => {
     e.preventDefault();
     if (password === repeatPassword) {
+      if(!profilePic.length) setProfilePic(profilePicArr[randPic])
+
       const data = await dispatch(signUp(username, email, password));
       if (data) {
         setErrors(data)
@@ -42,6 +54,8 @@ const SignUpForm = () => {
   const updateRepeatPassword = (e) => {
     setRepeatPassword(e.target.value);
   };
+
+  const updateImage = (e) => setProfilePic(e.target.value);
 
   if (user) {
     return <Redirect to='/' />;
@@ -76,6 +90,13 @@ const SignUpForm = () => {
               onChange={updateEmail}
               value={email}
             ></input>
+          </div>
+          <div>
+            <input
+                type='text'
+                placeholder='Profile Picture'
+                value={profilePic}
+                onChange={updateImage}/>
           </div>
           <div>
             <label className='login-text'>PASSWORD</label>
