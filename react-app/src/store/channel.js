@@ -18,7 +18,7 @@ const getChannel = (channel) => ({
 
 const updateChannel = (channel) => ({
     type: UPDATE_CHANNEL,
-    channel
+    channel: channel.channel
 })
 
 const deleteChannel = (id) => ({
@@ -159,7 +159,7 @@ export default function channelReducer(state = initialState, action){
             }
           };
     case DELETE_CHANNEL:
-          const deleteState = {...state}
+          const deleteState = {...state, currentChannel: {}}
           delete deleteState.allChannels[action.id]
           return deleteState
     case CLEAR_CHANNEL:

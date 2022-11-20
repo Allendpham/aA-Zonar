@@ -16,7 +16,7 @@ const ServerPage = () => {
    const {serverId} = useParams();
    const servers = useSelector(state => Object.values(state.server.allServers))
    const singleServer = useSelector(state => state.server.currentServer.server)
-   const allChannels = useSelector(state => Object.values(state.channel.allChannels))
+   // const allChannels = useSelector(state => Object.values(state.channel.allChannels))
    const singleChannel = useSelector(state => state.channel?.currentChannel)
    // const channel_messages = useSelector(state => (Object.values(state.message), () => true))
    const currUser = useSelector(state => state.session.user)
@@ -36,7 +36,7 @@ const ServerPage = () => {
 
    const showChannel = (channel) => {
 
-      dispatch(getChannelThunk(channel.id))
+      // dispatch(getChannelThunk(channel.id))
    }
 
 
