@@ -24,23 +24,26 @@
   #modal-userMenu {
     display: flex;
     flex-direction: column;
-    position: absolute;
+    /* justify-self: center; */
+    /* position: absolute; */
     background-color: white;
     border: 1px transparent solid;
     border-radius: 4px;
-    width: 400px;
+    width: 350px;
     height: fit-content;
-    padding: 25px;
+    margin-left: 44%;
+    margin-top: 5%;
+    /* padding: 100px; */
     overflow: hidden;
   }
 
-  #modal-userMenu form{
+  /* #modal-userMenu form{
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
+  } */
 
-  #modal-userMenu input{
+  /* #modal-userMenu input{
     display: block;
     height: 40px;
     width: 400px;
@@ -49,4 +52,4 @@
     margin: 5px 0;
     font-size: 1rem;
     padding: 2px 5px;
-  }
+  } */
