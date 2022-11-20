@@ -8,9 +8,6 @@ function ServerIndexItem({server}) {
    const history = useHistory()
    const dispatch = useDispatch();
    const bg_img = server.preview_img? server.preview_img:null
-   var isAlpha = function(ch){
-    return /^[A-Z]$/i.test(ch);
-  }
    const intials = server?.name.split(' ').map(word => word[0]).join('').slice(0,3)
    useEffect(() => {
     // dispatch(loadServersThunk())
