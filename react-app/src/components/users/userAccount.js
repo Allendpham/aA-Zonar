@@ -7,6 +7,7 @@ import './users.css'
 const UserAccount = () => {
 const history = useHistory()
 const currUser = useSelector((state) => state?.session?.user);
+console.log('cure user --------', currUser)
 
     const handleClick = () => {
         history.goBack()
@@ -25,7 +26,7 @@ const currUser = useSelector((state) => state?.session?.user);
         <div className="account-card">
           <div className="card-header">
             <div className="pic-title">
-              <div className="profile-pic"> </div>
+              <img src={currUser.profile_pic} alt='profile' className="profile-pic" />
               <h3 className="header-name">
                 {currUser.username} #00{currUser.id}
               </h3>
@@ -48,7 +49,7 @@ const currUser = useSelector((state) => state?.session?.user);
             X
           </button>
           <br />
-          <p className="esc-text">ESC</p>
+          {/* <p className="esc-text">ESC</p> */}
         </div>
       </div>
     );

@@ -10,7 +10,7 @@
 .settings-bar{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
     width: 220px;
     height: 100%;
@@ -21,7 +21,8 @@
     border: 1px transparent solid;
     border-radius: 4px;
     margin-bottom: 0px !important;
-    margin-right: 5px;
+    margin-right: 5px !important;
+    margin-left: 54%;
     padding: 0;
     height: 32px;
     width: 32px;
@@ -36,6 +37,11 @@
 #gear:hover{
 background-color: #42464e;
 }
+
+#user-tag {
+    margin-left: 5%;
+}
+
 #user-tag p{
     padding: 0;
     margin: 0;
@@ -45,6 +51,7 @@ background-color: #42464e;
 }
 #user-tag > p:first-child{
     font-weight: bold;
+    font-size: 1rem;
     opacity: .9;
 }
 .left-bar {
@@ -133,14 +140,24 @@ background-color: #42464e;
 
 .profile-pic {
     border: 10px solid #202225;
-    background-color: lightgrey;
+    /* background-color: lightgrey; */
     z-index: 2;
     border-radius: 50%;
     margin-left: 25px;
     margin-top: -50px;
     height: 140%;
     width: 13%;
+}
 
+.settings-profile-pic {
+    border: 1px solid #202225;
+    /* background-color: lightgrey; */
+    /* z-index: 2; */
+    border-radius: 50%;
+    /* margin-left: 25px; */
+    /* margin-top: -50px; */
+    height: 40px;
+    width: 40px;
 }
 
 .card-info-div {
@@ -185,10 +202,10 @@ background-color: #42464e;
     color: white;
 }
 
-.esc-text {
+/* .esc-text {
     font-size: 12px;
     margin: 0 0 0 3px;
-}
+} */
 
 .esc-button {
     background: none;
@@ -203,6 +220,6 @@ background-color: #42464e;
     border-radius: 50%;
 }
 
-/* .esc-button:hover {
+.esc-button:hover {
     color: white;
-} */
+}
