@@ -21,6 +21,7 @@ const UserPreviewForm = ({currentServer, user}) => {
     }
   },[])
 
+
   const matchedChats = currentChats.map(chat => chat.users.map(mbr => mbr.id)).filter(item => item.includes(user.id))
   let targetChat;
   for(const chats in currentChats){
