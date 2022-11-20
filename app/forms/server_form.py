@@ -8,8 +8,13 @@ def server_name_exists(form, field):
     name = field.data
 
     server_name = Server.query.filter(Server.name == name).first()
-    
+
     if server_name:
+        if request.method == 'PUT':
+            admins = server_name.to_dict()['admins']
+            lst = [x['id'] for x in admins]
+            if current_user.to_dict()['id'] in lst:
+                return
         raise ValidationError('Server name is already in use.')
 
 class ServerForm(FlaskForm):

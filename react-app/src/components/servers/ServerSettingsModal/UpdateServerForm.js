@@ -77,10 +77,12 @@ const UpdateServerForm = ({setShowMenu, setClicked, update = null}) => {
 
   return(
     <div className='server-dropdown'>
+    {user.id === currServer.ownerId &&
     <button
       className='update-form-button'
       onClick={()=>{setShowSettings(!showSettings)}}
       ><p>Server Settings</p> <i className="fa-solid fa-gear"></i></button>
+    }
     {showSettings &&
       <form className='update-form' onSubmit={handleSubmit}>
       <div>
