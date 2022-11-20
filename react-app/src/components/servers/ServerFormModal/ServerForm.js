@@ -34,7 +34,7 @@ const ServerForm = ({setShowModal}) => {
     }
     if(server){
       setShowModal(false)
-      history.push(`/servers/${server.id}`)
+      history.push(`/servers/${server.server.id}`)
     }
   }
 
