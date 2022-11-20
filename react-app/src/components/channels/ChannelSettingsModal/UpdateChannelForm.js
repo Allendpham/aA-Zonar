@@ -37,9 +37,9 @@ const UpdateChannelForm = ({setShowModal, channelId}) => {
     }
     if(channel){
       setShowModal(false)
+      dispatch(loadServerChannelsThunk(chosenChannel.serverId))
+      dispatch(getChannelThunk(chosenChannel.id))
     }
-    dispatch(loadServerChannelsThunk(chosenChannel.serverId))
-    dispatch(getChannelThunk(chosenChannel.id))
   }
 
   const handleCancelClick = (e) => {
