@@ -47,4 +47,5 @@ def fetch_msgs(data):
         room = f"privatechat: {data['chat']}"
 
     last100Messages = {'messages':[message.to_dict() for message in messages]} ##change slice to fit CSS goals later
+    print('================MSGS-========================', last100Messages, room)
     emit('last_100_messages', last100Messages, room= room)
