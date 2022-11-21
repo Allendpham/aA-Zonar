@@ -1,6 +1,17 @@
 h4, p{
     margin: unset;
 }
+#message-edit-cancel{
+background-color: transparent;
+color: red;
+font-size: 10px;
+text-align: left;
+padding: 0;
+border: 1px solid transparent;
+}
+#message-edit-cancel:hover{
+ text-decoration: underline;
+}
 .all-messages-div::-webkit-scrollbar{
     background: rgba(0,0,0,0.1);
     border-radius: 8px;
