@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch} from 'react-redux';
 import { Link, useHistory} from 'react-router-dom';
 import { getServerThunk, loadServersThunk } from '../../../store/server';
 import './index.css'
@@ -7,6 +7,7 @@ import './index.css'
 function ServerIndexItem({server}) {
    const history = useHistory()
    const dispatch = useDispatch();
+   const [clicked, setClicked] = useState(false)
    const bg_img = server.preview_img? server.preview_img:null
    const intials = server?.name.split(' ').map(word => word[0]).join('').slice(0,3)
    useEffect(() => {
@@ -15,6 +16,10 @@ function ServerIndexItem({server}) {
 
   const goToServer = () =>{
     dispatch(getServerThunk(server.id))
+    setClicked(true)
+    setTimeout(()=>{
+      setClicked(false)
+    }, 200)
     history.push(`/servers/${server.id}`)
   }
   if(bg_img){
@@ -30,7 +35,10 @@ function ServerIndexItem({server}) {
    return(
     <button
     className='server-index-item'
-    onClick={()=> goToServer()}>
+    onClick={()=> goToServer()}
+    disabled={clicked}
+
+    >
     {intials}
     </button>
 

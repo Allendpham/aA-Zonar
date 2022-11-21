@@ -76,8 +76,8 @@ const MessageSettingOptions = ({message, user,users, populateSocket, chat}) => {
             //  onKeyPress={(e) => (e.key === "27" ? messageInput = message.message : null)}
            />
            <br />
-         <button onClick={() => {messageInput = message.message}}>escape to cancel</button>
            <p className='edit-text'>press enter to save</p>
+         <button id='message-edit-cancel' onClick={() => {messageInput = message.message}}>cancel</button>
          </form>
        ))
      : (messageInput = message.message);
@@ -120,7 +120,7 @@ if(message.userId === user.id){
             <img src={poster?.profile_pic}/>
            </div>
            <h4 className="chat-name">{poster?.username}</h4>{" "}
-           <p className="timestamp">{date}</p>
+           <p className="timestamp">{message?.updatedAt.slice(1,17)}</p>
             </div>
             {  message.userId === user.id &&
             <div className='message-modal'>

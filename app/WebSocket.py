@@ -43,7 +43,7 @@ def fetch_msgs(data):
         messages = ChannelMessage.query.filter(ChannelMessage.channelId == data['channel']['id'])
         room = f"{data['channel']['name']} {data['channel']['id']} {data['channel']['serverId']}"
     else:
-        messages = PrivateChatMessage.query.filter(PrivateChatMessage.privateChatId == data['chat'])
+        messages = PrivateChatMessage.query.filter(PrivateChatMessage.privateChatId == data['chat']).order_by(PrivateChatMessage.createdAt)
         room = f"privatechat: {data['chat']}"
 
     last100Messages = {'messages':[message.to_dict() for message in messages]} ##change slice to fit CSS goals later
