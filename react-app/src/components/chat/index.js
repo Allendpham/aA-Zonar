@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { io } from 'socket.io-client';
 import { getChannelMessagesThunk, createChannelMessagesThunk, getPrivateChatMessagesThunk, createPrivateChatMessagesThunk } from '../../store/message';
@@ -7,30 +7,24 @@ import { store } from '../../index';
 import './chat.css'
 
 let socket;
-
 const Chat = ({channel}) => {
-    const dispatch = useDispatch();
-    const [chatInput, setChatInput] = useState("");
-    const [messages, setMessages] = useState([]);
-    const [currRoom, setCurrRoom] = useState("")
-    const [users, setUsers] = useState([])
-    const [errors, setErrors] = useState([]);
-    const [currentConvo, setConvo] = useState('')
-    const user = useSelector(state => state.session.user)
-    const currentChat = useSelector(state => state.privatechat.currentPrivateChat)
-    const currentChannel = useSelector(state => state.channel.currentChannel)
+  const dispatch = useDispatch();
+  const [chatInput, setChatInput] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [currRoom, setCurrRoom] = useState("")
+  const [users, setUsers] = useState([])
+  const [errors, setErrors] = useState([]);
+  const [currentConvo, setConvo] = useState('')
+  const user = useSelector(state => state.session.user)
+  const currentChat = useSelector(state => state.privatechat.currentPrivateChat)
+  const currentChannel = useSelector(state => state.channel.currentChannel)
 
+  let end = useRef(null)
 
     useEffect(() => {
         socket = io();
         // open socket connection
         // create websocket
-
-        socket.on("currRoom", (currRoomName) => {
-            setCurrRoom(currRoomName.room)
-        })
-
-
         socket.on("chat", (chat) => {
             setMessages((message) => [...message, chat.message])
         })
@@ -43,6 +37,7 @@ const Chat = ({channel}) => {
     useEffect(() =>{
         setMessages([])
         if (channel != null)  {
+            setCurrRoom(`${channel.name} ${channel.id} ${channel.serverId}`)
             setConvo(channel.name)
             dispatch(getChannelMessagesThunk(channel.id))
             socket.emit('join', {channel: channel})
@@ -57,9 +52,11 @@ const Chat = ({channel}) => {
             for(let node of settingsButtons){
               node.id == `settings${channel.id}`?
               node.classList.add('selected-settings'):node.classList.remove('selected-settings')
-              console.log(node)
+
             }
           } else {
+            setCurrRoom(`privatechat: ${currentChat.id}`)
+
             dispatch(getPrivateChatMessagesThunk(currentChat.id))
             socket.emit('join', {chat: currentChat.id} )
             socket.emit('fetch', {chat: currentChat.id} )
@@ -81,17 +78,21 @@ const Chat = ({channel}) => {
           fetchData();
 
 
+
     }, [channel, currentChat, currentChannel])
 
     useEffect(() => {
         socket.on('last_100_messages', (data) => {
         const history = data.messages
-            setMessages((state) => [...history.slice(-10)]);
+            setMessages((state) => [...history]);
         });
 
 
         }, []);
 
+    useEffect(()=>{
+      end.current.scrollIntoView({behavior:'smooth'})
+    },[messages])
 
 
     const populateSocket = () => {
@@ -108,6 +109,8 @@ const Chat = ({channel}) => {
 
     const sendChat = async (e) => {
         e.preventDefault()
+        end.current.scrollIntoView({behavior:'smooth'})
+
         let inputBar = document.querySelector('.message-bar')
         inputBar.classList.remove('error-placeholder')
 
@@ -172,6 +175,7 @@ const Chat = ({channel}) => {
                   chat={currentChat.id}
                 />
               ))}
+              <div ref={end}></div>
             </div>
           </div>
           <div className='message-form'>

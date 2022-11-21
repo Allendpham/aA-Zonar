@@ -115,7 +115,7 @@ export const updateServerThunk = (server, id) => async (dispatch) =>{
   }else if (response.status < 500) {
     const data = await response.json();
     if (data) {
-      console.log(data)
+
       return data;
     }
   } else {

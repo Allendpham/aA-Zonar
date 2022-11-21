@@ -18,7 +18,7 @@ const MessageSettingOptions = ({message, user,users, populateSocket, chat}) => {
    const server = useSelector(state => state?.server?.currentServer?.server)
    const poster = Object.values(users).find(member => member.id == message?.userId)
    const date = dayjs(message?.updatedAt).fromNow(false);
-   console.log(date)
+
 
 
    useEffect(() => {
@@ -73,8 +73,10 @@ const MessageSettingOptions = ({message, user,users, populateSocket, chat}) => {
              type="text"
              value={currmessage}
              onChange={updateMessage}
+            //  onKeyPress={(e) => (e.key === "27" ? messageInput = message.message : null)}
            />
            <br />
+         <button onClick={() => {messageInput = message.message}}>escape to cancel</button>
            <p className='edit-text'>press enter to save</p>
          </form>
        ))

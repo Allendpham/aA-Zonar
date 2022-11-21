@@ -10,7 +10,7 @@
 .settings-bar{
     display: flex;
     flex-direction: row;
-    /* justify-content: space-between; */
+    justify-content: space-between;
     align-items: center;
     width: 220px;
     height: 100%;
@@ -22,7 +22,7 @@
     border-radius: 4px;
     margin-bottom: 0px !important;
     margin-right: 5px !important;
-    margin-left: 54%;
+    /* margin-left: 54%; */
     padding: 0;
     height: 32px;
     width: 32px;
@@ -38,8 +38,16 @@
 background-color: #42464e;
 }
 
-#user-tag {
+#user-tag-div {
     margin-left: 5%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#user-tag {
+    margin-left: 10px;
+    
 }
 
 #user-tag p{
@@ -53,6 +61,7 @@ background-color: #42464e;
     font-weight: bold;
     font-size: 1rem;
     opacity: .9;
+    padding-bottom: 3px;
 }
 .left-bar {
     /* border: 1px solid red; */
@@ -145,8 +154,10 @@ background-color: #42464e;
     border-radius: 50%;
     margin-left: 25px;
     margin-top: -50px;
-    height: 140%;
-    width: 13%;
+    min-height: 140%;
+    max-height: 140%;
+    min-width: 13%;
+    max-width: 13%;
 }
 
 .settings-profile-pic {
@@ -156,8 +167,10 @@ background-color: #42464e;
     border-radius: 50%;
     /* margin-left: 25px; */
     /* margin-top: -50px; */
-    height: 40px;
-    width: 40px;
+    min-height: 40px;
+    max-height: 40px;
+    min-width: 40px;
+    max-width: 40px;
 }
 
 .card-info-div {

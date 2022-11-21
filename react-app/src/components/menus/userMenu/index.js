@@ -16,16 +16,17 @@ function UserPreviewModal({currentServer, user}) {
     dispatch(getServerThunk(currentServer.id))
   },[])
 
-  currentServer.ownerId === user.id ? isOwner = 'Crown' : isOwner = null
+  currentServer.ownerId === user.id ? isOwner = '👑' : isOwner = null
   for(const admins of currentServer.admins){
     if(admins.id === user.id) {
-      isAdmin = 'admin'
+      isAdmin = '🔹'
     }
   }
 
   return (
     <div className="user-preview-wrapper">
       <button id="user-preview-button" onClick={() => {setShowModal(true)}}>
+        <img id='member-list-icon' src={user.profile_pic}/>
         <p id='user-butt-text'>
           {user.username} {isOwner} {isAdmin}
         </p>

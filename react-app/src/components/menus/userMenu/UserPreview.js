@@ -31,7 +31,7 @@ const UserPreviewForm = ({currentServer, user}) => {
         }
     }
   }
-  console.log(targetChat)
+
   useEffect(()=>{
     dispatch(getServerThunk(currentServer.id))
   }, [adminRole])
@@ -94,7 +94,9 @@ currUser.id !== user.id ?
 
   return(
     <div id='userPreviewContainer'>
-      <div id='userPreviewHeader'></div>
+      <div id='userPreviewHeader'>
+        <img src={user.profile_pic}/>
+      </div>
       <div id='userPreviewCard'>
         <h2>{user.username}</h2>
         <form className='user-preview-form'>
