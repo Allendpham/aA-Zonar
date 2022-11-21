@@ -31,7 +31,7 @@ const UserPreviewForm = ({currentServer, user}) => {
         }
     }
   }
-  console.log(targetChat)
+
   useEffect(()=>{
     dispatch(getServerThunk(currentServer.id))
   }, [adminRole])

@@ -7,7 +7,7 @@ import './users.css'
 const UserAccount = () => {
 const history = useHistory()
 const currUser = useSelector((state) => state?.session?.user);
-console.log('cure user --------', currUser)
+
 
     const handleClick = () => {
         history.goBack()

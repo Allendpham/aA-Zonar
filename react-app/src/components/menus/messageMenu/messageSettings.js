@@ -18,7 +18,7 @@ const MessageSettingOptions = ({message, user,users, populateSocket, chat}) => {
    const server = useSelector(state => state?.server?.currentServer?.server)
    const poster = Object.values(users).find(member => member.id == message?.userId)
    const date = dayjs(message?.updatedAt).fromNow(false);
-   console.log(date)
+
 
 
    useEffect(() => {

@@ -25,12 +25,6 @@ const Chat = ({channel}) => {
         socket = io();
         // open socket connection
         // create websocket
-
-        socket.on("currRoom", (currRoomName) => {
-            setCurrRoom(currRoomName.room)
-        })
-
-
         socket.on("chat", (chat) => {
             setMessages((message) => [...message, chat.message])
         })
@@ -43,6 +37,7 @@ const Chat = ({channel}) => {
     useEffect(() =>{
         setMessages([])
         if (channel != null)  {
+            setCurrRoom(`${channel.name} ${channel.id} ${channel.serverId}`)
             setConvo(channel.name)
             dispatch(getChannelMessagesThunk(channel.id))
             socket.emit('join', {channel: channel})
@@ -57,9 +52,11 @@ const Chat = ({channel}) => {
             for(let node of settingsButtons){
               node.id == `settings${channel.id}`?
               node.classList.add('selected-settings'):node.classList.remove('selected-settings')
-              console.log(node)
+
             }
           } else {
+            setCurrRoom(`privatechat: ${currentChat.id}`)
+
             dispatch(getPrivateChatMessagesThunk(currentChat.id))
             socket.emit('join', {chat: currentChat.id} )
             socket.emit('fetch', {chat: currentChat.id} )

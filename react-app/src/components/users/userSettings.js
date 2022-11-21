@@ -10,7 +10,7 @@ const UserSettings = () => {
 const history = useHistory()
 const [settingsBar, setSettingsBar] = useState(true)
 const currUser = useSelector(state => state?.session?.user)
-console.log('this is currUser--------', currUser)
+
 
 const handleClick = () => {
     history.push('/@me/settings')

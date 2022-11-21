@@ -23,21 +23,18 @@ def handle_chat(data):
 
 @socketio.on('join')
 def joinroom(data):
+    print('JOININGGGGGGGGG', data)
     user = current_user.to_dict()
     curr_rooms = rooms(sid=None, namespace=None)
     for room in curr_rooms:
         leave_room(room)
+
     if 'channel' in data:
         room = f"{data['channel']['name']} {data['channel']['id']} {data['channel']['serverId']}"
     else:
-        room = f"privatechat: {data['chat']}" #come back to this
+        room = f"privatechat: {data['chat']}"
+#come back to this
     join_room(room)
-    emit("currRoom", {"room": room})
-    # emit("chat",{'message': {
-    #         'userId': user['id'],
-    #         'channelId': data['channel']['id'],
-    #         'message': f"{user['username']} joined room {room.split()[0]}"
-    #     }}, room=room)
 
 @socketio.on('fetch')
 def fetch_msgs(data):
@@ -49,5 +46,5 @@ def fetch_msgs(data):
         messages = PrivateChatMessage.query.filter(PrivateChatMessage.privateChatId == data['chat'])
         room = f"privatechat: {data['chat']}"
 
-    last100Messages = {'messages':[message.to_dict() for message in messages][-10:]} ##change slice to fit CSS goals later
+    last100Messages = {'messages':[message.to_dict() for message in messages]} ##change slice to fit CSS goals later
     emit('last_100_messages', last100Messages, room= room)
