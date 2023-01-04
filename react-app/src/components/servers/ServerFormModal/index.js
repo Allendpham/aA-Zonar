@@ -8,7 +8,10 @@ function ServerFormModal() {
 
   return (
     <div >
-      <button className="server-index-create" onClick={() => {setShowModal(true)}}><i className="fa-solid fa-plus"></i></button>
+      <button className="server-index-create" onClick={() => {setShowModal(true)}}><i className="fa-solid fa-plus"></i>
+      <span class="tooltiptext">Add a Server</span>
+
+      </button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <CreateServerPopup setShowModal={setShowModal}/>
