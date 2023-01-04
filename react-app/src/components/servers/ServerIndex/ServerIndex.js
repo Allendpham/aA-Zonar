@@ -7,6 +7,7 @@ import ExploreServersModal from '../ExploreServersModal';
 import ServerIndexItem from './ServerIndexItem';
 import './index.css'
 import { clearChannel } from '../../../store/channel';
+import DeveloperModal from '../DeveloperInfo';
 
 function ServerIndex() {
    const dispatch = useDispatch();
@@ -48,6 +49,9 @@ function ServerIndex() {
          </li>
          <li>
          <ExploreServersModal />
+         </li>
+         <li>
+         <DeveloperModal/>
          </li>
          </ul>
 
