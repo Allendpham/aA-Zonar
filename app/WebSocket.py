@@ -40,7 +40,7 @@ def joinroom(data):
 def fetch_msgs(data):
     user = request.sid
     if 'channel' in data:
-        messages = ChannelMessage.query.filter(ChannelMessage.channelId == data['channel']['id'])
+        messages = ChannelMessage.query.filter(ChannelMessage.channelId == data['channel']['id']).order_by(ChannelMessage.createdAt)
         room = f"{data['channel']['name']} {data['channel']['id']} {data['channel']['serverId']}"
     else:
         messages = PrivateChatMessage.query.filter(PrivateChatMessage.privateChatId == data['chat']).order_by(PrivateChatMessage.createdAt)
